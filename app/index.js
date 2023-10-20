@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   StyleSheet,
   View,
@@ -5,53 +6,63 @@ import {
   ScrollView,
   SafeAreaView,
   Dimensions,
-  Button
-} from 'react-native'
-import { Stack, useRouter } from 'expo-router'
-
-import { SIZES } from '../constants/themes.js'
+  Pressable,
+} from 'react-native';
+import { Stack, useRouter, Link } from 'expo-router';
+import { SIZES } from '../constants/themes.js';
 
 const App = () => {
   const router = useRouter();
 
   return (
-    <SafeAreaView  style={styles.app}>
-      <Stack.Screen 
-        options={{
-          title: 'Flatsharing',
-          headerStyle: styles.header
-        }}
-        style={styles.navbar}
-      />
-      <ScrollView showVerticalScrollIndicator={false}>
-        <View style={{
-          flex: 1,
-          padding: SIZES.medium 
-        }}>
-          <Text>Welcome to the flatmates sharing app!</Text>
-          <Button title={"Get Started!"} />
+    <SafeAreaView style={styles.app}>
+      <ScrollView
+        contentContainerStyle={styles.scrollViewContent}
+        showsVerticalScrollIndicator={false}
+      >
+        <View style={styles.container}>
+          <Text style={styles.welcomeText}>Welcome to the flatmates sharing app!</Text>
+          <Link href="/NewEnvironmentPage" asChild>
+            <Pressable style={styles.newEnvironmentButton}>
+              <Text style={styles.buttonText}>Create New Environment</Text>
+            </Pressable>
+          </Link>
         </View>
       </ScrollView>
     </SafeAreaView>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   app: {
-    backgroundColor: '#bdf8ff',
     flex: 1,
-    paddingTop: 40,
+    backgroundColor: '#bdf8ff',
   },
-  header: {
-    position: 'absolute',
-    top: Dimensions.get('window').height - 60,
-    left: 0,
-    right: 0,
-    height: 60,
-    borderWidth: 1,
+  scrollViewContent: {
+    flexGrow: 1,
+    justifyContent: 'space-between',
+  },
+  container: {
+    flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
-  }
-})
+    alignItems: 'center',
+    padding: SIZES.medium,
+  },
+  welcomeText: {
+    fontSize: 24,
+    marginBottom: 20,
+  },
+  newEnvironmentButton: {
+    alignItems: 'center',
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+    backgroundColor: 'lightblue',
+  },
+  buttonText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+});
 
-export default App
+export default App;
