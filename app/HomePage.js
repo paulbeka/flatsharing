@@ -1,16 +1,61 @@
 import React from "react";
 import {
-  StyleSheet, View
+  StyleSheet, ScrollView, Text, View
 } from 'react-native'
+import { useEnvironmentsStore } from './store/EnvironmentsContext';
 
 
 const HomePage = () => {
-  return (<>
-  </>)
+  const environmentsStore = useEnvironmentsStore();
+  const environment = environmentsStore.getEnvironment(0);
+
+  return (
+    <ScrollView contentContainerStyle={styles.homePageContainer}>
+      <Text style={styles.title}>{environment.name}</Text>
+      <Text style={styles.subTitle}>Your upcoming tasks...</Text>
+      <ScrollView  horizontal={true}>
+        {environment.tasks.map((task) => {
+          return (
+            <View style={styles.yourTaskView}>
+              <Text>Hello World!</Text>
+            </View>
+          )
+        })}
+      </ScrollView>
+    </ScrollView>
+  )
 }
 
 const styles = StyleSheet.create({
-
+  homePageContainer: {
+    flex: 1,
+    paddingLeft: 10
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginTop: 10,
+    marginBottom: 10
+  },
+  subTitle: {
+    fontSize: 18,
+    color: '#949494',
+    marginBottom: 5,
+  },
+  yourTasksScroll: {
+    flex: 1,
+    width: '100%',
+    borderWidth: 1
+  },  
+  yourTaskView: {
+    borderWidth: 1,
+    margin: 5,
+    width: 100,
+    height: 100,
+    borderRadius: 5,
+    padding: 3
+  }
 });
 
 export default HomePage
