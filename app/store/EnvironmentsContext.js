@@ -5,7 +5,7 @@ import { useLocalStore } from 'mobx-react'
 const EnvironmentsContext = createContext(null)
 
 export const EnvironmentsProvider = ({ children }) => {
-  const environmentsStore = useLocalStore(createEnvironmentStore())
+  const environmentsStore = useLocalStore(createEnvironmentStore)
 
   return <EnvironmentsContext.Provider value={environmentsStore}>
     {children}

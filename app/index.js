@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   StyleSheet,
   ScrollView,
@@ -8,13 +8,19 @@ import WelcomePage from './WelcomePage';
 import HomePage from './HomePage';
 import { EnvironmentsProvider, useEnvironmentsStore } from './store/EnvironmentsContext';
 
-
 const App = () => {
+  return (
+    <EnvironmentsProvider>
+      <AppContent />
+    </EnvironmentsProvider>
+  );
+};
+
+const AppContent = () => {
   const environmentsStore = useEnvironmentsStore();
 
   return (
-    <EnvironmentsProvider>
-      <SafeAreaView style={styles.app}>
+    <SafeAreaView style={styles.app}>
       <ScrollView
         contentContainerStyle={styles.scrollViewContent}
         showsVerticalScrollIndicator={false}
@@ -22,8 +28,6 @@ const App = () => {
         {environmentsStore.isEnvironments() ? <HomePage /> : <WelcomePage />}
       </ScrollView>
     </SafeAreaView>
-    </EnvironmentsProvider>
-    
   );
 };
 

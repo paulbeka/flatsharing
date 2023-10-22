@@ -1,6 +1,8 @@
 export const createEnvironmentStore = () => {
   return {
-    environments: [],
+    environments: [{
+      "name" : "Flat1"
+    }],
     addEnvironment(environment) {
       this.environments.push(environment)
     },
