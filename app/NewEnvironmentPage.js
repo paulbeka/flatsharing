@@ -1,65 +1,37 @@
 import React, { useState } from "react";
-import { Text, TextInput, StyleSheet, Pressable } from 'react-native'
-import { SafeAreaView } from "react-native-safe-area-context";
+import CreateEnvironmentName from "./components/addNewEnvironment/CreateEnvironmentName.js";
+import AddPeople from "./components/addNewEnvironment/AddPeople.js";
+
 
 const NewEnvironmentPage = () => {
-  const [flatname, onChangeFlatname] = useState(null);
+  const [currentPage, setCurrentPage] = useState(0)
+  const [environmentDetails, setEnvironmentDetails] = useState({
+    "name": undefined,
+    "people": [],
+    "tasks": []
+  })
 
-  return (
-    <SafeAreaView style={styles.newEnvironmentPage}>
-      <Text style={styles.inputText}>Input flat name:</Text>
-      <TextInput 
-        style={styles.input}
-        onChangeText={onChangeFlatname}
-        value={flatname}
-        placeholder="Flat name..."
+  const incCurrentPage = () => {
+    console.log("HELLO WORLD!")
+    setCurrentPage(currentPage + 1)
+  }
+
+  switch(currentPage) {
+    case 0:
+      return <CreateEnvironmentName 
+        nextItem={incCurrentPage}
+        setEnvironmentDetails={setEnvironmentDetails}
       />
-      <Text style={styles.inputText}>Number of people in flat:</Text>
-      <TextInput 
-        style={styles.input}
-        onChangeText={onChangeFlatname}
-        value={flatname}
-        placeholder="Number of people..."
+    case 1:
+      return <AddPeople 
+        nextItem={incCurrentPage}
+        setEnvironmentDetails={setEnvironmentDetails}
       />
-      <Pressable style={styles.createNewEnvironmentButton}>
-        <Text style={styles.createNewEnvironmentText}>Create New Environment</Text>
-      </Pressable>
-    </SafeAreaView>
-  );
+    case 2:
+      return <></>
+  }
 }
 
-const styles = StyleSheet.create({
-  newEnvironmentPage: {
-    flex: 1,
-    backgroundColor: '#bdf8ff',
-    alignItems: 'center',
-  },
-  input: {
-    width: '90%',
-    height: 45,
-    borderWidth: 1,
-    borderRadius: 5,
-    padding: 10,
-    backgroundColor: 'white',
-    marginBottom: 20,
-  },
-  inputText: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginBottom: 10,
-  },
-  createNewEnvironmentButton: {
-    backgroundColor: '#007BFF',
-    borderRadius: 5,
-    padding: 15,
-    width: '90%',
-    alignItems: 'center',
-  },
-  createNewEnvironmentText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: 'bold',
-  }
-});
+
 
 export default NewEnvironmentPage;
