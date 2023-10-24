@@ -21,6 +21,7 @@ const CreateEnvironmentName = ({nextItem, previousItem, setFlatname}) => {
   }
 
   const handleBackButton = () => {
+    environmentsStore.removeEnvironment(flatname)
     previousItem()
   }
 

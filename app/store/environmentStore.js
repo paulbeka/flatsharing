@@ -18,6 +18,12 @@ export const createEnvironmentStore = () => {
         this.environments.push(newEnvironment);
       }
     },
+    removeEnvironment(flatname) {
+      const index = this.environments.findIndex((el) => el.name === flatname);
+      if (index !== -1) {
+        this.environments.splice(index, 1);
+      }
+    },
     isEnvironments() {
       return this.environments.length > 0;
     }
