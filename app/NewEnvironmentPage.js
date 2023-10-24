@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import CreateEnvironmentName from "./components/addNewEnvironment/CreateEnvironmentName.js";
 import AddPeople from "./components/addNewEnvironment/AddPeople.js";
+import EnvironmentCreated from "./components/addNewEnvironment/EnvironmentCreated.js";
+import { useRouter, useFocusEffect } from 'expo-router';
 
 
 const NewEnvironmentPage = () => {
@@ -11,11 +13,18 @@ const NewEnvironmentPage = () => {
     "tasks": []
   })
 
+  const router = useRouter();
+
   const incCurrentPage = () => {
+    
     setCurrentPage(currentPage + 1)
   }
 
   const decCurrentPage = () => {
+    if(currentPage <= 0) {
+      router.replace('/')
+    } 
+    console.log("DEC")
     setCurrentPage(currentPage - 1)
   }
   
@@ -33,7 +42,7 @@ const NewEnvironmentPage = () => {
         setEnvironmentDetails={setEnvironmentDetails}
       />
     case 2:
-      return <></>
+      return <EnvironmentCreated />
   }
 }
 

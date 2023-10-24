@@ -4,7 +4,7 @@ const Layout = () => {
   return <Stack
   screenOptions={{
     headerStyle: {
-      backgroundColor: "blue",
+      backgroundColor: "darkblue",
     },
     headerTintColor: "white",
     headerTitleStyle: {

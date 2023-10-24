@@ -8,22 +8,35 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 
 const AddPeople = ({ nextItem, previousItem, setEnvironmentDetails }) => {
   const [currentNameInput, setCurrentNameInput] = useState("")
-  const [listOfPeople, setListOfPeople] = useState([])
+  const [listOfPeople, setListOfPeople] = useState(["John", "Harris"])
+  const [error, setError] = useState(null);
 
   const onAddPersonToList = () => {
     if (currentNameInput !== "" && !listOfPeople.includes(currentNameInput)) {
       setListOfPeople([...listOfPeople, currentNameInput]);
       setCurrentNameInput("");
+      if(error) {
+        setError(null)
+      }
     }
   }
 
   const handleClick = () => {
-    setEnvironmentDetails(environmentDetails => ({...environmentDetails, peopleList: listOfPeople}))
-    nextItem()
+    if(listOfPeople.length <= 0) {
+      setError("You need to add people to the list.")
+    } else {
+      setEnvironmentDetails(environmentDetails => ({...environmentDetails, peopleList: listOfPeople}))
+      nextItem()
+    }
   }
 
   const handleBackButton = () => {
     previousItem()
+  }
+
+  const removeItemFromList = (person) => {
+    const newList = listOfPeople.filter((item) => item !== person);
+    setListOfPeople(newList);
   }
 
   return (
@@ -40,6 +53,9 @@ const AddPeople = ({ nextItem, previousItem, setEnvironmentDetails }) => {
           <Pressable onPress={onAddPersonToList} style={styles.addPersonButton}>
             <Text style={{fontWeight: "bold"}}>Add Person</Text>
           </Pressable>
+          {error !== null ? 
+          <Text style={{color: 'red'}}>{error}</Text> 
+          : <></>}
         </View>
 
         <View
@@ -54,7 +70,9 @@ const AddPeople = ({ nextItem, previousItem, setEnvironmentDetails }) => {
         {listOfPeople.map((person, key) => {
           return (
             <View style={styles.personAdded} key={key}>
-              <Ionicons name="md-close" size={32} color="green" style={styles.closeIcon} />
+              <Pressable onPress={() => removeItemFromList(person)}>
+                <Ionicons name="md-close" size={32} color="green" style={styles.closeIcon} />
+              </Pressable>
               <Text style={styles.personName}>{person}</Text>
             </View>
           );

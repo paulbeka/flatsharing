@@ -4,11 +4,16 @@ import {
 } from 'react-native'
 
 const CreateEnvironmentName = ({nextItem, previousItem, setEnvironmentDetails}) => {
-  const [flatname, onChangeFlatname] = useState(null);
+  const [flatname, onChangeFlatname] = useState("")
+  const [error, setError] = useState(null)
 
   const handleClick = () => {
-    setEnvironmentDetails(environmentDetails => ({...environmentDetails, name: flatname}))
-    nextItem()
+    if(flatname === "") {
+      setError("Please set a name before continuing")
+    } else {
+      setEnvironmentDetails(environmentDetails => ({...environmentDetails, name: flatname}))
+      nextItem()
+    }
   }
 
   const handleBackButton = () => {
@@ -26,13 +31,14 @@ const CreateEnvironmentName = ({nextItem, previousItem, setEnvironmentDetails}) 
           placeholder="Flat name..."
         />
       </View>
-      
+      {error === null ? <></> : 
+      <Text style={{color: 'red'}}>{error}</Text>}
       
       <View style={styles.buttonsView}>
         <Pressable style={styles.createNewEnvironmentButton} onPress={handleClick}>
           <Text style={styles.createNewEnvironmentText}>Next</Text>
         </Pressable>
-        <Pressable style={styles.backButton} onPressDown={handleBackButton}>
+        <Pressable style={styles.backButton} onPress={handleBackButton}>
           <Text style={styles.createNewEnvironmentText}>Back</Text>
         </Pressable>
       </View>
