@@ -8,6 +8,7 @@
       "expo-router"
     ],
     "name": "flatsharing",
+    "android":{"softwareKeyboardLayoutMode": "pan"},
     "slug": "flatsharing"
   }
 }

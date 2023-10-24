@@ -24,10 +24,13 @@ const CreateEnvironmentName = ({nextItem, setEnvironmentDetails}) => {
       </View>
       
       
-      <View>
+      <View style={styles.buttonsView}>
         <Pressable style={styles.createNewEnvironmentButton} onPress={handleClick}>
-        <Text style={styles.createNewEnvironmentText}>Next</Text>
-      </Pressable>
+          <Text style={styles.createNewEnvironmentText}>Next</Text>
+        </Pressable>
+        <Pressable style={styles.backButton} onPress={handleClick}>
+          <Text style={styles.createNewEnvironmentText}>Back</Text>
+        </Pressable>
       </View>
       
     </SafeAreaView>
@@ -42,7 +45,9 @@ const styles = StyleSheet.create({
   },
   inputView: {
     flex: 1,
-    width: '100%'
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
   }, 
   input: {
     width: '90%',
@@ -69,7 +74,22 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 16,
     fontWeight: 'bold',
-  }
+  },
+  buttonsView: {
+    marginBottom: 20,
+    width: '90%',
+    alignItems: 'center'
+  },
+  backButton: {
+    backgroundColor: '#d1d1d1',
+    borderWidth: 1,
+    marginTop: 5,
+    bottom: 0,
+    borderRadius: 5,
+    padding: 15,
+    width: '90%',
+    alignItems: 'center',
+  },
 });
 
 export default CreateEnvironmentName

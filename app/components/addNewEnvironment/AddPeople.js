@@ -1,16 +1,20 @@
 import React, { useState } from "react";
 import {
-  StyleSheet, Text, TextInput, SafeAreaView, Pressable, View
+  StyleSheet, Text, TextInput, SafeAreaView, Pressable, View, Dimensions
 } from 'react-native'
 import { ScrollView } from "react-native-gesture-handler";
+import Ionicons from '@expo/vector-icons/Ionicons';
 
 
 const AddPeople = ({ nextItem, setEnvironmentDetails }) => {
   const [currentNameInput, setCurrentNameInput] = useState("")
-  const [listOfPeople, setListOfPeople] = useState([])
+  const [listOfPeople, setListOfPeople] = useState(["John", "Michael"])
 
   const onAddPersonToList = () => {
-
+    if(currentNameInput != "" && !listOfPeople.some(item => currentNameInput === item)) {
+      setListOfPeople(old => [...old, currentNameInput])
+      setCurrentNameInput("")
+    }
   }
 
   const handleClick = () => {
@@ -20,17 +24,40 @@ const AddPeople = ({ nextItem, setEnvironmentDetails }) => {
 
   return (
     <SafeAreaView style={styles.newEnvironmentPage}>
-      <ScrollView style={styles.namesScrollView}>
-        <Text style={styles.inputText}>Input person's name:</Text>
-        <TextInput 
-          style={styles.input}
-          onChangeText={setCurrentNameInput}
-          value={currentNameInput}
-          placeholder="Person's name"
+      <ScrollView contentContainerStyle={styles.namesScrollView}>
+        <View style={styles.inputPersonView}>
+          <Text style={styles.inputText}>Input person's name:</Text>
+          <TextInput 
+            style={styles.input}
+            onChangeText={setCurrentNameInput}
+            value={currentNameInput}
+            placeholder="Person's name"
+          />
+          <Pressable onPress={onAddPersonToList} style={styles.addPersonButton}>
+            <Text style={{fontWeight: "bold"}}>Add Person</Text>
+          </Pressable>
+        </View>
+
+        <View
+          style={{
+            width: Dimensions.get('window').width - 40,
+            marginBottom: 10,
+            borderBottomColor: 'black',
+            borderBottomWidth: StyleSheet.hairlineWidth,
+          }}
         />
+
+        {listOfPeople.map((person, key) => {
+          return (
+            <View style={styles.personAdded} key={key}>
+              <Ionicons name="md-close" size={32} color="green" style={styles.closeIcon} />
+              <Text style={styles.personName}>{person}</Text>
+            </View>
+          );
+        })}
       </ScrollView>
       
-      <View>
+      <View style={styles.buttonsView}>
         <Pressable style={styles.createNewEnvironmentButton} onPress={handleClick}>
           <Text style={styles.createNewEnvironmentText}>Next</Text>
         </Pressable>
@@ -47,13 +74,19 @@ const styles = StyleSheet.create({
   newEnvironmentPage: {
     flex: 1,
     backgroundColor: '#bdf8ff',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   namesScrollView: {
-    flex: 1
+    alignItems: 'center',
+    minWidth: Dimensions.get('window').width,
+    maxWidth: Dimensions.get('window').width
+  },
+  inputPersonView: {
+    flex: 1,
+    width: '90%',
+    padding: 20
   },
   input: {
-    width: '90%',
     height: 45,
     borderWidth: 1,
     borderRadius: 5,
@@ -65,6 +98,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     marginBottom: 10,
+    marginTop: 20,
   },
   backButton: {
     backgroundColor: '#d1d1d1',
@@ -90,6 +124,37 @@ const styles = StyleSheet.create({
   },
   backText: {
     color: 'black',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  buttonsView: {
+    marginBottom: 20,
+    width: '90%',
+    alignItems: 'center',
+    marginTop: 10
+  },
+  addPersonButton: {
+    borderRadius: 5,
+    backgroundColor: '#76d676',
+    padding: 10,
+    alignItems: 'center',
+  },
+  personAdded: {
+    flexDirection: 'row',
+    width: '90%',
+    alignItems: 'center',
+    marginTop: 5,
+    marginBottom: 5,
+    padding: 10,
+    borderRadius: 5,
+    backgroundColor: '#d1d1d1'
+  },
+  closeIcon: {
+    color: 'black',
+    marginRight: 10,
+  },
+  personName: {
+    flex: 1,
     fontSize: 16,
     fontWeight: 'bold',
   },
