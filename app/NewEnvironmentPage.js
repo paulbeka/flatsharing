@@ -12,19 +12,24 @@ const NewEnvironmentPage = () => {
   })
 
   const incCurrentPage = () => {
-    console.log("HELLO WORLD!")
     setCurrentPage(currentPage + 1)
   }
 
+  const decCurrentPage = () => {
+    setCurrentPage(currentPage - 1)
+  }
+  
   switch(currentPage) {
     case 0:
       return <CreateEnvironmentName 
         nextItem={incCurrentPage}
+        previousItem={decCurrentPage}
         setEnvironmentDetails={setEnvironmentDetails}
       />
     case 1:
       return <AddPeople 
         nextItem={incCurrentPage}
+        previousItem={decCurrentPage}
         setEnvironmentDetails={setEnvironmentDetails}
       />
     case 2:

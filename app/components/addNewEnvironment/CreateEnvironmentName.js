@@ -3,12 +3,16 @@ import {
   StyleSheet, Text, TextInput, SafeAreaView, Pressable, View
 } from 'react-native'
 
-const CreateEnvironmentName = ({nextItem, setEnvironmentDetails}) => {
+const CreateEnvironmentName = ({nextItem, previousItem, setEnvironmentDetails}) => {
   const [flatname, onChangeFlatname] = useState(null);
 
   const handleClick = () => {
     setEnvironmentDetails(environmentDetails => ({...environmentDetails, name: flatname}))
     nextItem()
+  }
+
+  const handleBackButton = () => {
+    previousItem()
   }
 
   return (
@@ -28,7 +32,7 @@ const CreateEnvironmentName = ({nextItem, setEnvironmentDetails}) => {
         <Pressable style={styles.createNewEnvironmentButton} onPress={handleClick}>
           <Text style={styles.createNewEnvironmentText}>Next</Text>
         </Pressable>
-        <Pressable style={styles.backButton} onPress={handleClick}>
+        <Pressable style={styles.backButton} onPressDown={handleBackButton}>
           <Text style={styles.createNewEnvironmentText}>Back</Text>
         </Pressable>
       </View>

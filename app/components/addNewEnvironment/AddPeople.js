@@ -6,25 +6,29 @@ import { ScrollView } from "react-native-gesture-handler";
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 
-const AddPeople = ({ nextItem, setEnvironmentDetails }) => {
+const AddPeople = ({ nextItem, previousItem, setEnvironmentDetails }) => {
   const [currentNameInput, setCurrentNameInput] = useState("")
-  const [listOfPeople, setListOfPeople] = useState(["John", "Michael"])
+  const [listOfPeople, setListOfPeople] = useState([])
 
   const onAddPersonToList = () => {
-    if(currentNameInput != "" && !listOfPeople.some(item => currentNameInput === item)) {
-      setListOfPeople(old => [...old, currentNameInput])
-      setCurrentNameInput("")
+    if (currentNameInput !== "" && !listOfPeople.includes(currentNameInput)) {
+      setListOfPeople([...listOfPeople, currentNameInput]);
+      setCurrentNameInput("");
     }
   }
 
   const handleClick = () => {
-    setEnvironmentDetails(environmentDetails => ({...environmentDetails, name: flatname}))
+    setEnvironmentDetails(environmentDetails => ({...environmentDetails, peopleList: listOfPeople}))
     nextItem()
+  }
+
+  const handleBackButton = () => {
+    previousItem()
   }
 
   return (
     <SafeAreaView style={styles.newEnvironmentPage}>
-      <ScrollView contentContainerStyle={styles.namesScrollView}>
+      <ScrollView keyboardShouldPersistTaps='handled' contentContainerStyle={styles.namesScrollView}>
         <View style={styles.inputPersonView}>
           <Text style={styles.inputText}>Input person's name:</Text>
           <TextInput 
@@ -59,9 +63,9 @@ const AddPeople = ({ nextItem, setEnvironmentDetails }) => {
       
       <View style={styles.buttonsView}>
         <Pressable style={styles.createNewEnvironmentButton} onPress={handleClick}>
-          <Text style={styles.createNewEnvironmentText}>Next</Text>
+          <Text style={styles.createNewEnvironmentText}>Done</Text>
         </Pressable>
-        <Pressable style={styles.backButton} onPress={handleClick}>
+        <Pressable style={styles.backButton} onPress={handleBackButton}>
           <Text style={styles.backText}>Back</Text>
         </Pressable>
       </View>
