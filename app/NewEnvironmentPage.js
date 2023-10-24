@@ -2,21 +2,15 @@ import React, { useState } from "react";
 import CreateEnvironmentName from "./components/addNewEnvironment/CreateEnvironmentName.js";
 import AddPeople from "./components/addNewEnvironment/AddPeople.js";
 import EnvironmentCreated from "./components/addNewEnvironment/EnvironmentCreated.js";
-import { useRouter, useFocusEffect } from 'expo-router';
-
+import { useRouter } from 'expo-router';
 
 const NewEnvironmentPage = () => {
   const [currentPage, setCurrentPage] = useState(0)
-  const [environmentDetails, setEnvironmentDetails] = useState({
-    "name": undefined,
-    "people": [],
-    "tasks": []
-  })
+  const [flatname, setFlatname] = useState(null)
 
   const router = useRouter();
 
   const incCurrentPage = () => {
-    
     setCurrentPage(currentPage + 1)
   }
 
@@ -33,13 +27,13 @@ const NewEnvironmentPage = () => {
       return <CreateEnvironmentName 
         nextItem={incCurrentPage}
         previousItem={decCurrentPage}
-        setEnvironmentDetails={setEnvironmentDetails}
+        setFlatname={setFlatname}
       />
     case 1:
       return <AddPeople 
         nextItem={incCurrentPage}
         previousItem={decCurrentPage}
-        setEnvironmentDetails={setEnvironmentDetails}
+        flatname={flatname}
       />
     case 2:
       return <EnvironmentCreated />

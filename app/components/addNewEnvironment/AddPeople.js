@@ -4,12 +4,14 @@ import {
 } from 'react-native'
 import { ScrollView } from "react-native-gesture-handler";
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { useEnvironmentsStore } from "../../store/EnvironmentsContext";
 
 
-const AddPeople = ({ nextItem, previousItem, setEnvironmentDetails }) => {
+const AddPeople = ({ nextItem, previousItem, flatname}) => {
   const [currentNameInput, setCurrentNameInput] = useState("")
   const [listOfPeople, setListOfPeople] = useState(["John", "Harris"])
   const [error, setError] = useState(null);
+  const environmentsStore = useEnvironmentsStore();
 
   const onAddPersonToList = () => {
     if (currentNameInput !== "" && !listOfPeople.includes(currentNameInput)) {
@@ -25,7 +27,9 @@ const AddPeople = ({ nextItem, previousItem, setEnvironmentDetails }) => {
     if(listOfPeople.length <= 0) {
       setError("You need to add people to the list.")
     } else {
-      setEnvironmentDetails(environmentDetails => ({...environmentDetails, peopleList: listOfPeople}))
+      let env = environmentsStore.getEnvironment(flatname)
+      env.flatmates = listOfPeople
+      environmentsStore.setEnvironment(env)
       nextItem()
     }
   }

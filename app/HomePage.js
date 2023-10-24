@@ -7,7 +7,7 @@ import { useEnvironmentsStore } from './store/EnvironmentsContext';
 
 const HomePage = () => {
   const environmentsStore = useEnvironmentsStore();
-  const environment = environmentsStore.getEnvironment(0);
+  const environment = environmentsStore.getEnvironmentByIndex(0);
 
   return (
     <ScrollView contentContainerStyle={styles.homePageContainer}>

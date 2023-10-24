@@ -6,17 +6,10 @@ import {
 } from 'react-native';
 import WelcomePage from './WelcomePage';
 import HomePage from './HomePage';
-import { EnvironmentsProvider, useEnvironmentsStore } from './store/EnvironmentsContext';
+import { useEnvironmentsStore } from './store/EnvironmentsContext';
+
 
 const App = () => {
-  return (
-    <EnvironmentsProvider>
-      <AppContent />
-    </EnvironmentsProvider>
-  );
-};
-
-const AppContent = () => {
   const environmentsStore = useEnvironmentsStore();
 
   return (

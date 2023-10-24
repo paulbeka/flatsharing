@@ -1,14 +1,14 @@
 import React from "react";
 import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { SIZES } from '../constants/themes.js';
-import { useNavigation } from '@react-navigation/native';
+import { useRouter } from 'expo-router';
 
 
 const WelcomePage = () => {
-  const navigation = useNavigation();
+  const router = useRouter();
 
   const handleNewEnvironmentPress = () => {
-    navigation.navigate('NewEnvironmentPage');
+    router.replace('NewEnvironmentPage');
   };
 
   return (

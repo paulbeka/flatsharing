@@ -2,16 +2,20 @@ import React, { useState } from "react";
 import {
   StyleSheet, Text, TextInput, SafeAreaView, Pressable, View
 } from 'react-native'
+import { useEnvironmentsStore } from '../../store/EnvironmentsContext';
 
-const CreateEnvironmentName = ({nextItem, previousItem, setEnvironmentDetails}) => {
-  const [flatname, onChangeFlatname] = useState("")
+
+const CreateEnvironmentName = ({nextItem, previousItem, setFlatname}) => {
+  const [flatname, onChangeFlatname] = useState("Test")
   const [error, setError] = useState(null)
+  const environmentsStore = useEnvironmentsStore();
 
   const handleClick = () => {
     if(flatname === "") {
       setError("Please set a name before continuing")
     } else {
-      setEnvironmentDetails(environmentDetails => ({...environmentDetails, name: flatname}))
+      environmentsStore.addEnvironment({ name: flatname, tasks: [] })
+      setFlatname(flatname)
       nextItem()
     }
   }
