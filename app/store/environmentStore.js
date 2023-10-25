@@ -1,6 +1,10 @@
 export const createEnvironmentStore = () => {
   return {
-    environments: [],
+    environments: [{
+      "name": "Test",
+      "flatmates": ["John", "Jack"],
+      "tasks": []
+    }],
     addEnvironment(environment) {
       this.environments.push(environment);
     },

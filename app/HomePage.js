@@ -3,27 +3,31 @@ import {
   StyleSheet, ScrollView, Text, View
 } from 'react-native'
 import { useEnvironmentsStore } from './store/EnvironmentsContext';
+import NoTasksYetPage from "./components/HomePageComponents/NoTasksYetPage";
 
 
 const HomePage = () => {
   const environmentsStore = useEnvironmentsStore();
   const environment = environmentsStore.getEnvironmentByIndex(0);
 
-  return (
-    <ScrollView contentContainerStyle={styles.homePageContainer}>
-      <Text style={styles.title}>{environment.name}</Text>
-      <Text style={styles.subTitle}>Your upcoming tasks...</Text>
-      <ScrollView  horizontal={true}>
-        {environment.tasks.map((task) => {
-          return (
-            <View style={styles.yourTaskView}>
-              <Text>Hello World!</Text>
-            </View>
-          )
-        })}
-      </ScrollView>
-    </ScrollView>
-  )
+  if(environment.tasks.length <= 0) {
+    return <NoTasksYetPage />
+  } else {
+    return (
+      <ScrollView contentContainerStyle={styles.homePageContainer}>
+        <Text style={styles.title}>{environment.name}</Text>
+        <Text style={styles.subTitle}>Your upcoming tasks...</Text>
+        <ScrollView  horizontal={true}>
+          {environment.tasks.map((task) => {
+            return (
+              <View style={styles.yourTaskView}>
+                <Text>Hello World!</Text>
+              </View>
+            )
+          })}
+        </ScrollView>
+      </ScrollView>)
+  }
 }
 
 const styles = StyleSheet.create({
