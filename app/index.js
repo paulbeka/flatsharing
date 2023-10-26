@@ -4,8 +4,8 @@ import {
   ScrollView,
   SafeAreaView,
 } from 'react-native';
-import WelcomePage from './WelcomePage';
-import HomePage from './HomePage';
+import WelcomePage from './components/HomePageComponents/WelcomePage';
+import HomePage from './components/HomePageComponents/HomePage';
 import { useEnvironmentsStore } from './store/EnvironmentsContext';
 
 

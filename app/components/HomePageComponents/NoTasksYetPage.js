@@ -11,13 +11,14 @@ const NoTasksYetPage = () => {
         You have no tasks. Create new tasks or choose from a template to get started.
       </Text>
       <View>
-        <Link href="/TaskManagementPage" asChild>
+        <Link href="/TaskCreationPage" asChild>
           <Pressable style={styles.button}>
             <Text style={styles.buttonText}>
               Create New Tasks
             </Text>
           </Pressable>
         </Link>
+
         <View style={{flexDirection: 'row', alignItems: 'center', width: '90%'}}>
           <View style={{flex: 1, height: 1, backgroundColor: 'black'}} />
           <View>
@@ -25,7 +26,8 @@ const NoTasksYetPage = () => {
           </View>
           <View style={{flex: 1, height: 1, backgroundColor: 'black'}} />
         </View>
-        <Link href="TaskManagementPage" asChild>
+        
+        <Link href="TemplatePage" asChild>
           <Pressable style={styles.button}>
             <Text style={styles.buttonText}>
               Choose from template
@@ -49,7 +51,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   button: {
-    borderWidth: 1,
     padding: 15,
     margin: 10,
     borderRadius: 5,
@@ -60,11 +61,6 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 16,
     fontWeight: 'bold',
-  },
-  orDivider: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginVertical: 10, 
   },
   orText: {
     width: 50,

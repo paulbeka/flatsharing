@@ -2,8 +2,8 @@ import React from "react";
 import {
   StyleSheet, ScrollView, Text, View
 } from 'react-native'
-import { useEnvironmentsStore } from './store/EnvironmentsContext';
-import NoTasksYetPage from "./components/HomePageComponents/NoTasksYetPage";
+import { useEnvironmentsStore } from '../../store/EnvironmentsContext';
+import NoTasksYetPage from "./NoTasksYetPage";
 
 
 const HomePage = () => {
