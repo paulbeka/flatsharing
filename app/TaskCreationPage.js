@@ -3,27 +3,49 @@ import {
   SafeAreaView, Text, StyleSheet, View, ScrollView, TextInput, TouchableHighlight, Pressable
 } from "react-native";
 import { useEnvironmentsStore } from './store/EnvironmentsContext';
+import { useRouter } from "expo-router";
 
 
 const TaskManagementPage = () => {
   const environmentsStore = useEnvironmentsStore();
+  const router = useRouter();
   const environment = environmentsStore.getEnvironmentByIndex(0);
   
   const [suggestions, setSuggestions] = useState([{"title": "Test"}, {"title": "Test"}, {"title": "Test"}])
-  const [taskName, setTaskName] = useState("")
+  const [taskName, setTaskName] = useState("TestName")
   const [taskDescription, setTaskDescription] = useState("")
   const [taskIcons, setTaskIcons] = useState([])
   const [taskType, setTaskType] = useState(null)
   const [flatmatesIncluded, setFlatmatesIncluded] = useState(environment.flatmates)
-
+  const [error, setError] = useState(null)
   
+  const handleCreateTask = () => {
+    if(taskName === "" || taskType === null || flatmatesIncluded.length <= 0) {
+      setError("Please make sure the required fields are completed.")
+      return
+    }
+
+    const newTask = {
+      "name": taskName,
+      "description": taskDescription,
+      "type": taskType,
+      "flatmatesIncluded": flatmatesIncluded
+    }
+
+    environment.tasks.push(newTask)
+    environmentsStore.setEnvironment(environment)
+
+    router.replace("/")
+  }
+
+
   return (
     <SafeAreaView style={styles.mainContainer}>
       <View style={{ width: '90%' }}>
         <Text style={styles.suggestionTitleText}>Suggestions:</Text>
       </View>
       <ScrollView horizontal={true} style={styles.suggestionScrollView}>
-        {suggestions.map((suggestion) => {
+        {suggestions.map((suggestion, key) => {
           return (
             <View style={styles.suggestionView}>
               <Text>{suggestion.title}</Text>
@@ -95,7 +117,7 @@ const TaskManagementPage = () => {
       </View>
 
       <ScrollView horizontal={true} style={styles.flatmatePicker}>
-        {flatmatesIncluded.map((flatmate) => {
+        {flatmatesIncluded.map((flatmate, key) => {
           return (
             <View style={styles.flatmateView}>
               <Text>{flatmate}</Text>
@@ -103,12 +125,15 @@ const TaskManagementPage = () => {
           )
         })}
       </ScrollView>
+      
+      {error ? <Text style={{ color: 'red' }}>{error}</Text> : <></>}
 
-      <Pressable>
+      <Pressable onPress={handleCreateTask}>
         <View style={styles.createTaskButton}>
-          <Text>Create Task</Text>
+          <Text style={styles.buttonText}>Create Task</Text>
         </View>
       </Pressable>
+
 
     </SafeAreaView>
   )
@@ -175,12 +200,18 @@ const styles = StyleSheet.create({
     borderRadius: 10
   },
   createTaskButton: {
-    borderRadius: 5,
-    width: '90%',
-    justifyContent: 'center',
-    backgroundColor: 'lightblue',
-    padding: 10
-  }
+    alignItems: 'center',
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+    backgroundColor: '#007BFF',
+    marginTop: 10
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
 })
 
 

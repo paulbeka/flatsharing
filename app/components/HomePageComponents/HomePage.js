@@ -18,10 +18,12 @@ const HomePage = () => {
         <Text style={styles.title}>{environment.name}</Text>
         <Text style={styles.subTitle}>Your upcoming tasks...</Text>
         <ScrollView  horizontal={true}>
-          {environment.tasks.map((task) => {
+          {environment.tasks.map((task, key) => {
             return (
               <View style={styles.yourTaskView}>
-                <Text>Hello World!</Text>
+                <Text>{task.name}</Text>
+                <Text>{task.description}</Text>
+                <Text>{task.flatmatesIncluded[0]}</Text>
               </View>
             )
           })}
