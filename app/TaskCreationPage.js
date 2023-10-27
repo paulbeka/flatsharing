@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { 
   SafeAreaView, Text, StyleSheet, View, ScrollView, TextInput, TouchableHighlight, Pressable
 } from "react-native";
+import { Picker } from '@react-native-picker/picker';
 import { useEnvironmentsStore } from './store/EnvironmentsContext';
 import { useRouter } from "expo-router";
 
@@ -17,8 +18,13 @@ const TaskManagementPage = () => {
   const [taskIcons, setTaskIcons] = useState([])
   const [taskType, setTaskType] = useState(null)
   const [flatmatesIncluded, setFlatmatesIncluded] = useState(environment.flatmates)
+
+  const [taskInterval, setTaskInterval] = useState(null)
+  const [unit, setUnit] = useState('days');
+
   const [error, setError] = useState(null)
   
+
   const handleCreateTask = () => {
     if(taskName === "" || taskType === null || flatmatesIncluded.length <= 0) {
       setError("Please make sure the required fields are completed.")
@@ -36,6 +42,32 @@ const TaskManagementPage = () => {
     environmentsStore.setEnvironment(environment)
 
     router.replace("/")
+  }
+
+  const renderTaskTypeSelector = () => {
+    if (taskType === 0) {
+      return (
+        <View>
+          <Text>Select your task interval here:</Text>
+          <Picker
+                selectedValue={unit}
+                onValueChange={(itemValue) => setUnit(itemValue)}
+            >
+                <Picker.Item label="Days" value="days" />
+                <Picker.Item label="Weeks" value="weeks" />
+                {/* Add more time units as needed */}
+            </Picker>
+          </View>
+      )
+    } else if (taskType === 1) {
+      return (
+        <View>
+          <Text>Select bins options here.</Text>
+        </View>
+      )
+    } else {
+      return <></>
+    }
   }
 
 
@@ -107,6 +139,8 @@ const TaskManagementPage = () => {
           </View>
         </TouchableHighlight>
       </View>
+
+      {renderTaskTypeSelector()}
 
       <View style={{flexDirection: 'row', alignItems: 'center', width: '90%', marginTop: 10}}>
         <View style={{flex: 1, height: 1, backgroundColor: 'black'}} />
