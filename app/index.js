@@ -6,6 +6,7 @@ import {
 } from 'react-native';
 import WelcomePage from './components/HomePageComponents/WelcomePage';
 import HomePage from './components/HomePageComponents/HomePage';
+import Login from './Login'
 import { useEnvironmentsStore } from './store/EnvironmentsContext';
 
 
@@ -14,12 +15,8 @@ const App = () => {
 
   return (
     <SafeAreaView style={styles.app}>
-      <ScrollView
-        contentContainerStyle={styles.scrollViewContent}
-        showsVerticalScrollIndicator={false}
-      >
-        {environmentsStore.isEnvironments() ? <HomePage /> : <WelcomePage />}
-      </ScrollView>
+      {/* {environmentsStore.isEnvironments() ? <HomePage /> : <WelcomePage />} */}
+      <Login />        
     </SafeAreaView>
   );
 };
