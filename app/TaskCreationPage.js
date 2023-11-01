@@ -5,7 +5,8 @@ import {
 import { Picker } from '@react-native-picker/picker';
 import { useEnvironmentsStore } from './store/EnvironmentsContext';
 import { useRouter } from "expo-router";
-
+import { ref, set } from "firebase/database";
+import { database } from "../firebaseConfig";
 
 const TaskManagementPage = () => {
   const environmentsStore = useEnvironmentsStore();

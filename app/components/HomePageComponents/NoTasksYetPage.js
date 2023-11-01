@@ -27,7 +27,7 @@ const NoTasksYetPage = () => {
           <View style={{flex: 1, height: 1, backgroundColor: 'black'}} />
         </View>
         
-        <Link href="TemplatePage" asChild>
+        <Link href="/TemplatePage" asChild>
           <Pressable style={styles.button}>
             <Text style={styles.buttonText}>
               Choose from template

@@ -12,7 +12,6 @@ const Login = () => {
     auth.signInWithEmailAndPassword(email, password)
     .then((creds) => {
       const user = creds.user;
-      console.log("Logged in with: ", user.email)
     })
     .catch((err) => {
       console.log(err)

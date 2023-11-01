@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { 
-  SafeAreaView, View, ScrollView, Text, StyleSheet
+  SafeAreaView, View, Text, StyleSheet, Pressable
 } from "react-native";
+import { Link } from "expo-router";
+import { ScrollView } from "react-native-gesture-handler";
 
 
 const TemplatePage = () => {
@@ -18,11 +20,11 @@ const TemplatePage = () => {
       <ScrollView>
         {templates.map((template, key) => {
           return (
-            <Link>
-              <View>
+            <Link href="/" asChild>
+              <Pressable>
                 <Text>{template.title}</Text>
                 <Text>{template.description}</Text>
-              </View>
+              </Pressable>
             </Link>
           )
         })}
