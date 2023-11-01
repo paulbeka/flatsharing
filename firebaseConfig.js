@@ -16,7 +16,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = firebase.default.initializeApp(firebaseConfig);
-console.log(app)
+
 // Initialize Firebase Authentication and get a reference to the service
 const auth = firebase.default.auth(app);
 export { auth }
