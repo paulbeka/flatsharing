@@ -18,7 +18,6 @@ const NewEnvironmentPage = () => {
     if(currentPage <= 0) {
       router.replace('/')
     } 
-    console.log("DEC")
     setCurrentPage(currentPage - 1)
   }
   

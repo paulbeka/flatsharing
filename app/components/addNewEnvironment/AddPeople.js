@@ -5,8 +5,6 @@ import {
 import { ScrollView } from "react-native-gesture-handler";
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useEnvironmentsStore } from "../../store/EnvironmentsContext";
-import { ref, set } from "firebase/database";
-import { database } from "../../../firebaseConfig";
 
 
 const AddPeople = ({ nextItem, previousItem, flatname}) => {
@@ -32,9 +30,6 @@ const AddPeople = ({ nextItem, previousItem, flatname}) => {
       let env = environmentsStore.getEnvironment(flatname)
       env.flatmates = listOfPeople
       environmentsStore.setEnvironment(env)
-      set(ref(database, 'user'), {
-        env
-      });
       nextItem()
     }
   }

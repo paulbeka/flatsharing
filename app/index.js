@@ -12,11 +12,13 @@ import firebase from 'firebase/compat/app';
 
 const App = () => {
   const environmentsStore = useEnvironmentsStore();
+  
   const [user, setUser] = useState(null);
 
   useEffect(() => {
     const unsubscribe = firebase.auth().onAuthStateChanged((authUser) => {
       setUser(authUser);
+      environmentsStore.loadEnvironments()
     });
 
     return () => unsubscribe();
