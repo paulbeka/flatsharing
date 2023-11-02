@@ -9,8 +9,8 @@ import NoTasksYetPage from "./NoTasksYetPage";
 const HomePage = () => {
   const environmentsStore = useEnvironmentsStore();
   const environment = environmentsStore.getEnvironmentByIndex(0);
-
-  if(environment.tasks.length <= 0) {
+  console.log(environment)
+  if(environment.tasks === undefined) {
     return <NoTasksYetPage />
   } else {
     return (

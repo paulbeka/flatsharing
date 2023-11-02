@@ -7,7 +7,7 @@ import { useEnvironmentsStore } from './store/EnvironmentsContext';
 import { useRouter } from "expo-router";
 
 
-const TaskManagementPage = () => {
+const TaskCreationPage = () => {
   const environmentsStore = useEnvironmentsStore();
   const router = useRouter();
   const environment = environmentsStore.getEnvironmentByIndex(0);
@@ -249,4 +249,4 @@ const styles = StyleSheet.create({
 })
 
 
-export default TaskManagementPage
+export default TaskCreationPage

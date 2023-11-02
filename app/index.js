@@ -14,7 +14,7 @@ const App = () => {
   const environmentsStore = useEnvironmentsStore();
   
   const [user, setUser] = useState(null);
-
+  
   useEffect(() => {
     const unsubscribe = firebase.auth().onAuthStateChanged((authUser) => {
       setUser(authUser);
@@ -24,10 +24,11 @@ const App = () => {
     return () => unsubscribe();
   }, []);
 
+
   return (
     <SafeAreaView style={styles.app}>
       {user ? (
-        environmentsStore.isEnvironments() ? <HomePage /> : <WelcomePage />
+        environmentsStore.environments.length ? <HomePage /> : <WelcomePage />
       ) : (
         <Login />
       )}

@@ -1,23 +1,29 @@
 import { ref, set, child, push, update, get } from "firebase/database";
-import { database, auth } from "../../firebaseConfig";
+import { database } from "../../firebaseConfig";
 import firebase from 'firebase/compat/app';
 
 
 export const createEnvironmentStore = () => {
   return {
-    environments: [
-    //   {
-    //   "name": "Test",
-    //   "flatmates": ["John", "Jack"],
-    //   "tasks": []
-    // }
-  ],
+    environments: [],
+
+    // LOAD ENVIRONMENTS AT APP STARTUP 
     loadEnvironments() {
       const dbRef = ref(database);
       const userId = firebase.auth().currentUser.uid;
-      get(child(dbRef, `users/user-${userId}`)).then((snapshot) => {
+      get(child(dbRef, `/users/user-${userId}`)).then((snapshot) => {
         if (snapshot.exists()) {
-          console.log(snapshot.val());
+          const envId = snapshot.val();
+          get(child(dbRef, `/environments/${envId}`)).then((res) => {
+            if(res.exists()) {
+              this.environments.push(res.val())
+            } else {
+              console.log("Wrong environment key.")
+            }
+          })
+          .catch((error) => { 
+            console.error(error);
+          });
         } else {
           console.log("No data available");
         }
@@ -25,6 +31,7 @@ export const createEnvironmentStore = () => {
         console.error(error);
       });
     },
+
     addEnvironment(environment) {
       this.environments.push(environment);
     },
@@ -34,6 +41,7 @@ export const createEnvironmentStore = () => {
     getEnvironment(flatname) {
       return this.environments.find((el) => el.name === flatname);
     },
+
     setEnvironment(newEnvironment) {
       const index = this.environments.findIndex((el) => el.name === newEnvironment.name);
       if (index !== -1) {
@@ -41,7 +49,7 @@ export const createEnvironmentStore = () => {
         
         const updates = {};
         updates['/environments/' + newEnvKey] = newEnvironment;
-        updates['/user-' + firebase.auth().currentUser.uid + '/'] = newEnvKey;
+        updates['/users/user-' + firebase.auth().currentUser.uid + '/'] = newEnvKey;
 
         this.environments.push(newEnvironment);
 
@@ -50,12 +58,14 @@ export const createEnvironmentStore = () => {
         return -1;        
       }
     },
+
     removeEnvironment(flatname) {
       const index = this.environments.findIndex((el) => el.name === flatname);
       if (index !== -1) {
         this.environments.splice(index, 1);
       }
     },
+
     isEnvironments() {
       return this.environments.length > 0;
     }
