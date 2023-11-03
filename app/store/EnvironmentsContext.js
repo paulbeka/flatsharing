@@ -7,9 +7,11 @@ const EnvironmentsContext = createContext(null)
 export const EnvironmentsProvider = ({ children }) => {
   const environmentsStore = useLocalObservable(createEnvironmentStore)
 
-  return <EnvironmentsContext.Provider value={environmentsStore}>
-    {children}
-  </EnvironmentsContext.Provider>
+  return (
+    <EnvironmentsContext.Provider value={environmentsStore}>
+      {children}
+    </EnvironmentsContext.Provider>
+  )
 }
 
 export const useEnvironmentsStore = () => useContext(EnvironmentsContext)

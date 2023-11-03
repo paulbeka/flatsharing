@@ -1,11 +1,12 @@
 import { ref, set, child, push, update, get } from "firebase/database";
 import { database } from "../../firebaseConfig";
 import firebase from 'firebase/compat/app';
+import {  runInAction } from "mobx";
 
 
 export const createEnvironmentStore = () => {
   return {
-    environments: [],
+    environments: [null],
 
     // LOAD ENVIRONMENTS AT APP STARTUP 
     loadEnvironments() {
@@ -16,7 +17,10 @@ export const createEnvironmentStore = () => {
           const envId = snapshot.val();
           get(child(dbRef, `/environments/${envId}`)).then((res) => {
             if(res.exists()) {
-              this.environments.push(res.val())
+              runInAction(() => {
+                this.environments.splice(0, 1);
+                this.environments.push(res.val())
+              })
             } else {
               console.log("Wrong environment key.")
             }
