@@ -1,89 +1,98 @@
 import React from "react";
 import {
   StyleSheet, ScrollView, Text, View, Pressable
-} from 'react-native'
+} from 'react-native';
 import { useEnvironmentsStore } from '../../store/EnvironmentsContext';
 import NoTasksYetPage from "./NoTasksYetPage";
 import { Link, Stack } from 'expo-router';
 import Icon from 'react-native-vector-icons/Entypo';
+import { useFonts, Quicksand_400Regular, Quicksand_700Bold } from '@expo-google-fonts/quicksand'; // Import the fonts
+import CustomHeader from '../StackHeader/CustomHeader'
 
 
 const HomePage = () => {
   const environmentsStore = useEnvironmentsStore();
   const environment = environmentsStore.getEnvironmentByIndex(0);
-  
-  const handleAddNewTask = () => {
 
+  const [fontsLoaded] = useFonts({
+    QuicksandRegular: Quicksand_400Regular,
+    QuicksandBold: Quicksand_700Bold,
+  });
+
+  if (!fontsLoaded) {
+    return null;
   }
 
-  if(environment.tasks === undefined) {
-    return <NoTasksYetPage />
+  if (environment.tasks === undefined) {
+    return <NoTasksYetPage />;
   } else {
     return (
       <ScrollView contentContainerStyle={styles.homePageContainer}>
         <Stack.Screen
-        options={{
-          headerTitleStyle: {
-            fontWeight: 'bold',
-          },
-          title: environment.name,
-        }}
-      />
-        <Text style={styles.subTitle}>Your upcoming tasks...</Text>
-        <ScrollView  horizontal={true}>
+          component={CustomHeader}
+          options={{
+            header: ({ route, navigation }) => (
+              <CustomHeader title={environment.name} />
+            ),
+          }}
+        />
+        <Text style={{ ...styles.subTitle, marginTop: 10, fontFamily: 'QuicksandBold' }}>Today's tasks:</Text>
+        <Text style={{ fontFamily: 'QuicksandRegular' }}>No tasks today! :D</Text>
+        <Text style={{ ...styles.subTitle, fontFamily: 'QuicksandBold', marginTop: 20 }}>Your upcoming tasks...</Text>
+        <ScrollView horizontal={true}>
           {environment.tasks.map((task, key) => {
             return (
               <View style={styles.yourTaskView}>
-                <Text>{task.name}</Text>
-                <Text>{task.description}</Text>
-                <Text>{task.flatmatesIncluded[0]}</Text>
+                <Text style={{ fontFamily: 'QuicksandRegular' }}>{task.name}</Text>
+                <Text style={{ fontFamily: 'QuicksandRegular' }}>{task.description}</Text>
+                <Text style={{ fontFamily: 'QuicksandRegular' }}>{task.flatmatesIncluded[0]}</Text>
               </View>
-            )
+            );
           })}
         </ScrollView>
         <View style={styles.addNewTaskView}>
           <Link href="/TaskCreationPage" asChild>
-            <Pressable style={styles.addNewTaskPressable} onPress={handleAddNewTask}>
-              <View style={{justifyContent: 'center'}}>
-                <Text style={styles.addNewTaskText}>Add new task</Text>
+            <Pressable style={styles.addNewTaskPressable}>
+              <View style={{ justifyContent: 'center' }}>
+                <Text style={{ ...styles.addNewTaskText, fontFamily: 'QuicksandBold' }}>Add new task</Text>
               </View>
-              <Icon size={50} color="blue" name="circle-with-plus" />
+              <Icon size={50} color="#80BDD7" name="circle-with-plus" />
             </Pressable>
           </Link>
         </View>
-      </ScrollView>)
+      </ScrollView>
+    );
   }
 }
 
 const styles = StyleSheet.create({
   homePageContainer: {
     flex: 1,
-    paddingLeft: 10
+    paddingLeft: 10,
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     textAlign: 'center',
     marginTop: 10,
-    marginBottom: 10
+    marginBottom: 10,
   },
   subTitle: {
     fontSize: 18,
-    color: '#949494',
     marginBottom: 5,
   },
   yourTasksScroll: {
     flex: 1,
     width: '100%',
-    borderWidth: 1
-  },  
+    borderWidth: 1,
+  },
   yourTaskView: {
     borderWidth: 1,
     margin: 5,
     width: 100,
     height: 100,
     borderRadius: 5,
-    padding: 3
+    padding: 3,
   },
   addNewTaskView: {
     width: '100%',
@@ -94,9 +103,9 @@ const styles = StyleSheet.create({
     margin: 18,
   },
   addNewTaskText: {
-    color: 'blue',
-    marginRight: 5
-  }
+    color: '#80BDD7',
+    marginRight: 5,
+  },
 });
 
-export default HomePage
+export default HomePage;

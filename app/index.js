@@ -43,7 +43,7 @@ const App = () => {
 const styles = StyleSheet.create({
   app: {
     flex: 1,
-    backgroundColor: '#bdf8ff',
+    backgroundColor: '#F6F8FA',
   },
   scrollViewContent: {
     flexGrow: 1,

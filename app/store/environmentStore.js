@@ -49,15 +49,21 @@ export const createEnvironmentStore = () => {
     setEnvironment(newEnvironment) {
       const index = this.environments.findIndex((el) => el.name === newEnvironment.name);
       if (index !== -1) {
-        const newEnvKey = push(child(ref(database), 'environments')).key;
-        
-        const updates = {};
-        updates['/environments/' + newEnvKey] = newEnvironment;
-        updates['/users/user-' + firebase.auth().currentUser.uid + '/'] = newEnvKey;
+        const dbRef = ref(database);
+        const userId = firebase.auth().currentUser.uid;
+        get(child(dbRef, `/users/user-${userId}`)).then((snapshot) => {
+          if (snapshot.exists()) {
+            const envId = snapshot.val();
 
-        this.environments.push(newEnvironment);
+            const updates = {};
+            updates['/environments/' + envId] = newEnvironment;
+            updates['/users/user-' + firebase.auth().currentUser.uid + '/'] = envId;
 
-        return update(ref(database), updates);
+            this.environments.push(newEnvironment);
+              
+            update(ref(database), updates);
+          }
+        })
       } else {
         return -1;        
       }
