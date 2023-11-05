@@ -1,21 +1,34 @@
 import React from "react";
 import {
-  StyleSheet, ScrollView, Text, View
+  StyleSheet, ScrollView, Text, View, Pressable
 } from 'react-native'
 import { useEnvironmentsStore } from '../../store/EnvironmentsContext';
 import NoTasksYetPage from "./NoTasksYetPage";
+import { Link, Stack } from 'expo-router';
+import Icon from 'react-native-vector-icons/Entypo';
 
 
 const HomePage = () => {
   const environmentsStore = useEnvironmentsStore();
   const environment = environmentsStore.getEnvironmentByIndex(0);
-  console.log(environment)
+  
+  const handleAddNewTask = () => {
+
+  }
+
   if(environment.tasks === undefined) {
     return <NoTasksYetPage />
   } else {
     return (
       <ScrollView contentContainerStyle={styles.homePageContainer}>
-        <Text style={styles.title}>{environment.name}</Text>
+        <Stack.Screen
+        options={{
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+          title: environment.name,
+        }}
+      />
         <Text style={styles.subTitle}>Your upcoming tasks...</Text>
         <ScrollView  horizontal={true}>
           {environment.tasks.map((task, key) => {
@@ -28,6 +41,16 @@ const HomePage = () => {
             )
           })}
         </ScrollView>
+        <View style={styles.addNewTaskView}>
+          <Link href="/TaskCreationPage" asChild>
+            <Pressable style={styles.addNewTaskPressable} onPress={handleAddNewTask}>
+              <View style={{justifyContent: 'center'}}>
+                <Text style={styles.addNewTaskText}>Add new task</Text>
+              </View>
+              <Icon size={50} color="blue" name="circle-with-plus" />
+            </Pressable>
+          </Link>
+        </View>
       </ScrollView>)
   }
 }
@@ -61,6 +84,18 @@ const styles = StyleSheet.create({
     height: 100,
     borderRadius: 5,
     padding: 3
+  },
+  addNewTaskView: {
+    width: '100%',
+  },
+  addNewTaskPressable: {
+    justifyContent: 'flex-end',
+    flexDirection: 'row',
+    margin: 18,
+  },
+  addNewTaskText: {
+    color: 'blue',
+    marginRight: 5
   }
 });
 
