@@ -14,24 +14,23 @@ import Icon from 'react-native-vector-icons/AntDesign';
 // GoogleSignin.configure();
 
 
-const Login = () => {
+const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const [error, setError] = useState("");
 
-  const togglePasswordVisibility = () => {
-    setIsPasswordVisible(!isPasswordVisible);
-  };
-
-  const submitLogin = () => {
-    auth.signInWithEmailAndPassword(email, password)
+  const submitRegister = () => {
+    if(password !== confirmPassword) {
+      setError("Please type in the same password.");
+      return;
+    }
+    auth.createUserWithEmailAndPassword(email, password)
       .then((creds) => {
         const user = creds.user;
       })
       .catch((err) => {
-        setError("There was an error logging you in.")
         console.log(err);
       });
   }
@@ -56,7 +55,7 @@ const Login = () => {
       <View style={{width: '100%', alignItems: 'center', marginTop: 75}}>
         <View style={{ width: '100%', alignItems: 'center' }}>
           <View style={styles.loginViewText}>
-            <Text style={{ fontSize: 32, fontFamily: 'Quicksand' }}>Log In</Text>
+            <Text style={{ fontSize: 32, fontFamily: 'Quicksand' }}>Create account</Text>
           </View>
           <View style={styles.inputContainer}>
             <TextInput value={email} onChangeText={setEmail} style={styles.input} placeholder="Email" />
@@ -68,32 +67,31 @@ const Login = () => {
               onChangeText={setPassword}
               style={styles.input}
               placeholder="Password"
-              secureTextEntry={!isPasswordVisible} // Toggle secureTextEntry based on visibility state
+              secureTextEntry={true}
             />
-            <Pressable onPress={togglePasswordVisibility} style={styles.visibilityIcon}>
-              <Icon
-                name={isPasswordVisible ? 'eye' : 'eyeo'}
-                size={24}
-                color="#000"
-              />
-            </Pressable>
+          </View>
+
+          <View style={styles.inputContainer}>
+            <TextInput
+              value={confirmPassword}
+              onChangeText={setConfirmPassword}
+              style={styles.input}
+              placeholder="Confirm Password"
+              secureTextEntry={true}
+            />
           </View>
 
           {error !== "" ? <Text style={{color: 'red', width: '90%'}}>{error}</Text> : <></>}
 
-          <View style={styles.forgotPasswordLinkView}>
-            <Text style={{ textDecorationLine: 'underline' }}>Forgot password?</Text>
-          </View>
-
-          <Pressable onPress={submitLogin} style={styles.loginButton}>
-            <Text style={{ fontSize: 26, fontWeight: 'semibold' }}>Log In</Text>
+          <Pressable onPress={submitRegister} style={styles.loginButton}>
+            <Text style={{ fontSize: 26, fontWeight: 'semibold' }}>Sign Up</Text>
           </Pressable>
         </View>
 
         <View style={{ flexDirection: 'row', alignItems: 'center', width: '90%' }}>
           <View style={{ flex: 1, height: 1, backgroundColor: 'black' }} />
           <View>
-            <Text style={{ width: 120, textAlign: 'center' }}>Or Log In With</Text>
+            <Text style={{ width: 140, textAlign: 'center' }}>Or Register In With</Text>
           </View>
           <View style={{ flex: 1, height: 1, backgroundColor: 'black' }} />
         </View>
@@ -107,8 +105,8 @@ const Login = () => {
       
 
       <View style={styles.dontHaveAccount}>
-        <Text>Don't have an account?  </Text>
-        <Text style={{ fontWeight: 'bold' }}>Sign Up Now</Text>
+        <Text>Already have an account?  </Text>
+        <Text style={{ fontWeight: 'bold' }}>Log In Now</Text>
       </View>
     </View>
   );
@@ -172,4 +170,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Login;
+export default Register;

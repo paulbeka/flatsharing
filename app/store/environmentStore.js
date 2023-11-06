@@ -26,10 +26,11 @@ export const createEnvironmentStore = () => {
             }
           })
           .catch((error) => { 
+            this.environments.splice(0, 1);
             console.error(error);
           });
         } else {
-          console.log("No data available");
+          this.environments.splice(0, 1);
         }
       }).catch((error) => { 
         console.error(error);

@@ -31,6 +31,7 @@ const HomePage = () => {
         <Stack.Screen
           component={CustomHeader}
           options={{
+            headerShown: true,
             header: ({ route, navigation }) => (
               <CustomHeader title={environment.name} />
             ),

@@ -7,6 +7,7 @@ import {
 import WelcomePage from './components/HomePageComponents/WelcomePage';
 import HomePage from './components/HomePageComponents/HomePage';
 import Login from './Login';
+import Register from './Register';
 import { useEnvironmentsStore } from './store/EnvironmentsContext';
 import firebase from 'firebase/compat/app';
 import { useObserver } from 'mobx-react';
@@ -27,14 +28,14 @@ const App = () => {
     return () => unsubscribe();
   }, []);
 
-
   return useObserver(() => (
     <SafeAreaView style={styles.app}>
       {user ? (environmentsStore.environments[0] === null ? (
         <Text>Loading...</Text>
       ) : (environmentsStore.environments.length > 0 ? <HomePage /> : <WelcomePage />)
       ) : (
-        <Login />
+        // <Login />
+        <Register />
       )}
     </SafeAreaView>
   ));
