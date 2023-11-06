@@ -30,7 +30,7 @@ export const createEnvironmentStore = () => {
             console.error(error);
           });
         } else {
-          this.environments.splice(0, 1);
+          this.environments.splice(0, 1); 
         }
       }).catch((error) => { 
         console.error(error);

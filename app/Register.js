@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { View, TextInput, Text, Pressable, StyleSheet } from 'react-native';
 import { auth } from '../firebaseConfig';
 import { useFonts, Quicksand_400Regular } from '@expo-google-fonts/quicksand';
-import { Stack } from 'expo-router';
 import Icon from 'react-native-vector-icons/AntDesign';
+import { useRouter, Stack } from 'expo-router';
+
 // import {
 //   GoogleSignin,
 //   GoogleSigninButton,
@@ -21,9 +22,11 @@ const Register = () => {
 
   const [error, setError] = useState("");
 
+  const router = useRouter();
+
   const submitRegister = () => {
     if(password !== confirmPassword) {
-      setError("Please type in the same password.");
+      setError("Please make sure the passwords are matching.");
       return;
     }
     auth.createUserWithEmailAndPassword(email, password)
@@ -106,7 +109,9 @@ const Register = () => {
 
       <View style={styles.dontHaveAccount}>
         <Text>Already have an account?  </Text>
-        <Text style={{ fontWeight: 'bold' }}>Log In Now</Text>
+        <Pressable onPress={() => {router.replace('Login');}}>
+          <Text style={{ fontWeight: 'bold' }}>Log In Now</Text>
+        </Pressable>
       </View>
     </View>
   );

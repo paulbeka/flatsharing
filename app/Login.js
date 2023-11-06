@@ -2,17 +2,16 @@ import React, { useState } from "react";
 import { View, TextInput, Text, Pressable, StyleSheet } from 'react-native';
 import { auth } from '../firebaseConfig';
 import { useFonts, Quicksand_400Regular } from '@expo-google-fonts/quicksand';
-import { Stack } from 'expo-router';
+import { Stack, useRouter } from 'expo-router';
 import Icon from 'react-native-vector-icons/AntDesign';
+
 // import {
 //   GoogleSignin,
 //   GoogleSigninButton,
 //   statusCodes,
 // } from '@react-native-google-signin/google-signin';
 
-
 // GoogleSignin.configure();
-
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -20,6 +19,8 @@ const Login = () => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   const [error, setError] = useState("");
+
+  const router = useRouter();
 
   const togglePasswordVisibility = () => {
     setIsPasswordVisible(!isPasswordVisible);
@@ -108,7 +109,9 @@ const Login = () => {
 
       <View style={styles.dontHaveAccount}>
         <Text>Don't have an account?  </Text>
-        <Text style={{ fontWeight: 'bold' }}>Sign Up Now</Text>
+        <Pressable onPress={() => {router.replace('Register');}}>
+          <Text style={{ fontWeight: 'bold' }}>Sign Up Now</Text>
+        </Pressable>
       </View>
     </View>
   );

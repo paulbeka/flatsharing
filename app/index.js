@@ -6,11 +6,11 @@ import {
 } from 'react-native';
 import WelcomePage from './components/HomePageComponents/WelcomePage';
 import HomePage from './components/HomePageComponents/HomePage';
-import Login from './Login';
-import Register from './Register';
 import { useEnvironmentsStore } from './store/EnvironmentsContext';
 import firebase from 'firebase/compat/app';
 import { useObserver } from 'mobx-react';
+import FirstView from './FirstView';
+
 
 const App = () => {
   const environmentsStore = useEnvironmentsStore();
@@ -34,8 +34,7 @@ const App = () => {
         <Text>Loading...</Text>
       ) : (environmentsStore.environments.length > 0 ? <HomePage /> : <WelcomePage />)
       ) : (
-        // <Login />
-        <Register />
+        <FirstView />
       )}
     </SafeAreaView>
   ));
