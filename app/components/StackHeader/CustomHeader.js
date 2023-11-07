@@ -1,7 +1,18 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { useFonts, Quicksand_700Bold } from '@expo-google-fonts/quicksand';
+
 
 const CustomHeader = ({ title }) => {
+
+  const [fontsLoaded] = useFonts({
+    Bold: Quicksand_700Bold
+  });
+  
+  if (!fontsLoaded) {
+    return null; // You can return a loading indicator here if needed
+  }
+
   return (
     <View style={styles.headerContainer}>
       <Text style={styles.headerTitle}>{title}</Text>
@@ -18,8 +29,8 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     color: 'black',
-    fontFamily: 'QuicksandBold',
-    fontSize: 20,
+    fontFamily: 'Bold',
+    fontSize: 25,
     textAlign: 'center',
   },
 });

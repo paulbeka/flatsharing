@@ -10,6 +10,7 @@ import { useEnvironmentsStore } from './store/EnvironmentsContext';
 import firebase from 'firebase/compat/app';
 import { useObserver } from 'mobx-react';
 import FirstView from './FirstView';
+import TaskCreationPage from './TaskCreationPage';
 
 
 const App = () => {
@@ -19,6 +20,7 @@ const App = () => {
   
   useEffect(() => {
     const unsubscribe = firebase.auth().onAuthStateChanged((authUser) => {
+      console.log(authUser)
       setUser(authUser);
       if(authUser !== null) {
         environmentsStore.loadEnvironments()
@@ -34,7 +36,8 @@ const App = () => {
         <Text>Loading...</Text>
       ) : (environmentsStore.environments.length > 0 ? <HomePage /> : <WelcomePage />)
       ) : (
-        <FirstView />
+        // <FirstView />
+        <TaskCreationPage />
       )}
     </SafeAreaView>
   ));

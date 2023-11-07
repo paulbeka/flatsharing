@@ -33,7 +33,7 @@ const FirstView = () => {
         </Pressable>
         
         <Pressable style={styles.button} onPress={() => { router.replace("Login") }}>
-          <Text style={{ fontFamily: 'Quicksand' }}>Log In</Text>
+          <Text style={{ fontFamily: 'Quicksand_700Bold' }}>Log In</Text>
         </Pressable>
       </View>
 
