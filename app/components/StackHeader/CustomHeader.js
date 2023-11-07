@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { useFonts, Quicksand_700Bold } from '@expo-google-fonts/quicksand';
+import { LinearGradient } from 'expo-linear-gradient'
 
 
 const CustomHeader = ({ title }) => {
@@ -14,15 +15,14 @@ const CustomHeader = ({ title }) => {
   }
 
   return (
-    <View style={styles.headerContainer}>
+    <LinearGradient colors={["#1ABAFF", "#3776D5"]} style={styles.headerContainer}>
       <Text style={styles.headerTitle}>{title}</Text>
-    </View>
+    </LinearGradient>
   );
 };
 
 const styles = StyleSheet.create({
   headerContainer: {
-    backgroundColor: '#80BDD7',
     borderRadius: 20,
     padding: 20,
     paddingTop: 45

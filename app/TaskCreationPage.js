@@ -7,6 +7,7 @@ import { useEnvironmentsStore } from './store/EnvironmentsContext';
 import { Stack, useRouter } from "expo-router";
 import CustomHeader from "./components/StackHeader/CustomHeader"
 import { useFonts, Quicksand_400Regular, Quicksand_500Medium, Quicksand_700Bold } from '@expo-google-fonts/quicksand';
+import CustomButton from "./components/Buttons/CustomButton";
 
 
 const TaskCreationPage = () => {
@@ -20,10 +21,8 @@ const TaskCreationPage = () => {
   const [taskIcons, setTaskIcons] = useState([])
   const [taskType, setTaskType] = useState(null)
   const [flatmatesIncluded, setFlatmatesIncluded] = useState(environment.flatmates)
-
   const [taskInterval, setTaskInterval] = useState(null)
   const [unit, setUnit] = useState('days');
-
   const [error, setError] = useState(null)
 
   const [fontsLoaded] = useFonts({
@@ -83,8 +82,8 @@ const TaskCreationPage = () => {
   }
 
   return (
-    <SafeAreaView style={styles.mainContainer}>
-      <ScrollView style={{marginLeft: 10, marginRight: 10}}>
+    <ScrollView style={{marginLeft: 10, marginRight: 10}}>
+      <SafeAreaView style={styles.mainContainer}>
         <Stack.Screen
           component={CustomHeader}
           options={{
@@ -156,6 +155,7 @@ const TaskCreationPage = () => {
           <TouchableHighlight underlayColor={'gray'}
           style={[styles.typeTaskView, taskType === 1 ? styles.taskTypeSelected : null]} onPress={() => setTaskType(1)}>
             <View style={styles.taskType}>
+              
               <View style={styles.taskTypeImage}>
                 {/* Add the image for task type here */}
               </View>
@@ -183,13 +183,10 @@ const TaskCreationPage = () => {
         
         {error ? <Text style={{ color: 'red' }}>{error}</Text> : <></>}
 
-        <Pressable onPress={handleCreateTask}>
-          <View style={styles.createTaskButton}>
-            <Text style={styles.buttonText}>Create Task</Text>
-          </View>
-        </Pressable>
-      </ScrollView>
-    </SafeAreaView>
+        <CustomButton doFunction={handleCreateTask} />
+
+      </SafeAreaView>
+    </ScrollView>
   )
 }
 
@@ -204,7 +201,7 @@ const styles = StyleSheet.create({
   },
   suggestionView: {
     padding: 10,
-    margin: 5,
+    marginRight: 5,
     borderRadius: 10,
     width: 70,
     height: 70,
@@ -234,7 +231,7 @@ const styles = StyleSheet.create({
   typeTaskView: {
     borderWidth: StyleSheet.hairlineWidth,
     width: '40%',
-    aspectRatio: 1,
+    aspectRatio: 0.8,
     borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center'
@@ -245,7 +242,7 @@ const styles = StyleSheet.create({
   flatmateView: {
     borderWidth: StyleSheet.hairlineWidth,
     padding: 10,
-    margin: 5,
+    marginRight: 5,
     borderRadius: 10
   },
   createTaskButton: {
@@ -270,6 +267,11 @@ const styles = StyleSheet.create({
   taskType: {
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  flatmatePicker: {
+    marginTop: 10,
+    marginBottom: 5,
+    width: '90%'
   }
 })
 
