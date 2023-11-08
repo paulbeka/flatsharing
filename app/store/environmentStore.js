@@ -7,7 +7,7 @@ import {  runInAction } from "mobx";
 export const createEnvironmentStore = () => {
   return {
     environments: [
-      {"name": "Test", "flatmates": ["John", "Sam"]}
+      // {"name": "Test", "flatmates": ["John", "Sam"]}
     ],
 
     // LOAD ENVIRONMENTS AT APP STARTUP 

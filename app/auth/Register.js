@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, TextInput, Text, Pressable, StyleSheet } from 'react-native';
-import { auth } from '../firebaseConfig';
+import { auth } from '../../firebaseConfig';
 import { useFonts, Quicksand_400Regular } from '@expo-google-fonts/quicksand';
 import Icon from 'react-native-vector-icons/AntDesign';
 import { useRouter, Stack } from 'expo-router';
@@ -24,7 +24,7 @@ const Register = () => {
 
   const router = useRouter();
 
-  const submitRegister = () => {
+  const submitRegister = ({ setInitialView }) => {
     if(password !== confirmPassword) {
       setError("Please make sure the passwords are matching.");
       return;
@@ -109,7 +109,7 @@ const Register = () => {
 
       <View style={styles.dontHaveAccount}>
         <Text>Already have an account?  </Text>
-        <Pressable onPress={() => {router.replace('Login');}}>
+        <Pressable onPress={() => {setInitialView("login")}}>
           <Text style={{ fontWeight: 'bold' }}>Log In Now</Text>
         </Pressable>
       </View>

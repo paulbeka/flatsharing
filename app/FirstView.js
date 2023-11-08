@@ -6,7 +6,7 @@ import { Stack, useRouter } from 'expo-router';
 import { useFonts, Quicksand_700Bold } from '@expo-google-fonts/quicksand';
 
 
-const FirstView = () => {
+const FirstView = ({ setInitialView }) => {
 
   const router = useRouter();
   
@@ -28,11 +28,11 @@ const FirstView = () => {
       </View>
 
       <View style={styles.buttonView}>
-        <Pressable style={{...styles.button, backgroundColor: '#80BDD7'}} onPress={() => { router.replace("Register") }}>
+        <Pressable style={{...styles.button, backgroundColor: '#80BDD7'}} onPress={() => { setInitialView("register") }}>
           <Text style={{ fontFamily: 'Quicksand_700Bold' }}>Sign Up</Text>
         </Pressable>
         
-        <Pressable style={styles.button} onPress={() => { router.replace("Login") }}>
+        <Pressable style={styles.button} onPress={() => { setInitialView("login") }}>
           <Text style={{ fontFamily: 'Quicksand_700Bold' }}>Log In</Text>
         </Pressable>
       </View>

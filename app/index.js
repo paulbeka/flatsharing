@@ -8,19 +8,19 @@ import WelcomePage from './components/HomePageComponents/WelcomePage';
 import HomePage from './components/HomePageComponents/HomePage';
 import { useEnvironmentsStore } from './store/EnvironmentsContext';
 import firebase from 'firebase/compat/app';
-import { useObserver } from 'mobx-react';
+import { observer  } from 'mobx-react';
 import FirstView from './FirstView';
-import TaskCreationPage from './TaskCreationPage';
+import Login from './auth/Login'
 
 
-const App = () => {
+const App = observer(() => {
   const environmentsStore = useEnvironmentsStore();
   
   const [user, setUser] = useState(null);
+  const [initialView, setInitialView] = useState(null);
   
   useEffect(() => {
     const unsubscribe = firebase.auth().onAuthStateChanged((authUser) => {
-      console.log(authUser)
       setUser(authUser);
       if(authUser !== null) {
         environmentsStore.loadEnvironments()
@@ -30,18 +30,19 @@ const App = () => {
     return () => unsubscribe();
   }, []);
 
-  return useObserver(() => (
+  return (
     <SafeAreaView style={styles.app}>
       {user ? (environmentsStore.environments[0] === null ? (
         <Text>Loading...</Text>
       ) : (environmentsStore.environments.length > 0 ? <HomePage /> : <WelcomePage />)
       ) : (
-        // <FirstView />
-        <TaskCreationPage />
+        initialView === null ? <FirstView setInitialView={setInitialView}/> : (
+          initialView === "login" ? <Login setInitialView={setInitialView}/> : <Register setInitialView={setInitialView}/>
+        )
       )}
     </SafeAreaView>
-  ));
-};
+  );
+});
 
 const styles = StyleSheet.create({
   app: {

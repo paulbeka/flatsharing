@@ -8,6 +8,7 @@ import { Stack, useRouter } from "expo-router";
 import CustomHeader from "./components/StackHeader/CustomHeader"
 import { useFonts, Quicksand_400Regular, Quicksand_500Medium, Quicksand_700Bold } from '@expo-google-fonts/quicksand';
 import CustomButton from "./components/Buttons/CustomButton";
+import Checkbox from 'expo-checkbox';
 
 
 const TaskCreationPage = () => {
@@ -20,7 +21,9 @@ const TaskCreationPage = () => {
   const [taskDescription, setTaskDescription] = useState("")
   const [taskIcons, setTaskIcons] = useState([])
   const [taskType, setTaskType] = useState(null)
-  const [flatmatesIncluded, setFlatmatesIncluded] = useState(environment.flatmates)
+  const [flatmatesIncluded, setFlatmatesIncluded] = useState(
+    environment.flatmates.map((x) => {return {"name": x, "isIncluded": true}})
+  )
   const [taskInterval, setTaskInterval] = useState(null)
   const [unit, setUnit] = useState('days');
   const [error, setError] = useState(null)
@@ -49,6 +52,12 @@ const TaskCreationPage = () => {
 
     router.replace("/")
   }
+
+  const handleFlatmateCheckboxChange = (index) => {
+    const updatedFlatmatesIncluded = [...flatmatesIncluded];
+    updatedFlatmatesIncluded[index].isIncluded = !updatedFlatmatesIncluded[index].isIncluded;
+    setFlatmatesIncluded(updatedFlatmatesIncluded);
+  };
 
   const renderTaskTypeSelector = () => {
     if (taskType === 0) {
@@ -101,7 +110,7 @@ const TaskCreationPage = () => {
         <ScrollView horizontal={true} style={styles.suggestionScrollView}>
           {suggestions.map((suggestion, key) => {
             return (
-              <View style={styles.suggestionView}>
+              <View style={styles.suggestionView} key={key}>
                 <Text>{suggestion.title}</Text>
               </View>
             )
@@ -168,14 +177,26 @@ const TaskCreationPage = () => {
         {renderTaskTypeSelector()}
 
         <View style={{width: '90%'}}>
-          <Text style={{fontFamily: 'Bold', fontSize: 15, marginTop: 5}}>Task Type</Text>
+          <Text style={{fontFamily: 'Bold', fontSize: 15, marginTop: 5}}>Flatmates included:</Text>
         </View>
 
-        <ScrollView horizontal={true} style={styles.flatmatePicker}>
-          {flatmatesIncluded.map((flatmate, key) => {
+        <ScrollView style={styles.flatmatePicker}>
+          {flatmatesIncluded.map((flatmate, index) => {
             return (
-              <View style={styles.flatmateView}>
-                <Text>{flatmate}</Text>
+              <View style={styles.flatmateView} key={index}>
+                {/* This will be the profile picture of the flatmate one day */}
+                <View style={{ alignItems: 'center', flexDirection: 'row', justifyContent: 'center'}}>
+                  <View style={{width: 40, height: 40, borderRadius: 20, borderWidth: 1}}></View>
+                  <Text style={{marginLeft: 20}}>{flatmate.name}</Text>
+                </View>
+                <View style={{marginRight: 20}}>
+                  <Checkbox
+                    value={flatmate.isIncluded}
+                    onValueChange={() => handleFlatmateCheckboxChange(index)}
+                    color={false ? '#4630EB' : undefined}
+                    style={{ width: 35, height: 35}}
+                  />
+                </View>
               </View>
             )
           })}
@@ -240,9 +261,12 @@ const styles = StyleSheet.create({
     backgroundColor: 'lightgray'
   },
   flatmateView: {
-    borderWidth: StyleSheet.hairlineWidth,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    borderBottomWidth: StyleSheet.hairlineWidth,
     padding: 10,
-    marginRight: 5,
+    marginBottom: 5,
     borderRadius: 10
   },
   createTaskButton: {

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import CreateEnvironmentName from "./components/addNewEnvironment/CreateEnvironmentName.js";
-import AddPeople from "./components/addNewEnvironment/AddPeople.js";
-import EnvironmentCreated from "./components/addNewEnvironment/EnvironmentCreated.js";
+import CreateEnvironmentName from "./components/AddNewEnvironment/CreateEnvironmentName.js";
+import AddPeople from "./components/AddNewEnvironment/AddPeople.js";
+import EnvironmentCreated from "./components/AddNewEnvironment/EnvironmentCreated.js";
 import { useRouter } from 'expo-router';
 
 const NewEnvironmentPage = () => {

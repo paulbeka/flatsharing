@@ -43,7 +43,7 @@ const HomePage = () => {
         <ScrollView horizontal={true}>
           {environment.tasks.map((task, key) => {
             return (
-              <View style={styles.yourTaskView}>
+              <View style={styles.yourTaskView} key={key}>
                 <Text style={{ fontFamily: 'QuicksandRegular' }}>{task.name}</Text>
                 <Text style={{ fontFamily: 'QuicksandRegular' }}>{task.description}</Text>
                 <Text style={{ fontFamily: 'QuicksandRegular' }}>{task.flatmatesIncluded[0]}</Text>
