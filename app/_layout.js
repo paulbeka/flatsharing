@@ -1,22 +1,11 @@
-import { Stack } from 'expo-router'
+import { Stack, Tabs } from 'expo-router';
 import { EnvironmentsProvider } from './store/EnvironmentsContext'
- 
-const Layout = () => {
+
+
+export default function Layout() {
   return (
     <EnvironmentsProvider>
-      <Stack
-        screenOptions={{
-          headerStyle: {
-            backgroundColor: "darkblue",
-          },
-          headerTintColor: "white",
-          headerTitleStyle: {
-            fontWeight: "bold",
-          },
-        }}
-      />
+      <Stack />
     </EnvironmentsProvider>
-  )
+  );
 }
-
-export default Layout

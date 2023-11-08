@@ -15,7 +15,7 @@ import { useRouter, Stack } from 'expo-router';
 // GoogleSignin.configure();
 
 
-const Register = () => {
+const Register = ({ setInitialView }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");

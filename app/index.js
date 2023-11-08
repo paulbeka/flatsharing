@@ -5,16 +5,19 @@ import {
   SafeAreaView,
 } from 'react-native';
 import WelcomePage from './components/HomePageComponents/WelcomePage';
-import HomePage from './components/HomePageComponents/HomePage';
+import HomePage from './(home)/HomePage';
 import { useEnvironmentsStore } from './store/EnvironmentsContext';
 import firebase from 'firebase/compat/app';
 import { observer  } from 'mobx-react';
-import FirstView from './FirstView';
+import FirstView from './auth/FirstView';
 import Login from './auth/Login'
+import Register from './auth/Register'
+import { useRouter } from 'expo-router';
 
 
 const App = observer(() => {
   const environmentsStore = useEnvironmentsStore();
+  const router = useRouter()
   
   const [user, setUser] = useState(null);
   const [initialView, setInitialView] = useState(null);
@@ -30,18 +33,19 @@ const App = observer(() => {
     return () => unsubscribe();
   }, []);
 
-  return (
-    <SafeAreaView style={styles.app}>
-      {user ? (environmentsStore.environments[0] === null ? (
-        <Text>Loading...</Text>
-      ) : (environmentsStore.environments.length > 0 ? <HomePage /> : <WelcomePage />)
-      ) : (
-        initialView === null ? <FirstView setInitialView={setInitialView}/> : (
-          initialView === "login" ? <Login setInitialView={setInitialView}/> : <Register setInitialView={setInitialView}/>
-        )
-      )}
-    </SafeAreaView>
-  );
+  if(user) {
+    if(environmentsStore.environments[0] === null) {
+      return <Text>Loading...</Text>
+    } else {
+      router.replace("(home)/HomePage")
+    }
+  } else {
+    return (
+      initialView === null ? <FirstView setInitialView={setInitialView}/> : (
+        initialView === "login" ? <Login setInitialView={setInitialView}/> : <Register setInitialView={setInitialView}/>
+      )
+    )
+  }
 });
 
 const styles = StyleSheet.create({

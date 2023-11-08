@@ -2,12 +2,12 @@ import React from "react";
 import {
   StyleSheet, ScrollView, Text, View, Pressable
 } from 'react-native';
-import { useEnvironmentsStore } from '../../store/EnvironmentsContext';
-import NoTasksYetPage from "./NoTasksYetPage";
+import { useEnvironmentsStore } from '../store/EnvironmentsContext';
+import NoTasksYetPage from "../components/HomePageComponents/NoTasksYetPage";
 import { Link, Stack } from 'expo-router';
 import Icon from 'react-native-vector-icons/Entypo';
 import { useFonts, Quicksand_400Regular, Quicksand_700Bold } from '@expo-google-fonts/quicksand'; // Import the fonts
-import CustomHeader from '../StackHeader/CustomHeader'
+import CustomHeader from '../components/StackHeader/CustomHeader'
 
 
 const HomePage = () => {
