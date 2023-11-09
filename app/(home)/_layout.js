@@ -37,6 +37,7 @@ const Layout = () => {
       <Tabs.Screen name="NewEnvironmentPage" options={{ href: null }} />
       <Tabs.Screen name="TaskCreationPage" options={{ href: null }} />
       <Tabs.Screen name="TemplatePage" options={{ href: null }} />
+      <Tabs.Screen name="AccountManagementPage" options={{ href: null }} />
     </Tabs>
   );
 }

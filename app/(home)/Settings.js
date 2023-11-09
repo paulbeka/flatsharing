@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import {
   View, Text, SafeAreaView, StyleSheet, Pressable
 } from 'react-native'
-import { Stack } from 'expo-router';
+import { Stack, Link } from 'expo-router';
 import CustomHeader from "../components/StackHeader/CustomHeader";
 import { useEnvironmentsStore } from "../store/EnvironmentsContext";
 import { ScrollView } from "react-native-gesture-handler";
@@ -16,9 +16,9 @@ const Settings = () => {
 
   const [settingsIcons, setSettingsIcons] = useState([
     {"title": "Account", "iconName": "user", "link": "AccountManagementPage"},
-    {"title": "Notifications", "iconName": "bells"},
-    {"title": "Theme", "iconName": "tool"},
-    {"title": "Flatmate management", "iconName": "edit"},
+    {"title": "Notifications", "iconName": "bells", "link": "AccountManagementPage"},
+    {"title": "Theme", "iconName": "tool", "link": "AccountManagementPage"},
+    {"title": "Flatmate management", "iconName": "edit", "link": "AccountManagementPage"},
   ]);
 
   const [fontsLoaded] = useFonts({
@@ -49,21 +49,23 @@ const Settings = () => {
       <ScrollView>
         {settingsIcons.map((setting, key) => {
           return (
-            <View style={styles.settingsView} key={key}>
-              <View style={styles.settingsIconAndTextView}>
-                <Icon size={30} name={setting.iconName} />
-                <Text style={{ fontFamily: 'Regular', marginLeft: 15 }}>{setting.title}</Text>
-              </View>
-              <View style={{ flex: 1, alignItems: 'flex-end', marginRight: 15 }}>
-                <Icon size={25} name="right" />
-              </View>
-            </View>
+            <Link href={setting.link} key={key} asChild>
+              <Pressable style={styles.settingsView}>
+                <View style={styles.settingsIconAndTextView}>
+                  <Icon size={30} name={setting.iconName} />
+                  <Text style={{ fontFamily: 'Regular', marginLeft: 15 }}>{setting.title}</Text>
+                </View>
+                <View style={{ flex: 1, alignItems: 'flex-end', marginRight: 15 }}>
+                  <Icon size={25} name="right" />
+                </View>
+              </Pressable>
+            </Link>
           )
         })}
       </ScrollView>
       
       <View style={styles.logoutView}>
-        <Pressable style={styles.logoutButton}>
+        <Pressable style={styles.logoutButton} onPress={() => {}}>
           <Icon size={25} name="logout" color="red" />
           <Text style={{ fontFamily: 'Regular', marginLeft: 10, color: 'red'}}>Logout</Text>
         </Pressable>
