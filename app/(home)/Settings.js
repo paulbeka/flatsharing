@@ -6,7 +6,7 @@ import { Stack, Link } from 'expo-router';
 import CustomHeader from "../components/StackHeader/CustomHeader";
 import { useEnvironmentsStore } from "../store/EnvironmentsContext";
 import { ScrollView } from "react-native-gesture-handler";
-import { useFonts, Quicksand_400Regular, Quicksand_700Bold } from '@expo-google-fonts/quicksand'; // Import the fonts
+import { useFonts, Quicksand_500Medium, Quicksand_700Bold } from '@expo-google-fonts/quicksand'; // Import the fonts
 import Icon from "react-native-vector-icons/AntDesign";
 
 
@@ -22,7 +22,7 @@ const Settings = () => {
   ]);
 
   const [fontsLoaded] = useFonts({
-    Regular: Quicksand_400Regular, 
+    Regular: Quicksand_500Medium, 
     Bold: Quicksand_700Bold
   })
 
