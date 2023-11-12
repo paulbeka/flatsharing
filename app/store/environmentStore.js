@@ -1,7 +1,7 @@
 import { ref, set, child, push, update, get } from "firebase/database";
 import { database } from "../../firebaseConfig";
 import firebase from 'firebase/compat/app';
-import {  runInAction } from "mobx";
+import { runInAction } from "mobx";
 
 
 export const createEnvironmentStore = () => {
@@ -37,9 +37,6 @@ export const createEnvironmentStore = () => {
       });
     },
 
-    addEnvironment(environment) {
-      this.environments.push(environment);
-    },
     getEnvironmentByIndex(index) {
       return this.environments[index];
     },
@@ -60,10 +57,17 @@ export const createEnvironmentStore = () => {
             updates['/environments/' + envId] = newEnvironment;
             updates['/users/user-' + firebase.auth().currentUser.uid + '/'] = envId;
 
-            this.environments.push(newEnvironment);
-              
+            update(ref(database), updates);
+          } else {
+            const newEnvKey = push(child(ref(database), '/environments/')).key;
+
+            const updates = {};
+            updates['/users/user-' + firebase.auth().currentUser.uid + '/'] = newEnvKey;
+
             update(ref(database), updates);
           }
+          this.removeEnvironment(this.getEnvironment(newEnvironment))
+          this.environments.push(newEnvironment);
         })
       } else {
         return -1;        

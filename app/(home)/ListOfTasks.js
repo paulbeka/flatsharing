@@ -35,8 +35,8 @@ const ListOfTasks = () => {
       />
 
       <ScrollView style={{width: '90%'}}>
-        {tasks.map((task) => (
-          <View style={styles.taskView}>
+        {tasks.map((task, key) => (
+          <View style={styles.taskView} key={key}>
             <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
               <Text style={{ fontFamily: 'Bold' }}>{task.name}</Text>
               <Icon size={25} name="edit" style={{marginRight: 10}} />

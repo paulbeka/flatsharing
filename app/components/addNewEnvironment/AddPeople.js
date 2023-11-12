@@ -29,6 +29,7 @@ const AddPeople = ({ nextItem, previousItem, flatname}) => {
     } else {
       let env = environmentsStore.getEnvironment(flatname)
       env.flatmates = listOfPeople
+      // add error management: if -1, an error has occured at some point
       environmentsStore.setEnvironment(env)
       nextItem()
     }

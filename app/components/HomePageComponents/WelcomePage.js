@@ -12,7 +12,7 @@ const WelcomePage = () => {
   };
 
   const handleJoinNewEnvironment = () => {
-    
+    router.replace('JoinEnvironmentPage');
   }
 
   return (

@@ -2,17 +2,20 @@ import React, { useState } from "react";
 import {
   View, Text, SafeAreaView, StyleSheet, Pressable
 } from 'react-native'
-import { Stack, Link } from 'expo-router';
+import { Stack, Link, useRouter } from 'expo-router';
 import CustomHeader from "../components/StackHeader/CustomHeader";
 import { useEnvironmentsStore } from "../store/EnvironmentsContext";
 import { ScrollView } from "react-native-gesture-handler";
 import { useFonts, Quicksand_500Medium, Quicksand_700Bold } from '@expo-google-fonts/quicksand'; // Import the fonts
 import Icon from "react-native-vector-icons/AntDesign";
+import { auth } from "../../firebaseConfig";
 
 
 const Settings = () => {
   const environmentsStore = useEnvironmentsStore();
   const environment = environmentsStore.getEnvironmentByIndex(0);
+
+  const router = useRouter()
 
   const [settingsIcons, setSettingsIcons] = useState([
     {"title": "Account", "iconName": "user", "link": "AccountManagementPage"},
@@ -25,6 +28,14 @@ const Settings = () => {
     Regular: Quicksand_500Medium, 
     Bold: Quicksand_700Bold
   })
+
+  const logout = () => {
+    auth.signOut().then(() => {
+      router.replace("/")
+    }).catch((error) => {
+      console.log(error)
+    });
+  }
 
   if (!fontsLoaded) {
     return null;
@@ -65,7 +76,7 @@ const Settings = () => {
       </ScrollView>
       
       <View style={styles.logoutView}>
-        <Pressable style={styles.logoutButton} onPress={() => {}}>
+        <Pressable style={styles.logoutButton} onPress={logout}>
           <Icon size={25} name="logout" color="red" />
           <Text style={{ fontFamily: 'Regular', marginLeft: 10, color: 'red'}}>Logout</Text>
         </Pressable>

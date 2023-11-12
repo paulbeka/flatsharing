@@ -10,7 +10,7 @@ const EnvironmentCreated = () => {
   const router = useRouter()
 
   const goToTasksManagement = () => {
-
+    router.replace('/(home)/ListOfTasks')
   }
 
   const goHome = () => {

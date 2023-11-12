@@ -8,6 +8,7 @@ import { Link, Stack } from 'expo-router';
 import Icon from 'react-native-vector-icons/Entypo';
 import { useFonts, Quicksand_400Regular, Quicksand_700Bold } from '@expo-google-fonts/quicksand'; // Import the fonts
 import CustomHeader from '../components/StackHeader/CustomHeader'
+import WelcomePage from "../components/HomePageComponents/WelcomePage";
 
 
 const HomePage = () => {
@@ -18,12 +19,14 @@ const HomePage = () => {
     QuicksandRegular: Quicksand_400Regular,
     QuicksandBold: Quicksand_700Bold,
   });
-
+  
   if (!fontsLoaded) {
     return null;
   }
-
-  if (environment.tasks === undefined) {
+  if(environment === undefined) {
+    return <WelcomePage />
+  }
+  if(environment.tasks === undefined) {
     return <NoTasksYetPage />;
   } else {
     return (
@@ -46,7 +49,7 @@ const HomePage = () => {
               <View style={styles.yourTaskView} key={key}>
                 <Text style={{ fontFamily: 'QuicksandRegular' }}>{task.name}</Text>
                 <Text style={{ fontFamily: 'QuicksandRegular' }}>{task.description}</Text>
-                <Text style={{ fontFamily: 'QuicksandRegular' }}>{task.flatmatesIncluded[0]}</Text>
+                <Text style={{ fontFamily: 'QuicksandRegular' }}>{task.flatmatesIncluded[0].name}</Text>
               </View>
             );
           })}
