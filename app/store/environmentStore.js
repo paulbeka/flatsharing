@@ -4,6 +4,7 @@ import firebase from 'firebase/compat/app';
 import { runInAction } from "mobx";
 
 
+// TODO: Store the environment ID so it does not need to be fetched every time
 export const createEnvironmentStore = () => {
   return {
     environments: [null],
@@ -18,8 +19,8 @@ export const createEnvironmentStore = () => {
           get(child(dbRef, `/environments/${envId}`)).then((res) => {
             if(res.exists()) {
               runInAction(() => {
-                this.environments.splice(0, 1);
-                this.environments.push(res.val())
+                this.environments.splice(0, 1); // delete the null value
+                this.environments.push({...res.val(), envId: envId})
               })
             } else {
               console.log("Wrong environment key.")

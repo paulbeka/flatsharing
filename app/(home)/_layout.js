@@ -1,34 +1,37 @@
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Tabs } from 'expo-router';
+import { useEnvironmentsStore } from "../store/EnvironmentsContext";
+
 
 const Layout = () => {
+  const environmentsStore = useEnvironmentsStore();
+  const environment = environmentsStore.getEnvironmentByIndex(0);
+
   return (
-    <Tabs screenOptions={{ headerShown: false }}>
+    <Tabs screenOptions={{ headerShown: false, tabBarStyle: { paddingTop: 10 } }}>
       <Tabs.Screen
         name="HomePage"
         options={{
           tabBarLabel: "",
-          tabBarStyle: { paddingTop: 10 },
           tabBarIcon: ({ focused }) => (
             <Icon size={25} name={focused ? "home" : "home-outline"} />
           ),
         }}
       />
+      {environment !== undefined ? 
       <Tabs.Screen
         name="ListOfTasks"
         options={{
           tabBarLabel: "",
-          tabBarStyle: { paddingTop: 10 },
           tabBarIcon: ({ focused }) => (
             <Icon size={25} name={focused ? "list" : "list-outline"} />
           ),
         }}
-      />
+      /> : <Tabs.Screen name="ListOfTasks" options={{ href:null }}/>}
       <Tabs.Screen
         name="Settings"
         options={{
           tabBarLabel: "",
-          tabBarStyle: { paddingTop: 10 },
           tabBarIcon: ({ focused }) => (
             <Icon size={25} name={focused ? "settings" : "settings-outline"} />
           ),
@@ -38,6 +41,8 @@ const Layout = () => {
       <Tabs.Screen name="TaskCreationPage" options={{ href: null }} />
       <Tabs.Screen name="TemplatePage" options={{ href: null }} />
       <Tabs.Screen name="AccountManagementPage" options={{ href: null }} />
+      <Tabs.Screen name="QrGenerator" options={{ href: null }} />
+      <Tabs.Screen name="JoinEnvironmentPage" options={{ href: null }} />
     </Tabs>
   );
 }

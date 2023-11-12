@@ -21,6 +21,7 @@ const Settings = () => {
     {"title": "Account", "iconName": "user", "link": "AccountManagementPage"},
     {"title": "Notifications", "iconName": "bells", "link": "AccountManagementPage"},
     {"title": "Theme", "iconName": "tool", "link": "AccountManagementPage"},
+    // TODO: We may need to remove this option depending how it works, or change entirely this functionality
     {"title": "Flatmate management", "iconName": "edit", "link": "AccountManagementPage"},
   ]);
 
@@ -48,7 +49,7 @@ const Settings = () => {
         options={{
           headerShown: true,
           header: ({ route, navigation }) => (
-            <CustomHeader title={environment.name} />
+            <CustomHeader title="Profile Page" />
           ),
         }}
       />

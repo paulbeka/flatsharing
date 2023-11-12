@@ -34,6 +34,7 @@ const ListOfTasks = () => {
         }}
       />
 
+      {tasks.length > 0 ? 
       <ScrollView style={{width: '90%'}}>
         {tasks.map((task, key) => (
           <View style={styles.taskView} key={key}>
@@ -43,7 +44,12 @@ const ListOfTasks = () => {
             </View>
           </View>
         ))}
-      </ScrollView>
+      </ScrollView> 
+      : 
+      <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+        <Text style={{ fontFamily: 'Bold', fontSize: 30}}>No tasks</Text>
+      </View>
+      }
 
     </View>
   )

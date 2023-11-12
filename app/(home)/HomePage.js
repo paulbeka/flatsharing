@@ -5,7 +5,7 @@ import {
 import { useEnvironmentsStore } from '../store/EnvironmentsContext';
 import NoTasksYetPage from "../components/HomePageComponents/NoTasksYetPage";
 import { Link, Stack } from 'expo-router';
-import Icon from 'react-native-vector-icons/Entypo';
+import Icon from 'react-native-vector-icons/AntDesign';
 import { useFonts, Quicksand_400Regular, Quicksand_700Bold } from '@expo-google-fonts/quicksand'; // Import the fonts
 import CustomHeader from '../components/StackHeader/CustomHeader'
 import WelcomePage from "../components/HomePageComponents/WelcomePage";
@@ -19,7 +19,7 @@ const HomePage = () => {
     QuicksandRegular: Quicksand_400Regular,
     QuicksandBold: Quicksand_700Bold,
   });
-  
+
   if (!fontsLoaded) {
     return null;
   }
@@ -55,12 +55,15 @@ const HomePage = () => {
           })}
         </ScrollView>
         <View style={styles.addNewTaskView}>
+          <Link href="QrGenerator" asChild>
+            <Icon size={50} name="qrcode" />
+          </Link>
           <Link href="/TaskCreationPage" asChild>
             <Pressable style={styles.addNewTaskPressable}>
               <View style={{ justifyContent: 'center' }}>
                 <Text style={{ ...styles.addNewTaskText, fontFamily: 'QuicksandBold' }}>Add new task</Text>
               </View>
-              <Icon size={50} color="#80BDD7" name="circle-with-plus" />
+              <Icon size={40} color="#80BDD7" name="pluscircle" />
             </Pressable>
           </Link>
         </View>
@@ -100,6 +103,9 @@ const styles = StyleSheet.create({
   },
   addNewTaskView: {
     width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between'
   },
   addNewTaskPressable: {
     justifyContent: 'flex-end',

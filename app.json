@@ -5,11 +5,15 @@
       "bundler": "metro"
     },
     "plugins": [
-      "expo-router"
+      "expo-router",
+      ["expo-barcode-scanner",
+      {
+        "cameraPermission": "Allow $(PRODUCT_NAME) to access camera."
+      }]
     ],
     "name": "flatsharing",
     "android": {
-      "softwareKeyboardLayoutMode": "pan",
+      "softwareKeyboardLayoutMode": "pan"
     },
     "slug": "flatsharing"
   }
