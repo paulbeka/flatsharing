@@ -32,6 +32,7 @@ const Settings = () => {
 
   const logout = () => {
     auth.signOut().then(() => {
+      environmentsStore.environments = []
       router.replace("/")
     }).catch((error) => {
       console.log(error)
@@ -115,8 +116,6 @@ const styles = StyleSheet.create({
     borderRadius: 26,
     padding: 20,
     marginBottom: 5
-    // width: 135,
-    // height: 68
   }
 });
 

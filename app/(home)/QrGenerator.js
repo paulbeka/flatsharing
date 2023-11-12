@@ -22,14 +22,11 @@ const QrGenerator = () => {
         }}
       />
 
-      <View>
-        <Text>Scan this QR code to join my flat:</Text>
-      </View>
-
       <View style={styles.qrcodeContainer}>
+        <Text>Scan this QR code to join my flat:</Text>
         <QRCode
           value={environment.envId}
-          logoSize={200}
+          size={250}
         />
       </View>
     </SafeAreaView>
