@@ -75,11 +75,39 @@ export const createEnvironmentStore = () => {
       }
     },
 
+    joinEnvironment(code) {
+      this.environments.push(null);
+      const dbRef = ref(database);
+      get(child(dbRef, `/environments/${code}`)).then((res) => {
+        if(res.exists()) {
+          runInAction(() => {
+            this.environments.splice(0, 1); // delete the null value
+            this.environments.push({...res.val(), envId: code})
+
+            const updates = {};
+            updates['/users/user-' + firebase.auth().currentUser.uid + '/'] = code;
+      
+            update(ref(database), updates);
+          })
+        } else {
+          console.log("Wrong environment key.")
+        }
+      })
+      .catch((error) => { 
+        this.environments.splice(0, 1);
+        console.error(error);
+      });
+    },
+
     removeEnvironment(flatname) {
       const index = this.environments.findIndex((el) => el.name === flatname);
       if (index !== -1) {
         this.environments.splice(index, 1);
       }
+    },
+
+    emptyEnvironments() {
+      this.environments = [null];
     },
 
     isEnvironments() {

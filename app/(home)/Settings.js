@@ -32,7 +32,7 @@ const Settings = () => {
 
   const logout = () => {
     auth.signOut().then(() => {
-      environmentsStore.environments = []
+      environmentsStore.emptyEnvironments()
       router.replace("/")
     }).catch((error) => {
       console.log(error)

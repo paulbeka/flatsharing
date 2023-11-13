@@ -2,10 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   Text,
-  SafeAreaView,
 } from 'react-native';
-import WelcomePage from './components/HomePageComponents/WelcomePage';
-import HomePage from './(home)/HomePage';
 import { useEnvironmentsStore } from './store/EnvironmentsContext';
 import firebase from 'firebase/compat/app';
 import { observer  } from 'mobx-react';

@@ -11,6 +11,7 @@ const Layout = () => {
     <Tabs screenOptions={{ headerShown: false, tabBarStyle: { paddingTop: 10 } }}>
       <Tabs.Screen
         name="HomePage"
+        initialParams={{ environment: environment }} // Pass environment as initialParams
         options={{
           tabBarLabel: "",
           tabBarIcon: ({ focused }) => (

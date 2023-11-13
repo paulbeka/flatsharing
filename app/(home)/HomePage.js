@@ -2,18 +2,18 @@ import React from "react";
 import {
   StyleSheet, ScrollView, Text, View, Pressable
 } from 'react-native';
-import { useEnvironmentsStore } from '../store/EnvironmentsContext';
 import NoTasksYetPage from "../components/HomePageComponents/NoTasksYetPage";
 import { Link, Stack } from 'expo-router';
 import Icon from 'react-native-vector-icons/AntDesign';
 import { useFonts, Quicksand_400Regular, Quicksand_700Bold } from '@expo-google-fonts/quicksand'; // Import the fonts
 import CustomHeader from '../components/StackHeader/CustomHeader'
 import WelcomePage from "../components/HomePageComponents/WelcomePage";
+import { useEnvironmentsStore } from "../store/EnvironmentsContext";
 
 
 const HomePage = () => {
-  const environmentsStore = useEnvironmentsStore();
-  const environment = environmentsStore.getEnvironmentByIndex(0);
+  const environmentStore = useEnvironmentsStore()
+  const environment = environmentStore.getEnvironmentByIndex(0)
 
   const [fontsLoaded] = useFonts({
     QuicksandRegular: Quicksand_400Regular,
@@ -22,6 +22,10 @@ const HomePage = () => {
 
   if (!fontsLoaded) {
     return null;
+  }
+  if(environment === null) {
+    environment = environmentStore.getEnvironmentByIndex(0)
+    return <></>
   }
   if(environment === undefined) {
     return <WelcomePage />

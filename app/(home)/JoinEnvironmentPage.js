@@ -1,13 +1,20 @@
 import React, { useState, useEffect } from "react";
 import {
-  View, Text, StyleSheet, TextInput, SafeAreaView, Button
+  View, Text, StyleSheet, TextInput, SafeAreaView, Button, Pressable
 } from 'react-native'
 import { BarCodeScanner } from 'expo-barcode-scanner';
+import { useEnvironmentsStore } from "../store/EnvironmentsContext";
+import { useRouter } from "expo-router";
 
 
 const JoinEnvironmentPage = () => {
+  const environmentsStore = useEnvironmentsStore();
+  const router = useRouter()
+
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
+
+  const [shareCodeText, setShareCodeText] = useState("");
 
   useEffect(() => {
     const getBarCodeScannerPermissions = async () => {
@@ -25,17 +32,25 @@ const JoinEnvironmentPage = () => {
     return <Text>No access to camera</Text>;
   }
 
+  const joinEnvironment = () => {
+    environmentsStore.joinEnvironment(shareCodeText)
+    router.replace("(home)/HomePage")
+  }
 
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
-    alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+    environmentsStore.joinEnvironment(data)
+    router.replace("(home)/HomePage")
   };
 
   return (
     <SafeAreaView style={styles.mainContainer}>
       <View style={styles.inputEmailSection}>
         <Text>Join by share code:</Text>
-        <TextInput style={styles.input}/>
+        <TextInput onChangeText={setShareCodeText} style={styles.input}/>
+        <Pressable onPress={joinEnvironment} style={styles.joinEnvironmentButton}>
+          <Text style={{ fontSize: 20, fontWeight: 'semibold' }}>Join Environment</Text>
+        </Pressable>
       </View>
       <View style={styles.barcodeView}>
         <Text>Or join by scanning QR code:</Text>
@@ -76,6 +91,16 @@ const styles = StyleSheet.create({
   barCodeScannerView: {
     width: '100%', 
     height: '100%'
+  },
+  joinEnvironmentButton: {
+    backgroundColor: '#80BDD7',
+    borderRadius: 15,
+    width: '90%',
+    height: 70,
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin: 20,
+    marginBottom: 30
   }
 })
 
