@@ -78,15 +78,17 @@ export const createEnvironmentStore = () => {
     },
 
     joinEnvironment(code) {
-      this.environments = null;
       const dbRef = ref(database);
       get(child(dbRef, `/environments/${code}`)).then((res) => {
         if(res.exists()) {
           runInAction(() => {
-            this.environments = {...res.val(), envId: code}
+            this.environments = res.val()
 
             const updates = {};
-            updates['/users/user-' + firebase.auth().currentUser.uid + '/'] = code;
+            const path = '/users/user-' + firebase.auth().currentUser.uid + '/' + code
+            updates[path] = {
+              "username": this.userData["username"]
+            };
       
             update(ref(database), updates);
           })
@@ -95,8 +97,8 @@ export const createEnvironmentStore = () => {
         }
       })
       .catch((error) => { 
-        this.environments = undefined;
         console.error(error);
+        this.environments = undefined;
       });
     },
 

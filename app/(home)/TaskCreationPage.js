@@ -46,9 +46,11 @@ const TaskCreationPage = () => {
       "type": taskType,
       "flatmatesIncluded": flatmatesIncluded
     }
-    console.log(environment)
-    console.log(environmentsStore.environments)
-    environment.tasks.push(newTask)
+    if(environment.tasks) {
+      environment.tasks.push(newTask)
+    } else {
+      environment.tasks = [newTask]
+    }
     environmentsStore.setEnvironment(environment)
 
     router.replace("/")

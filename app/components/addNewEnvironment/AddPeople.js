@@ -30,6 +30,7 @@ const AddPeople = ({ nextItem, previousItem, flatname}) => {
       let env = environmentsStore.getEnvironment(flatname)
       env.flatmates = listOfPeople
       env.tasks = []
+      
       // add error management: if -1, an error has occured at some point
       environmentsStore.setEnvironment(env)
       nextItem()

@@ -2,14 +2,26 @@ import React, { useState } from "react";
 import {
   View, Text, StyleSheet, TextInput, Pressable
 } from 'react-native'
+import { useEnvironmentsStore } from "../../store/EnvironmentsContext";
+import { useRouter } from "expo-router";
 
 
 const CreateName = () => {
+  const environmentStore = useEnvironmentsStore()
+  const router = useRouter()
 
   const [name, setName] = useState("")
+  const [error, setError] = useState("")
 
   const submitNameCreated = () => {
-
+    if(name !== "") {
+      environmentStore.userData = {
+        "username": name
+      }
+    } else {
+      setError("Please input a value.")
+    }
+    router.replace("/")
   }
 
   return (
@@ -18,6 +30,7 @@ const CreateName = () => {
         Congratulations! You have joined the flat. What name would you like to use?
       </Text>
       <TextInput style={styles.input} onChangeText={setName} />
+      {error !== "" ? <Text style={{ color: 'red' }}></Text> : <></>}
       <Pressable style={styles.setNameButton} onPress={submitNameCreated}>
         <Text>Set Name</Text>
       </Pressable>

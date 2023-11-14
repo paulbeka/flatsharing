@@ -14,7 +14,7 @@ const CreateEnvironmentName = ({nextItem, previousItem, setFlatname}) => {
     if(flatname === "") {
       setError("Please set a name before continuing")
     } else {
-      environmentsStore.environments.push({ name: flatname, tasks: [] })
+      environmentsStore.setEnvironment({ name: flatname, tasks: [] })
       setFlatname(flatname)
       nextItem()
     }

@@ -9,7 +9,7 @@ import Icon from "react-native-vector-icons/AntDesign";
 
 const ListOfTasks = () => {
   const environmentsStore = useEnvironmentsStore();
-  const environment = environmentsStore.getEnvironment(0);
+  let environment = environmentsStore.getEnvironment(0);
   
   const [tasks, setTasks] = useState(environment.tasks)
 
@@ -17,6 +17,13 @@ const ListOfTasks = () => {
     Regular: Quicksand_500Medium, 
     Bold: Quicksand_700Bold
   })
+
+  const deleteItem = (item) => {
+    console.log(item)
+    environment.tasks = environment.tasks.filter((el) => el !== item)
+    environmentsStore.setEnvironment(environment)
+    setTasks(environment.tasks)
+  }
 
   if (!fontsLoaded) {
     return null;
@@ -40,14 +47,17 @@ const ListOfTasks = () => {
           <View style={styles.taskView} key={key}>
             <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
               <Text style={{ fontFamily: 'Bold' }}>{task.name}</Text>
-              <Icon size={25} name="edit" style={{marginRight: 10}} />
+              <View style={{ flexDirection: 'row' }}>
+                <Icon size={25} name="edit" style={{marginRight: 10}} />
+                <Icon size={25} name="delete" style={{marginRight: 10}} onPress={()=>deleteItem(task)} />
+              </View>
             </View>
           </View>
         ))}
       </ScrollView> 
       : 
       <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-        <Text style={{ fontFamily: 'Bold', fontSize: 30}}>No tasks</Text>
+        <Text style={{ fontFamily: 'Bold', fontSize: 30, marginTop: 30}}>No tasks</Text>
       </View>
       }
 
