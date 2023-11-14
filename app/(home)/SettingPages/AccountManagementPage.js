@@ -3,13 +3,13 @@ import {
   View, Text, StyleSheet, SafeAreaView
 } from 'react-native'
 import { Stack } from 'expo-router';
-import CustomHeader from "../components/StackHeader/CustomHeader";
-import { useEnvironmentsStore } from "../store/EnvironmentsContext";
+import CustomHeader from "../../components/StackHeader/CustomHeader";
+import { useEnvironmentsStore } from "../../store/EnvironmentsContext";
 
 
 const AccountManagementPage = () => {
   const environmentsStore = useEnvironmentsStore();
-  const environment = environmentsStore.getEnvironmentByIndex(0);
+  const environment = environmentsStore.getEnvironment(0);
 
   return (
     <SafeAreaView style={styles.mainContainer}>

@@ -13,7 +13,7 @@ import { useEnvironmentsStore } from "../store/EnvironmentsContext";
 
 const HomePage = () => {
   const environmentStore = useEnvironmentsStore()
-  const environment = environmentStore.getEnvironmentByIndex(0)
+  const environment = environmentStore.getEnvironment(0)
 
   const [fontsLoaded] = useFonts({
     QuicksandRegular: Quicksand_400Regular,
@@ -24,7 +24,6 @@ const HomePage = () => {
     return null;
   }
   if(environment === null) {
-    environment = environmentStore.getEnvironmentByIndex(0)
     return <></>
   }
   if(environment === undefined) {

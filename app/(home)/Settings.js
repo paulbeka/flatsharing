@@ -13,12 +13,12 @@ import { auth } from "../../firebaseConfig";
 
 const Settings = () => {
   const environmentsStore = useEnvironmentsStore();
-  const environment = environmentsStore.getEnvironmentByIndex(0);
+  const environment = environmentsStore.getEnvironment(0);
 
   const router = useRouter()
 
   const [settingsIcons, setSettingsIcons] = useState([
-    {"title": "Account", "iconName": "user", "link": "AccountManagementPage"},
+    {"title": "Account", "iconName": "user", "link": "SettingPages/AccountManagementPage"},
     {"title": "Notifications", "iconName": "bells", "link": "AccountManagementPage"},
     {"title": "Theme", "iconName": "tool", "link": "AccountManagementPage"},
     // TODO: We may need to remove this option depending how it works, or change entirely this functionality

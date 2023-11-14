@@ -31,7 +31,7 @@ const App = observer(() => {
   }, []);
 
   if(user) {
-    if(environmentsStore.environments[0] === null) {
+    if(environmentsStore.environments === null) {
       return <Text>Loading...</Text>
     } else {
       router.replace("(home)/HomePage")

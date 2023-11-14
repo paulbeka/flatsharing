@@ -4,17 +4,17 @@ import {
 } from 'react-native'
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { useEnvironmentsStore } from "../store/EnvironmentsContext";
-import { useRouter } from "expo-router";
+import CreateName from "../components/JoinEnvironmentUtil/CreateName";
 
 
 const JoinEnvironmentPage = () => {
   const environmentsStore = useEnvironmentsStore();
-  const router = useRouter()
 
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
 
   const [shareCodeText, setShareCodeText] = useState("");
+  const [createNamePage, setCreateNamePage] = useState(false)
 
   useEffect(() => {
     const getBarCodeScannerPermissions = async () => {
@@ -34,36 +34,41 @@ const JoinEnvironmentPage = () => {
 
   const joinEnvironment = () => {
     environmentsStore.joinEnvironment(shareCodeText)
-    router.replace("(home)/HomePage")
+    setCreateNamePage(true)
   }
 
+  // Just put the scanned code into the bar
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
-    environmentsStore.joinEnvironment(data)
-    router.replace("(home)/HomePage")
+    setShareCodeText(data)
   };
 
-  return (
-    <SafeAreaView style={styles.mainContainer}>
-      <View style={styles.inputEmailSection}>
-        <Text>Join by share code:</Text>
-        <TextInput onChangeText={setShareCodeText} style={styles.input}/>
-        <Pressable onPress={joinEnvironment} style={styles.joinEnvironmentButton}>
-          <Text style={{ fontSize: 20, fontWeight: 'semibold' }}>Join Environment</Text>
-        </Pressable>
-      </View>
-      <View style={styles.barcodeView}>
-        <Text>Or join by scanning QR code:</Text>
-        <View style={styles.barCodeScannerView}>
-          <BarCodeScanner
-            onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-            style={{...StyleSheet.absoluteFillObject, borderWidth: 1}}
-          />
-          {scanned && <Button title={'Tap to Scan Again'} onPress={() => setScanned(false)} />}
+  if(!createNamePage) {
+    return (
+      <SafeAreaView style={styles.mainContainer}>
+        <View style={styles.inputEmailSection}>
+          <Text>Join by share code:</Text>
+          <TextInput onChangeText={setShareCodeText} style={styles.input}/>
+          <Pressable onPress={joinEnvironment} style={styles.joinEnvironmentButton}>
+            <Text style={{ fontSize: 20, fontWeight: 'semibold' }}>Join Environment</Text>
+          </Pressable>
         </View>
-      </View>
-    </SafeAreaView>
-  );
+        <View style={styles.barcodeView}>
+          <Text>Or join by scanning QR code:</Text>
+          <View style={styles.barCodeScannerView}>
+            <BarCodeScanner
+              onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+              style={{...StyleSheet.absoluteFillObject, borderWidth: 1}}
+            />
+            {scanned && <Button title={'Tap to Scan Again'} onPress={() => setScanned(false)} />}
+          </View>
+        </View>
+      </SafeAreaView>
+    );
+  } else {
+    return <CreateName />
+  }
+
 }
 
 const styles = StyleSheet.create({

@@ -5,7 +5,7 @@ import { useEnvironmentsStore } from "../store/EnvironmentsContext";
 
 const Layout = () => {
   const environmentsStore = useEnvironmentsStore();
-  const environment = environmentsStore.getEnvironmentByIndex(0);
+  const environment = environmentsStore.getEnvironment(0);
 
   return (
     <Tabs screenOptions={{ headerShown: false, tabBarStyle: { paddingTop: 10 } }}>
@@ -41,7 +41,7 @@ const Layout = () => {
       <Tabs.Screen name="NewEnvironmentPage" options={{ href: null }} />
       <Tabs.Screen name="TaskCreationPage" options={{ href: null }} />
       <Tabs.Screen name="TemplatePage" options={{ href: null }} />
-      <Tabs.Screen name="AccountManagementPage" options={{ href: null }} />
+      <Tabs.Screen name="SettingPages/AccountManagementPage" options={{ href: null }} />
       <Tabs.Screen name="QrGenerator" options={{ href: null }} />
       <Tabs.Screen name="JoinEnvironmentPage" options={{ href: null }} />
     </Tabs>

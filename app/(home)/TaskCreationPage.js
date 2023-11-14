@@ -14,7 +14,7 @@ import Checkbox from 'expo-checkbox';
 const TaskCreationPage = () => {
   const environmentsStore = useEnvironmentsStore();
   const router = useRouter();
-  const environment = environmentsStore.getEnvironmentByIndex(0);
+  const environment = environmentsStore.getEnvironment(0);
   
   const [suggestions, setSuggestions] = useState([{"title": "Test"}, {"title": "Test"}, {"title": "Test"}])
   const [taskName, setTaskName] = useState("")
@@ -46,7 +46,8 @@ const TaskCreationPage = () => {
       "type": taskType,
       "flatmatesIncluded": flatmatesIncluded
     }
-
+    console.log(environment)
+    console.log(environmentsStore.environments)
     environment.tasks.push(newTask)
     environmentsStore.setEnvironment(environment)
 

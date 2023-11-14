@@ -7,7 +7,10 @@ import { runInAction } from "mobx";
 // TODO: Store the environment ID so it does not need to be fetched every time
 export const createEnvironmentStore = () => {
   return {
-    environments: [null],
+    environments: null,
+    userData: {
+      username: "GenericUser"
+    },
 
     // LOAD ENVIRONMENTS AT APP STARTUP 
     loadEnvironments() {
@@ -15,74 +18,72 @@ export const createEnvironmentStore = () => {
       const userId = firebase.auth().currentUser.uid;
       get(child(dbRef, `/users/user-${userId}`)).then((snapshot) => {
         if (snapshot.exists()) {
-          const envId = snapshot.val();
+          const envId = Object.keys(snapshot.val())[0];
           get(child(dbRef, `/environments/${envId}`)).then((res) => {
             if(res.exists()) {
               runInAction(() => {
-                this.environments.splice(0, 1); // delete the null value
-                this.environments.push({...res.val(), envId: envId})
+                this.environments = {...res.val(), envId: envId}
               })
             } else {
               console.log("Wrong environment key.")
             }
           })
           .catch((error) => { 
-            this.environments.splice(0, 1);
+            this.environments = undefined
             console.error(error);
           });
         } else {
-          this.environments.splice(0, 1); 
+          this.environments = undefined
         }
       }).catch((error) => { 
         console.error(error);
       });
     },
 
-    getEnvironmentByIndex(index) {
-      return this.environments[index];
+    // Load the name of the user for environments and such
+    loadUserData() {
+
     },
-    getEnvironment(flatname) {
-      return this.environments.find((el) => el.name === flatname);
+
+    getEnvironment() {
+      return this.environments;
     },
 
     setEnvironment(newEnvironment) {
-      const index = this.environments.findIndex((el) => el.name === newEnvironment.name);
-      if (index !== -1) {
-        const dbRef = ref(database);
-        const userId = firebase.auth().currentUser.uid;
-        get(child(dbRef, `/users/user-${userId}`)).then((snapshot) => {
-          if (snapshot.exists()) {
-            const envId = snapshot.val();
+      const dbRef = ref(database);
+      const userId = firebase.auth().currentUser.uid;
+      get(child(dbRef, `/users/user-${userId}`)).then((snapshot) => {
+        if (snapshot.exists()) {
+          const envId = Object.keys(snapshot.val())[0];
 
-            const updates = {};
-            updates['/environments/' + envId] = newEnvironment;
-            updates['/users/user-' + firebase.auth().currentUser.uid + '/'] = envId;
+          const updates = {};
+          updates['/environments/' + envId] = newEnvironment;
 
-            update(ref(database), updates);
-          } else {
-            const newEnvKey = push(child(ref(database), '/environments/')).key;
+          update(ref(database), updates);
+        } else {
+          const newEnvKey = push(child(ref(database), '/environments/')).key;
 
-            const updates = {};
-            updates['/users/user-' + firebase.auth().currentUser.uid + '/'] = newEnvKey;
+          const updates = {};
+          const path = '/users/user-' + firebase.auth().currentUser.uid + '/' + newEnvKey
+          
+          updates['/environments/' + newEnvKey] = newEnvironment;
+          updates[path] = {
+            "username": this.userData["username"]
+          };
 
-            update(ref(database), updates);
-          }
-          this.removeEnvironment(this.getEnvironment(newEnvironment))
-          this.environments.push(newEnvironment);
-        })
-      } else {
-        return -1;        
-      }
+          update(ref(database), updates);
+        }
+        this.environments = newEnvironment;
+      })
     },
 
     joinEnvironment(code) {
-      this.environments.push(null);
+      this.environments = null;
       const dbRef = ref(database);
       get(child(dbRef, `/environments/${code}`)).then((res) => {
         if(res.exists()) {
           runInAction(() => {
-            this.environments.splice(0, 1); // delete the null value
-            this.environments.push({...res.val(), envId: code})
+            this.environments = {...res.val(), envId: code}
 
             const updates = {};
             updates['/users/user-' + firebase.auth().currentUser.uid + '/'] = code;
@@ -94,24 +95,21 @@ export const createEnvironmentStore = () => {
         }
       })
       .catch((error) => { 
-        this.environments.splice(0, 1);
+        this.environments = undefined;
         console.error(error);
       });
     },
 
     removeEnvironment(flatname) {
-      const index = this.environments.findIndex((el) => el.name === flatname);
-      if (index !== -1) {
-        this.environments.splice(index, 1);
-      }
+        this.environments = undefined;
     },
 
     emptyEnvironments() {
-      this.environments = [null];
+      this.environments = null;
     },
 
     isEnvironments() {
-      return this.environments.length > 0;
+      return this.environments !== null && this.environments !== undefined;
     }
   };
 };
