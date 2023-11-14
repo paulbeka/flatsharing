@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import {
-  StyleSheet, ScrollView, Text, View, Pressable
+  StyleSheet, ScrollView, Text, View, Pressable, Modal
 } from 'react-native';
 import NoTasksYetPage from "../components/HomePageComponents/NoTasksYetPage";
 import { Link, Stack } from 'expo-router';
@@ -8,12 +8,26 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import { useFonts, Quicksand_400Regular, Quicksand_700Bold } from '@expo-google-fonts/quicksand'; // Import the fonts
 import CustomHeader from '../components/StackHeader/CustomHeader'
 import WelcomePage from "../components/HomePageComponents/WelcomePage";
+import TaskFocusedView from "../components/HomePageComponents/TaskFocusedView";
 import { useEnvironmentsStore } from "../store/EnvironmentsContext";
 
 
 const HomePage = () => {
   const environmentStore = useEnvironmentsStore()
   const environment = environmentStore.getEnvironment(0)
+
+  const [taskInFocus, setTaskInFocus] = useState(null)
+
+  const [isModalVisible, setIsModalVisible] = useState(true);
+
+  const openModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setIsModalVisible(false);
+    setTaskInFocus(null); // Clear taskInFocus when closing the modal
+  };
 
   const [fontsLoaded] = useFonts({
     QuicksandRegular: Quicksand_400Regular,
@@ -26,14 +40,16 @@ const HomePage = () => {
   if(environment === null) {
     return <></>
   }
+  // you have not created or joined an environment so you need to make one
   if(environment === undefined) {
     return <WelcomePage />
   }
+  // You have an environment, but no tasks have been defined
   if(environment.tasks === undefined) {
     return <NoTasksYetPage />;
   } else {
     return (
-      <ScrollView contentContainerStyle={styles.homePageContainer}>
+      <View style={{justifyContent: 'space-between', height: '100%'}}>
         <Stack.Screen
           component={CustomHeader}
           options={{
@@ -43,20 +59,35 @@ const HomePage = () => {
             ),
           }}
         />
-        <Text style={{ ...styles.subTitle, marginTop: 10, fontFamily: 'QuicksandBold' }}>Today's tasks:</Text>
-        <Text style={{ fontFamily: 'QuicksandRegular' }}>No tasks today! :D</Text>
-        <Text style={{ ...styles.subTitle, fontFamily: 'QuicksandBold', marginTop: 20 }}>Your upcoming tasks...</Text>
-        <ScrollView horizontal={true}>
-          {environment.tasks.map((task, key) => {
-            return (
-              <View style={styles.yourTaskView} key={key}>
-                <Text style={{ fontFamily: 'QuicksandRegular' }}>{task.name}</Text>
-                <Text style={{ fontFamily: 'QuicksandRegular' }}>{task.description}</Text>
-                <Text style={{ fontFamily: 'QuicksandRegular' }}>{task.flatmatesIncluded[0].name}</Text>
-              </View>
-            );
-          })}
+        <ScrollView contentContainerStyle={styles.homePageContainer}>
+          <Text style={{ ...styles.subTitle, marginTop: 10, fontFamily: 'QuicksandBold' }}>Today's tasks:</Text>
+          <Text style={{ fontFamily: 'QuicksandRegular' }}>No tasks today! :D</Text>
+          <Text style={{ ...styles.subTitle, fontFamily: 'QuicksandBold', marginTop: 20 }}>Your upcoming tasks...</Text>
+          <ScrollView horizontal={true}>
+            {environment.tasks.map((task, key) => {
+              return (
+                <Pressable style={styles.yourTaskView} key={key} onPress={() => {setTaskInFocus(task); openModal()}}>
+                  <Text style={{ fontFamily: 'QuicksandRegular' }}>{task.name}</Text>
+                  <Text style={{ fontFamily: 'QuicksandRegular' }}>{task.description}</Text>
+                  <Text style={{ fontFamily: 'QuicksandRegular' }}>{task.flatmatesIncluded[0].name}</Text>
+                </Pressable>
+              );
+            })}
+          </ScrollView>
+          <Text style={{ ...styles.subTitle, fontFamily: 'QuicksandBold', marginTop: 20 }}>Your flatmates' tasks...</Text>
+          <ScrollView horizontal={true}>
+            {environment.tasks.map((task, key) => {
+              return (
+                <Pressable style={styles.yourTaskView} key={key} onPress={() => {setTaskInFocus(task); openModal()}}>
+                  <Text style={{ fontFamily: 'QuicksandRegular' }}>{task.name}</Text>
+                  <Text style={{ fontFamily: 'QuicksandRegular' }}>{task.description}</Text>
+                  <Text style={{ fontFamily: 'QuicksandRegular' }}>{task.flatmatesIncluded[0].name}</Text>
+                </Pressable>
+              );
+            })}
+          </ScrollView>
         </ScrollView>
+
         <View style={styles.addNewTaskView}>
           <Link href="QrGenerator" asChild>
             <Icon size={50} name="qrcode" />
@@ -70,14 +101,26 @@ const HomePage = () => {
             </Pressable>
           </Link>
         </View>
-      </ScrollView>
+
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={isModalVisible}
+          onRequestClose={closeModal}
+        >
+          <View style={styles.taskInFocusView}>
+            <Pressable style={styles.taskInFocusBackground} onPress={closeModal}>
+              <TaskFocusedView task={taskInFocus} />
+            </Pressable>
+          </View>
+        </Modal>
+      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
   homePageContainer: {
-    flex: 1,
     paddingLeft: 10,
   },
   title: {
@@ -108,17 +151,35 @@ const styles = StyleSheet.create({
     width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    marginLeft: 10
   },
   addNewTaskPressable: {
     justifyContent: 'flex-end',
     flexDirection: 'row',
     margin: 18,
+    marginRight: 28
   },
   addNewTaskText: {
     color: '#80BDD7',
     marginRight: 5,
   },
+
+  taskInFocusView: {
+    height: '100%',
+    width: '100%',
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(70, 70, 70, 0.6)',
+
+  },
+  taskInFocusBackground: {
+    height: '90%',
+    width: '90%',
+    borderRadius: 20,
+    backgroundColor: 'gray'
+  }
 });
 
 export default HomePage;
