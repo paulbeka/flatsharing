@@ -18,7 +18,7 @@ const HomePage = () => {
 
   const [taskInFocus, setTaskInFocus] = useState(null)
 
-  const [isModalVisible, setIsModalVisible] = useState(true);
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const openModal = () => {
     setIsModalVisible(true);
@@ -171,14 +171,11 @@ const styles = StyleSheet.create({
     position: 'absolute',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(70, 70, 70, 0.6)',
-
+    backgroundColor: 'rgba(80, 80, 80, 0.6)'
   },
   taskInFocusBackground: {
     height: '90%',
     width: '90%',
-    borderRadius: 20,
-    backgroundColor: 'gray'
   }
 });
 
