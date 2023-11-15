@@ -9,6 +9,7 @@ import CustomHeader from "../components/StackHeader/CustomHeader"
 import { useFonts, Quicksand_400Regular, Quicksand_500Medium, Quicksand_700Bold } from '@expo-google-fonts/quicksand';
 import CustomButton from "../components/Buttons/CustomButton";
 import Checkbox from 'expo-checkbox';
+import Icon from "react-native-vector-icons/AntDesign";
 
 
 const TaskCreationPage = () => {
@@ -19,7 +20,10 @@ const TaskCreationPage = () => {
   const [suggestions, setSuggestions] = useState([{"title": "Test"}, {"title": "Test"}, {"title": "Test"}])
   const [taskName, setTaskName] = useState("")
   const [taskDescription, setTaskDescription] = useState("")
-  const [taskIcons, setTaskIcons] = useState([])
+  const [taskIcons, setTaskIcons] = useState([
+    {name: "home"}, {name: "save"}, {name: "team"}, {name: "lock"}
+  ])
+  const [selectedTaskIcon, setSelectedTaskIcon] = useState("home")
   const [taskType, setTaskType] = useState(null)
   const [flatmatesIncluded, setFlatmatesIncluded] = useState(
     environment.flatmates.map((x) => {return {"name": x, "isIncluded": true}})
@@ -44,7 +48,8 @@ const TaskCreationPage = () => {
       "name": taskName,
       "description": taskDescription,
       "type": taskType,
-      "flatmatesIncluded": flatmatesIncluded
+      "flatmatesIncluded": flatmatesIncluded,
+      "icon": selectedTaskIcon
     }
     if(environment.tasks) {
       environment.tasks.push(newTask)
@@ -94,8 +99,7 @@ const TaskCreationPage = () => {
   }
 
   return (
-    <ScrollView style={{marginLeft: 10, marginRight: 10}}>
-      <SafeAreaView style={styles.mainContainer}>
+    <ScrollView contentContainerStyle={styles.mainContainer}>
         <Stack.Screen
           component={CustomHeader}
           options={{
@@ -128,7 +132,7 @@ const TaskCreationPage = () => {
 
         <View style={styles.inputTextView}>
           <View style={styles.inputForm}>
-            <Text style={{fontFamily: 'Regular', marginBottom: 5}}>*Task name:</Text>
+            <Text style={{fontFamily: 'Regular', marginBottom: 5}}>Task name:</Text>
             <TextInput
               value={taskName}
               onChangeText={setTaskName} 
@@ -138,7 +142,7 @@ const TaskCreationPage = () => {
           </View>
 
           <View style={styles.inputForm}>
-            <Text style={{fontFamily: 'Regular', marginBottom: 5}}>Task description:</Text>
+            <Text style={{fontFamily: 'Regular', marginBottom: 5}}>Task description (optional):</Text>
             <TextInput 
               value={taskDescription}
               onChangeText={setTaskDescription}
@@ -146,6 +150,20 @@ const TaskCreationPage = () => {
               placeholder="Description..."
             />
           </View>
+        </View>
+
+        <View style={{width: '90%'}}>
+          <Text style={{fontFamily: 'Bold', fontSize: 15, marginTop: 5}}>Choose task icon</Text>
+        </View>
+
+        <View style={styles.iconChooserView}>
+          <Icon name={selectedTaskIcon} size={50} style={{ padding: 10}}/>
+          <ScrollView style={{ maxHeight: 100 }} horizontal={true}>
+            {taskIcons.map((icon) => {
+              return <Icon size={50} style={styles.iconSelection} name={icon.name} onPress={
+                () => {setSelectedTaskIcon(icon.name)}} />
+            })}
+          </ScrollView>
         </View>
 
         <View style={{width: '90%'}}>
@@ -183,7 +201,7 @@ const TaskCreationPage = () => {
           <Text style={{fontFamily: 'Bold', fontSize: 15, marginTop: 5}}>Flatmates included:</Text>
         </View>
 
-        <ScrollView style={styles.flatmatePicker}>
+        <ScrollView style={{...styles.flatmatePicker, height: 100* flatmatesIncluded.length}}>
           {flatmatesIncluded.map((flatmate, index) => {
             return (
               <View style={styles.flatmateView} key={index}>
@@ -209,7 +227,6 @@ const TaskCreationPage = () => {
 
         <CustomButton doFunction={handleCreateTask} />
 
-      </SafeAreaView>
     </ScrollView>
   )
 }
@@ -221,6 +238,7 @@ const styles = StyleSheet.create({
   },
   suggestionScrollView: {
     width: '90%',
+    height: 120,
     margin: 10,
   },
   suggestionView: {
@@ -298,7 +316,21 @@ const styles = StyleSheet.create({
   flatmatePicker: {
     marginTop: 10,
     marginBottom: 5,
-    width: '90%'
+    width: '90%',
+  },
+
+  // ICON CHOOSING
+  iconChooserView: {
+    flexDirection: 'row',
+    margin: 10,
+    marginLeft: 15,
+  },
+  iconSelection: {
+    marginLeft: 10,
+    height: 70,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderRadius: 35,
+    padding: 10
   }
 })
 

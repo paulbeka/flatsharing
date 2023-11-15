@@ -10,20 +10,24 @@ export const createEnvironmentStore = () => {
     environments: null,
     userData: {
       username: "GenericUser",
-      language: "english"
+      language: "french"
     },
-    text: {},
+    language: null,
 
     loadLanguage() {
       if(this.userData["language"] === "english") {
         import('../../assets/languages/english')
         .then((language) => {
-          this.language = language.text
+          runInAction(() => {
+            this.language = language.text
+          })
         });
       } else if(this.userData["language"] === "french") {
         import('../../assets/languages/french')
         .then((language) => {
-          this.language = language.text
+          runInAction(() => {
+            this.language = language.text
+          })
         })
       }
     },

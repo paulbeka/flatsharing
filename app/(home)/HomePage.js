@@ -73,7 +73,7 @@ const HomePage = () => {
                 <Pressable style={styles.yourTaskView} key={key} onPress={() => {setTaskInFocus(task); openModal()}}>
                   <Text style={{ fontFamily: 'QuicksandRegular' }}>{task.name}</Text>
                   <Text style={{ fontFamily: 'QuicksandRegular' }}>{task.description}</Text>
-                  <Text style={{ fontFamily: 'QuicksandRegular' }}>{task.flatmatesIncluded[0].name}</Text>
+                  <Icon size={30} name={task.icon} />
                 </Pressable>
               );
             }) : <Text style={{ fontFamily: 'QuicksandRegular' }}>You don't have any tasks!</Text>}
@@ -86,7 +86,7 @@ const HomePage = () => {
                 <Pressable style={styles.yourTaskView} key={key} onPress={() => {setTaskInFocus(task); openModal()}}>
                   <Text style={{ fontFamily: 'QuicksandRegular' }}>{task.name}</Text>
                   <Text style={{ fontFamily: 'QuicksandRegular' }}>{task.description}</Text>
-                  <Text style={{ fontFamily: 'QuicksandRegular' }}>{task.flatmatesIncluded[0].name}</Text>
+                  <Icon size={30} name={task.icon} />
                 </Pressable>
               );
             }) : <Text style={{ fontFamily: 'QuicksandRegular' }}>Your flatmates don't have any tasks!</Text>}
