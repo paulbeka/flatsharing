@@ -4,6 +4,7 @@ import { auth } from '../../firebaseConfig';
 import { useFonts, Quicksand_400Regular } from '@expo-google-fonts/quicksand';
 import Icon from 'react-native-vector-icons/AntDesign';
 import { useRouter, Stack } from 'expo-router';
+import { useEnvironmentsStore } from "../store/EnvironmentsContext";
 
 // import {
 //   GoogleSignin,
@@ -16,6 +17,9 @@ import { useRouter, Stack } from 'expo-router';
 
 
 const Register = ({ setInitialView }) => {
+  const environmentsStore = useEnvironmentsStore();
+  const text = environmentsStore.language;
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -58,10 +62,10 @@ const Register = ({ setInitialView }) => {
       <View style={{width: '100%', alignItems: 'center', marginTop: 75}}>
         <View style={{ width: '100%', alignItems: 'center' }}>
           <View style={styles.loginViewText}>
-            <Text style={{ fontSize: 32, fontFamily: 'Quicksand' }}>Create account</Text>
+            <Text style={{ fontSize: 32, fontFamily: 'Quicksand' }}>{text.createAccount}</Text>
           </View>
           <View style={styles.inputContainer}>
-            <TextInput value={email} onChangeText={setEmail} style={styles.input} placeholder="Email" />
+            <TextInput value={email} onChangeText={setEmail} style={styles.input} placeholder={text.email} />
           </View>
 
           <View style={styles.inputContainer}>
@@ -69,7 +73,7 @@ const Register = ({ setInitialView }) => {
               value={password}
               onChangeText={setPassword}
               style={styles.input}
-              placeholder="Password"
+              placeholder={text.password}
               secureTextEntry={true}
             />
           </View>
@@ -79,7 +83,7 @@ const Register = ({ setInitialView }) => {
               value={confirmPassword}
               onChangeText={setConfirmPassword}
               style={styles.input}
-              placeholder="Confirm Password"
+              placeholder={text.confirmPassword}
               secureTextEntry={true}
             />
           </View>
@@ -87,14 +91,14 @@ const Register = ({ setInitialView }) => {
           {error !== "" ? <Text style={{color: 'red', width: '90%'}}>{error}</Text> : <></>}
 
           <Pressable onPress={submitRegister} style={styles.loginButton}>
-            <Text style={{ fontSize: 26, fontWeight: 'semibold' }}>Sign Up</Text>
+            <Text style={{ fontSize: 26, fontWeight: 'semibold' }}>{text.signUp}</Text>
           </Pressable>
         </View>
 
         <View style={{ flexDirection: 'row', alignItems: 'center', width: '90%' }}>
           <View style={{ flex: 1, height: 1, backgroundColor: 'black' }} />
           <View>
-            <Text style={{ width: 140, textAlign: 'center' }}>Or Register In With</Text>
+            <Text style={{ width: 140, textAlign: 'center' }}>{text.orRegisterWith}</Text>
           </View>
           <View style={{ flex: 1, height: 1, backgroundColor: 'black' }} />
         </View>
@@ -108,9 +112,9 @@ const Register = ({ setInitialView }) => {
       
 
       <View style={styles.dontHaveAccount}>
-        <Text>Already have an account?  </Text>
+        <Text>{text.alreadyHaveAccount}  </Text>
         <Pressable onPress={() => {setInitialView("login")}}>
-          <Text style={{ fontWeight: 'bold' }}>Log In Now</Text>
+          <Text style={{ fontWeight: 'bold' }}>{text.logInNow}</Text>
         </Pressable>
       </View>
     </View>

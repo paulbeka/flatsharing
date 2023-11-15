@@ -6,12 +6,16 @@ import Icon from "react-native-vector-icons/AntDesign";
 import { useFonts, Quicksand_400Regular, Quicksand_700Bold } from '@expo-google-fonts/quicksand'; // Import the fonts
 
 
-const TaskFocusedView = ({ task }) => {
+const TaskFocusedView = ({ task, closeModal }) => {
 
   const [fontsLoaded] = useFonts({
     QuicksandRegular: Quicksand_400Regular,
     QuicksandBold: Quicksand_700Bold,
   });
+
+  const taskCompleted = () => {
+    closeModal()
+  }
 
   if (!fontsLoaded) {
     return null;
@@ -22,8 +26,10 @@ const TaskFocusedView = ({ task }) => {
         <Text style={styles.title}>{task.name}</Text>
         <Icon size={200} name="home" style={styles.iconStyle}/>
         <Text>{task.description}</Text>
+        <Text style={{ fontFamily: 'QuicksandRegular', fontSize: 20 }}>Finish this task by:</Text>
+        <Text>{task.date}</Text>
       </View>
-      <Pressable style={styles.button} onPress={() => {console.log("HEllo world")}}>
+      <Pressable style={styles.button} onPress={taskCompleted}>
         <Text style={{
           fontSize: 22, fontFamily: 'QuicksandBold'
         }}>Task Done</Text>

@@ -9,7 +9,23 @@ export const createEnvironmentStore = () => {
   return {
     environments: null,
     userData: {
-      username: "GenericUser"
+      username: "GenericUser",
+      language: "english"
+    },
+    text: {},
+
+    loadLanguage() {
+      if(this.userData["language"] === "english") {
+        import('../../assets/languages/english')
+        .then((language) => {
+          this.language = language.text
+        });
+      } else if(this.userData["language"] === "french") {
+        import('../../assets/languages/french')
+        .then((language) => {
+          this.language = language.text
+        })
+      }
     },
 
     // LOAD ENVIRONMENTS AT APP STARTUP 

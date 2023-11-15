@@ -16,6 +16,9 @@ const HomePage = () => {
   const environmentStore = useEnvironmentsStore()
   const environment = environmentStore.getEnvironment(0)
 
+  let usersTasks = environment.tasks.filter((el) => environmentStore.userData["username"] in el.flatmatesIncluded)
+  let flatmatesTasks = environment.tasks.filter((el) => !(environmentStore.userData["username"] in el.flatmatesIncluded))
+
   const [taskInFocus, setTaskInFocus] = useState(null)
 
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -64,7 +67,8 @@ const HomePage = () => {
           <Text style={{ fontFamily: 'QuicksandRegular' }}>No tasks today! :D</Text>
           <Text style={{ ...styles.subTitle, fontFamily: 'QuicksandBold', marginTop: 20 }}>Your upcoming tasks...</Text>
           <ScrollView horizontal={true}>
-            {environment.tasks.map((task, key) => {
+            {usersTasks.length ? 
+            usersTasks.map((task, key) => {
               return (
                 <Pressable style={styles.yourTaskView} key={key} onPress={() => {setTaskInFocus(task); openModal()}}>
                   <Text style={{ fontFamily: 'QuicksandRegular' }}>{task.name}</Text>
@@ -72,11 +76,12 @@ const HomePage = () => {
                   <Text style={{ fontFamily: 'QuicksandRegular' }}>{task.flatmatesIncluded[0].name}</Text>
                 </Pressable>
               );
-            })}
+            }) : <Text style={{ fontFamily: 'QuicksandRegular' }}>You don't have any tasks!</Text>}
           </ScrollView>
           <Text style={{ ...styles.subTitle, fontFamily: 'QuicksandBold', marginTop: 20 }}>Your flatmates' tasks...</Text>
           <ScrollView horizontal={true}>
-            {environment.tasks.map((task, key) => {
+            {flatmatesTasks.length ? 
+            flatmatesTasks.map((task, key) => {
               return (
                 <Pressable style={styles.yourTaskView} key={key} onPress={() => {setTaskInFocus(task); openModal()}}>
                   <Text style={{ fontFamily: 'QuicksandRegular' }}>{task.name}</Text>
@@ -84,7 +89,7 @@ const HomePage = () => {
                   <Text style={{ fontFamily: 'QuicksandRegular' }}>{task.flatmatesIncluded[0].name}</Text>
                 </Pressable>
               );
-            })}
+            }) : <Text style={{ fontFamily: 'QuicksandRegular' }}>Your flatmates don't have any tasks!</Text>}
           </ScrollView>
         </ScrollView>
 
@@ -103,14 +108,14 @@ const HomePage = () => {
         </View>
 
         <Modal
-          animationType="slide"
+          animationType="fade"
           transparent={true}
           visible={isModalVisible}
           onRequestClose={closeModal}
         >
           <View style={styles.taskInFocusView}>
             <Pressable style={styles.taskInFocusBackground} onPress={closeModal}>
-              <TaskFocusedView task={taskInFocus} />
+              <TaskFocusedView task={taskInFocus} closeModal={closeModal}/>
             </Pressable>
           </View>
         </Modal>

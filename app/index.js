@@ -20,6 +20,7 @@ const App = observer(() => {
   const [initialView, setInitialView] = useState(null);
   
   useEffect(() => {
+    environmentsStore.loadLanguage()
     const unsubscribe = firebase.auth().onAuthStateChanged((authUser) => {
       setUser(authUser);
       if(authUser !== null) {

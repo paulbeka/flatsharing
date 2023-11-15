@@ -4,6 +4,7 @@ import { auth } from '../../firebaseConfig';
 import { useFonts, Quicksand_400Regular } from '@expo-google-fonts/quicksand';
 import { Stack, useRouter } from 'expo-router';
 import Icon from 'react-native-vector-icons/AntDesign';
+import { useEnvironmentsStore } from "../store/EnvironmentsContext";
 
 // import {
 //   GoogleSignin,
@@ -14,6 +15,9 @@ import Icon from 'react-native-vector-icons/AntDesign';
 // GoogleSignin.configure();
 
 const Login = ({ setInitialView }) => {
+  const environmentsStore = useEnvironmentsStore()
+  const text = environmentsStore.language;
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -58,10 +62,10 @@ const Login = ({ setInitialView }) => {
       <View style={{width: '100%', alignItems: 'center', marginTop: 75}}>
         <View style={{ width: '100%', alignItems: 'center' }}>
           <View style={styles.loginViewText}>
-            <Text style={{ fontSize: 32, fontFamily: 'Quicksand' }}>Log In</Text>
+            <Text style={{ fontSize: 32, fontFamily: 'Quicksand' }}>{text.logIn}</Text>
           </View>
           <View style={styles.inputContainer}>
-            <TextInput value={email} onChangeText={setEmail} style={styles.input} placeholder="Email" />
+            <TextInput value={email} onChangeText={setEmail} style={styles.input} placeholder={text.email} />
           </View>
 
           <View style={styles.inputContainer}>
@@ -69,7 +73,7 @@ const Login = ({ setInitialView }) => {
               value={password}
               onChangeText={setPassword}
               style={styles.input}
-              placeholder="Password"
+              placeholder={text.password}
               secureTextEntry={!isPasswordVisible} // Toggle secureTextEntry based on visibility state
             />
             <Pressable onPress={togglePasswordVisibility} style={styles.visibilityIcon}>
@@ -84,18 +88,18 @@ const Login = ({ setInitialView }) => {
           {error !== "" ? <Text style={{color: 'red', width: '90%'}}>{error}</Text> : <></>}
 
           <View style={styles.forgotPasswordLinkView}>
-            <Text style={{ textDecorationLine: 'underline' }}>Forgot password?</Text>
+            <Text style={{ textDecorationLine: 'underline' }}>{text.forgotPassword}</Text>
           </View>
 
           <Pressable onPress={submitLogin} style={styles.loginButton}>
-            <Text style={{ fontSize: 26, fontWeight: 'semibold' }}>Log In</Text>
+            <Text style={{ fontSize: 26, fontWeight: 'semibold' }}>{text.logIn}</Text>
           </Pressable>
         </View>
 
         <View style={{ flexDirection: 'row', alignItems: 'center', width: '90%' }}>
           <View style={{ flex: 1, height: 1, backgroundColor: 'black' }} />
           <View>
-            <Text style={{ width: 120, textAlign: 'center' }}>Or Log In With</Text>
+            <Text style={{ width: 120, textAlign: 'center' }}>{text.orLogInWith}</Text>
           </View>
           <View style={{ flex: 1, height: 1, backgroundColor: 'black' }} />
         </View>
@@ -109,9 +113,9 @@ const Login = ({ setInitialView }) => {
       
 
       <View style={styles.dontHaveAccount}>
-        <Text>Don't have an account?  </Text>
+        <Text>{text.dontHaveAnAccount} </Text>
         <Pressable onPress={() => {setInitialView("register")}}>
-          <Text style={{ fontWeight: 'bold' }}>Sign Up Now</Text>
+          <Text style={{ fontWeight: 'bold' }}>{text.signUpNow}</Text>
         </Pressable>
       </View>
     </View>

@@ -4,12 +4,13 @@ import {
 } from 'react-native';
 import { Stack, useRouter } from 'expo-router';
 import { useFonts, Quicksand_700Bold } from '@expo-google-fonts/quicksand';
+import { useEnvironmentsStore } from "../store/EnvironmentsContext";
 
 
 const FirstView = ({ setInitialView }) => {
+  const environmentsStore = useEnvironmentsStore()
+  const text = environmentsStore.language;
 
-  const router = useRouter();
-  
   const [fontsLoaded] = useFonts({
     Quicksand_700Bold
   });
@@ -29,11 +30,11 @@ const FirstView = ({ setInitialView }) => {
 
       <View style={styles.buttonView}>
         <Pressable style={{...styles.button, backgroundColor: '#80BDD7'}} onPress={() => { setInitialView("register") }}>
-          <Text style={{ fontFamily: 'Quicksand_700Bold' }}>Sign Up</Text>
+          <Text style={{ fontFamily: 'Quicksand_700Bold' }}>{text.signUp}</Text>
         </Pressable>
         
         <Pressable style={styles.button} onPress={() => { setInitialView("login") }}>
-          <Text style={{ fontFamily: 'Quicksand_700Bold' }}>Log In</Text>
+          <Text style={{ fontFamily: 'Quicksand_700Bold' }}>{text.logIn}</Text>
         </Pressable>
       </View>
 
