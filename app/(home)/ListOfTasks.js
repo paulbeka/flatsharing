@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Stack } from "expo-router";
+import { Stack, useRouter } from "expo-router";
 import { useEnvironmentsStore } from "../store/EnvironmentsContext";
 import CustomHeader from "../components/StackHeader/CustomHeader";
 import { ScrollView, View, Text, StyleSheet } from "react-native";
@@ -10,6 +10,7 @@ import Icon from "react-native-vector-icons/AntDesign";
 const ListOfTasks = () => {
   const environmentsStore = useEnvironmentsStore();
   let environment = environmentsStore.getEnvironment(0);
+  const router = useRouter()
   
   const [tasks, setTasks] = useState(environment.tasks)
 
@@ -18,11 +19,18 @@ const ListOfTasks = () => {
     Bold: Quicksand_700Bold
   })
 
+  // fix this for the last items
   const deleteItem = (item) => {
-    console.log(item)
     environment.tasks = environment.tasks.filter((el) => el !== item)
-    environmentsStore.setEnvironment(environment)
-    setTasks(environment.tasks)
+    if(environment.tasks.length <= 0) {
+      environment.tasks = []
+      setTasks(environment.tasks)
+      environmentsStore.setEnvironment(environment)
+      router.replace("/")
+    } else {
+      setTasks(environment.tasks)
+      environmentsStore.setEnvironment(environment)
+    }
   }
 
   if (!fontsLoaded) {
@@ -41,7 +49,7 @@ const ListOfTasks = () => {
         }}
       />
 
-      {tasks.length > 0 ? 
+      {tasks !== undefined && tasks.length > 0 ? 
       <ScrollView style={{width: '90%'}}>
         {tasks.map((task, key) => (
           <View style={styles.taskView} key={key}>

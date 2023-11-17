@@ -31,6 +31,10 @@ const App = observer(() => {
     return () => unsubscribe();
   }, []);
 
+  if(environmentsStore.language === null) {
+    return null
+  }
+
   if(user) {
     if(environmentsStore.environments === null) {
       return <Text>Loading...</Text>

@@ -16,11 +16,7 @@ const HomePage = () => {
   const environmentStore = useEnvironmentsStore()
   const environment = environmentStore.getEnvironment(0)
 
-  let usersTasks = environment.tasks.filter((el) => environmentStore.userData["username"] in el.flatmatesIncluded)
-  let flatmatesTasks = environment.tasks.filter((el) => !(environmentStore.userData["username"] in el.flatmatesIncluded))
-
   const [taskInFocus, setTaskInFocus] = useState(null)
-
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const openModal = () => {
@@ -51,6 +47,8 @@ const HomePage = () => {
   if(environment.tasks === undefined) {
     return <NoTasksYetPage />;
   } else {
+    let usersTasks = environment.tasks.filter((el) => environmentStore.userData["username"] in el.flatmatesIncluded)
+    let flatmatesTasks = environment.tasks.filter((el) => !(environmentStore.userData["username"] in el.flatmatesIncluded))
     return (
       <View style={{justifyContent: 'space-between', height: '100%'}}>
         <Stack.Screen

@@ -14,7 +14,7 @@ const NoTasksYetPage = () => {
         <Link href="/TaskCreationPage" asChild>
           <Pressable style={styles.button}>
             <Text style={styles.buttonText}>
-              Create New Tasks
+              Create New Task
             </Text>
           </Pressable>
         </Link>

@@ -2,6 +2,7 @@ import { ref, set, child, push, update, get } from "firebase/database";
 import { database } from "../../firebaseConfig";
 import firebase from 'firebase/compat/app';
 import { runInAction } from "mobx";
+import { getLocales } from 'expo-localization';
 
 
 // TODO: Store the environment ID so it does not need to be fetched every time
@@ -10,19 +11,19 @@ export const createEnvironmentStore = () => {
     environments: null,
     userData: {
       username: "GenericUser",
-      language: "french"
+      language: getLocales()[0].languageCode
     },
     language: null,
 
     loadLanguage() {
-      if(this.userData["language"] === "english") {
+      if(this.userData["language"] === "en") {
         import('../../assets/languages/english')
         .then((language) => {
           runInAction(() => {
             this.language = language.text
           })
         });
-      } else if(this.userData["language"] === "french") {
+      } else if(this.userData["language"] === "fr") {
         import('../../assets/languages/french')
         .then((language) => {
           runInAction(() => {
