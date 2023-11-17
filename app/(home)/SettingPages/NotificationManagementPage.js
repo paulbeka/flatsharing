@@ -6,7 +6,7 @@ import {
 
 const NotificationManagementPage = () => {
   return (
-    <View>
+    <View> 
 
     </View>
   )

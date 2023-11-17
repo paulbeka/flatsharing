@@ -18,6 +18,7 @@
     "android": {
       "softwareKeyboardLayoutMode": "pan"
     },
-    "slug": "flatsharing"
+    "slug": "flatsharing",
+    "orientation": "portrait"
   }
 }

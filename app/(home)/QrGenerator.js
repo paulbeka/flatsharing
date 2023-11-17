@@ -29,6 +29,16 @@ const QrGenerator = () => {
           size={250}
         />
       </View>
+
+      <View>
+        <Text>Share link for others to join:</Text>
+        {/* Some kind of share link here */}
+      </View>
+
+      <View>
+        <Text>Or, use this share code to join:</Text>
+        <Text>{environment.envId}</Text>
+      </View>
     </SafeAreaView>
   )
 }

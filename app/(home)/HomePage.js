@@ -44,11 +44,12 @@ const HomePage = () => {
     return <WelcomePage />
   }
   // You have an environment, but no tasks have been defined
-  if(environment.tasks === undefined) {
+  if(environment.tasks === undefined || environment.tasks.length === 0) {
     return <NoTasksYetPage />;
   } else {
-    let usersTasks = environment.tasks.filter((el) => environmentStore.userData["username"] in el.flatmatesIncluded)
-    let flatmatesTasks = environment.tasks.filter((el) => !(environmentStore.userData["username"] in el.flatmatesIncluded))
+    console.log(environment.tasks[0])
+    let usersTasks = environment.tasks.filter((el) => environmentStore.userData["username"] in el.flatmates)
+    let flatmatesTasks = environment.tasks.filter((el) => !(environmentStore.userData["username"] in el.flatmates))
     return (
       <View style={{justifyContent: 'space-between', height: '100%'}}>
         <Stack.Screen

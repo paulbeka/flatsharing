@@ -1,25 +1,63 @@
 import React, { useState } from "react";
 import { SafeAreaView, View, Text, StyleSheet, Pressable, ScrollView } from "react-native";
-import { Link } from "expo-router";
+import { Stack, useRouter } from 'expo-router'
+import Icon from "react-native-vector-icons/AntDesign";
+import { useEnvironmentsStore } from "../store/EnvironmentsContext";
+import CustomHeader from "../components/StackHeader/CustomHeader";
+import { Task } from "../objects/Task";
+
 
 const TemplatePage = () => {
+  const environmentStore = useEnvironmentsStore()
+  const router = useRouter()
+  let environment = environmentStore.getEnvironment()
+
   const [templates, setTemplates] = useState([
-    { title: "Test Template", description: "This is a test template with nothing in it.", "templateId": "/" },
-    { title: "Test Template", description: "This is a test template with nothing in it.", "templateId": "/" }
+    { 
+      title: "Test Template", 
+      items: [
+        Task("test", "", 1, ["John"], "home"),
+      ]
+    },
+    { 
+      title: "Test Template 2", 
+      items: [
+        Task("test", "", 1, ["John"], "home"),
+        Task("test", "", 1, ["John"], "home"),
+        Task("test", "", 1, ["John"], "home"),
+      ]
+    },
   ]);
+
+  const selectTemplate = (template) => {
+    environment.tasks = template.items
+    environmentStore.setEnvironment(environment)
+    router.replace("/")
+  }
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.titleText}>Pre-made Templates</Text>
+      <Stack.Screen
+        component={CustomHeader}
+        options={{
+          headerShown: true,
+          header: ({ route, navigation }) => (
+            <CustomHeader title="Templates" />
+          ),
+        }}
+      />
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         {templates.map((template, key) => {
           return (
-          <Link key={key} href={template.templateId} asChild>
-            <Pressable style={styles.templateItem}>
+            <Pressable key={key} style={styles.templateItem} onPress={() => selectTemplate(template)}>
               <Text style={styles.templateTitle}>{template.title}</Text>
-              <Text style={styles.templateDescription}>{template.description}</Text>
+              <View style={styles.iconsOnTemplates}>
+                {template.items.map((task, key) => (
+                  <Icon style={styles.templateIcon} size={25} name={task.icon}  key={key}/>
+                ))}
+              </View>
             </Pressable>
-          </Link>)
+          )
         })}
       </ScrollView>
     </SafeAreaView>
@@ -30,12 +68,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#f0f0f0",
-  },
-  titleText: {
-    fontWeight: "bold",
-    fontSize: 24,
-    padding: 16,
-    textAlign: "center",
   },
   scrollViewContent: {
     padding: 16,
@@ -51,10 +83,13 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
   },
-  templateDescription: {
-    fontSize: 14,
-    marginTop: 8,
+  iconsOnTemplates: {
+    flexDirection: 'row',
+    marginTop: 10
   },
+  templateIcon: {
+    marginRight: 5
+  }
 });
 
 export default TemplatePage;

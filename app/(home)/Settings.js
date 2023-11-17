@@ -13,7 +13,6 @@ import { auth } from "../../firebaseConfig";
 
 const Settings = () => {
   const environmentsStore = useEnvironmentsStore();
-  const environment = environmentsStore.getEnvironment(0);
 
   const router = useRouter()
 

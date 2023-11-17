@@ -1,6 +1,7 @@
 import { Link } from "expo-router";
 import React from "react";
 import { StyleSheet, View, Pressable, Text } from 'react-native';
+import Icon from 'react-native-vector-icons/AntDesign';
 
 
 const NoTasksYetPage = () => {
@@ -34,6 +35,11 @@ const NoTasksYetPage = () => {
             </Text>
           </Pressable>
         </Link>
+        <View style={{}}>
+          <Link href="QrGenerator" asChild>
+            <Icon size={50} name="qrcode" />
+          </Link>
+        </View>
       </View>
     </View>
   )

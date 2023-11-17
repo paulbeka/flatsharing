@@ -9,8 +9,8 @@ import Icon from "react-native-vector-icons/AntDesign";
 
 const ListOfTasks = () => {
   const environmentsStore = useEnvironmentsStore();
-  let environment = environmentsStore.getEnvironment(0);
   const router = useRouter()
+  let environment = environmentsStore.getEnvironment(0); 
   
   const [tasks, setTasks] = useState(environment.tasks)
 

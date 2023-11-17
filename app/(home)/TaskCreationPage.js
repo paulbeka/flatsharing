@@ -10,6 +10,7 @@ import { useFonts, Quicksand_400Regular, Quicksand_500Medium, Quicksand_700Bold 
 import CustomButton from "../components/Buttons/CustomButton";
 import Checkbox from 'expo-checkbox';
 import Icon from "react-native-vector-icons/AntDesign";
+import { Task } from "../objects/Task";
 
 
 const TaskCreationPage = () => {
@@ -44,13 +45,9 @@ const TaskCreationPage = () => {
       return
     }
 
-    const newTask = {
-      "name": taskName,
-      "description": taskDescription,
-      "type": taskType,
-      "flatmatesIncluded": flatmatesIncluded,
-      "icon": selectedTaskIcon
-    }
+    const flatmates = flatmatesIncluded.map(item => item.name);
+    const newTask = Task(taskName, taskDescription, taskType, flatmates, selectedTaskIcon)
+    
     if(environment.tasks) {
       environment.tasks.push(newTask)
     } else {
