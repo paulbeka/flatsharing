@@ -13,7 +13,8 @@ const firebaseConfig = {
   messagingSenderId: "211032401088",
   appId: "1:211032401088:web:d1066629784cd9382ab925",
   measurementId: "G-TGHW6GKH0Q",
-  databaseURL: "https://flatsharing-c0dfe-default-rtdb.europe-west1.firebasedatabase.app"
+  databaseURL: "https://flatsharing-c0dfe-default-rtdb.europe-west1.firebasedatabase.app",
+  messagingSenderId: "211032401088",
 };
 
 const app = firebase.default.initializeApp(firebaseConfig);

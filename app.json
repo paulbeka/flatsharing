@@ -16,9 +16,21 @@
     ],
     "name": "flatsharing",
     "android": {
-      "softwareKeyboardLayoutMode": "pan"
+      "softwareKeyboardLayoutMode": "pan",
+      "permissions": [
+        "android.permission.CAMERA"
+      ],
+      "package": "com.bekae.flatsharing"
     },
     "slug": "flatsharing",
-    "orientation": "portrait"
+    "orientation": "portrait",
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "91c6ab3f-1a23-4b6a-81b1-88975f88c6ed"
+      }
+    }
   }
 }
