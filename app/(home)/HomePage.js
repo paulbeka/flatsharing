@@ -13,7 +13,7 @@ import { useEnvironmentsStore } from "../store/EnvironmentsContext";
 
 
 const HomePage = () => {
-  
+
   const environmentStore = useEnvironmentsStore()
   const environment = environmentStore.getEnvironment(0)
 
@@ -48,7 +48,6 @@ const HomePage = () => {
   if(environment.tasks === undefined || environment.tasks.length === 0) {
     return <NoTasksYetPage />;
   } else {
-    console.log(environment.tasks[0])
     let usersTasks = environment.tasks.filter((el) => environmentStore.userData["username"] in el.flatmates)
     let flatmatesTasks = environment.tasks.filter((el) => !(environmentStore.userData["username"] in el.flatmates))
     return (

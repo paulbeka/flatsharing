@@ -54,13 +54,22 @@ const TaskCreationPage = () => {
     } else {
       environment.tasks = [newTask]
     }
+    // TODO: check if this worked before scheduling notification
     environmentsStore.setEnvironment(environment)
 
-    scheduleNotification({
-      title: "You have a task to do!",
-      body: `Task to do: ${taskName}`,
-      time: { seconds: 10 }
-    })
+    if(taskType === 1) {
+      // change to calculate the date of when it fires
+      // should be #flatmates * time diff --> and fire at 7am of the day
+      const trigger = new Date(Date.now() + 60 * 60 * 1000);
+      trigger.setMinutes(0);
+      trigger.setSeconds(0);
+
+      scheduleNotification({
+        title: "You have a task to do!",
+        body: `Task to do: ${taskName}`,
+        time: trigger
+      })
+    }
 
     router.replace("/")
   }
