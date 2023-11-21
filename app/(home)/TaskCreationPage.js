@@ -11,6 +11,7 @@ import CustomButton from "../components/Buttons/CustomButton";
 import Checkbox from 'expo-checkbox';
 import Icon from "react-native-vector-icons/AntDesign";
 import { Task } from "../objects/Task";
+import { scheduleNotification } from "../notifications/NotificationsHandler";
 
 
 const TaskCreationPage = () => {
@@ -54,6 +55,12 @@ const TaskCreationPage = () => {
       environment.tasks = [newTask]
     }
     environmentsStore.setEnvironment(environment)
+
+    scheduleNotification({
+      title: "You have a task to do!",
+      body: `Task to do: ${taskName}`,
+      time: { seconds: 10 }
+    })
 
     router.replace("/")
   }

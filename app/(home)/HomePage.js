@@ -13,6 +13,7 @@ import { useEnvironmentsStore } from "../store/EnvironmentsContext";
 
 
 const HomePage = () => {
+  
   const environmentStore = useEnvironmentsStore()
   const environment = environmentStore.getEnvironment(0)
 

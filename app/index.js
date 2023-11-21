@@ -12,9 +12,15 @@ import Register from './auth/Register'
 import { useRouter } from 'expo-router';
 import * as Notifications from 'expo-notifications';
 import * as Device from 'expo-device';
-import Constants from 'expo-constants';
-import { Button } from 'react-native';
 
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: true,
+    shouldSetBadge: false,
+  }),
+});
 
 const App = observer(() => {
   const environmentsStore = useEnvironmentsStore();
@@ -56,25 +62,6 @@ const App = observer(() => {
 
   }, []);
 
-  async function sendPushNotification(expoPushToken) {
-    const message = {
-      to: expoPushToken,
-      sound: 'default',
-      title: 'Original Title',
-      body: 'And here is the body!',
-      data: { someData: 'goes here' },
-    };
-
-    await fetch('https://exp.host/--/api/v2/push/send', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Accept-encoding': 'gzip, deflate',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(message),
-    });
-  }
 
   async function registerForPushNotificationsAsync() {
     let token;
@@ -102,15 +89,12 @@ const App = observer(() => {
       token = await Notifications.getExpoPushTokenAsync({
         projectId: '91c6ab3f-1a23-4b6a-81b1-88975f88c6ed',
       });
-      console.log(token)
     } else {
       alert('Must use physical device for Push Notifications');
     }
 
     return token.data;
   }
-
-  sendPushNotification(expoPushToken)
 
   if(environmentsStore.language === null) {
     return null
