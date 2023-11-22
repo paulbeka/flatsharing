@@ -11,7 +11,6 @@ import CustomButton from "../components/Buttons/CustomButton";
 import Checkbox from 'expo-checkbox';
 import Icon from "react-native-vector-icons/AntDesign";
 import { Task } from "../objects/Task";
-import { scheduleNotification } from "../notifications/NotificationsHandler";
 
 
 const TaskCreationPage = () => {
@@ -30,8 +29,7 @@ const TaskCreationPage = () => {
   const [flatmatesIncluded, setFlatmatesIncluded] = useState(
     environment.flatmates.map((x) => {return {"name": x, "isIncluded": true}})
   )
-  const [taskInterval, setTaskInterval] = useState(null)
-  const [unit, setUnit] = useState('days');
+  const [timeInterval, setTimeInterval] = useState("")
   const [error, setError] = useState(null)
 
   const [fontsLoaded] = useFonts({
@@ -46,30 +44,22 @@ const TaskCreationPage = () => {
       return
     }
 
+    if(environment.tasks !== undefined && 
+       environment.tasks !== null &&
+       environment.tasks.map(item => item.name).includes(taskName)) {
+      setError("Name for task already taken. Please choose a different name.")
+      return
+    }
+
     const flatmates = flatmatesIncluded.map(item => item.name);
-    const newTask = Task(taskName, taskDescription, taskType, flatmates, selectedTaskIcon)
-    
+    const newTask = Task(taskName, taskDescription, taskType, flatmates, selectedTaskIcon, parseInt(timeInterval))
+
     if(environment.tasks) {
       environment.tasks.push(newTask)
     } else {
       environment.tasks = [newTask]
     }
-    // TODO: check if this worked before scheduling notification
     environmentsStore.setEnvironment(environment)
-
-    if(taskType === 1) {
-      // change to calculate the date of when it fires
-      // should be #flatmates * time diff --> and fire at 7am of the day
-      const trigger = new Date(Date.now() + 60 * 60 * 1000);
-      trigger.setMinutes(0);
-      trigger.setSeconds(0);
-
-      scheduleNotification({
-        title: "You have a task to do!",
-        body: `Task to do: ${taskName}`,
-        time: trigger
-      })
-    }
 
     router.replace("/")
   }
@@ -84,16 +74,9 @@ const TaskCreationPage = () => {
     if (taskType === 0) {
       return (
         <View>
-          <Text>Select your task interval here:</Text>
-          <Picker
-                selectedValue={unit}
-                onValueChange={(itemValue) => setUnit(itemValue)}
-            >
-                <Picker.Item label="Days" value="days" />
-                <Picker.Item label="Weeks" value="weeks" />
-                {/* Add more time units as needed */}
-            </Picker>
-          </View>
+          <Text>Input your task interval here:</Text>
+          <TextInput style={styles.inputBar} onChangeText={setTimeInterval} value={timeInterval}/>
+        </View>
       )
     } else if (taskType === 1) {
       return (

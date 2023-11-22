@@ -10,6 +10,7 @@ import CustomHeader from '../components/StackHeader/CustomHeader'
 import WelcomePage from "../components/HomePageComponents/WelcomePage";
 import TaskFocusedView from "../components/HomePageComponents/TaskFocusedView";
 import { useEnvironmentsStore } from "../store/EnvironmentsContext";
+import * as Notifications from 'expo-notifications';
 
 
 const HomePage = () => {

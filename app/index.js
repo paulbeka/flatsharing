@@ -33,7 +33,6 @@ const App = observer(() => {
   const notificationListener = useRef();
   const responseListener = useRef();
 
-
   useEffect(() => {
     environmentsStore.loadLanguage()
     const unsubscribe = firebase.auth().onAuthStateChanged((authUser) => {

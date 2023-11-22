@@ -40,6 +40,7 @@ export const createEnvironmentStore = () => {
       get(child(dbRef, `/users/user-${userId}`)).then((snapshot) => {
         if (snapshot.exists()) {
           const envId = Object.keys(snapshot.val())[0];
+          // TODO: when these tasks are fetched, make sure to check that there has been no change in timing
           get(child(dbRef, `/environments/${envId}`)).then((res) => {
             if(res.exists()) {
               runInAction(() => {
