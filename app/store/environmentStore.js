@@ -45,6 +45,9 @@ export const createEnvironmentStore = () => {
             if(res.exists()) {
               runInAction(() => {
                 this.environments = {...res.val(), envId: envId}
+                // here handle the change in time 
+                // if there is a change where the time is set to be earlier, don't reshuffle
+                // and just make it the next persons's task
               })
             } else {
               console.log("Wrong environment key.")

@@ -97,7 +97,7 @@ const HomePage = () => {
           <Link href="QrGenerator" asChild>
             <Icon size={50} name="qrcode" />
           </Link>
-          <Link href="/TaskCreationPage" asChild>
+          <Link href="/TaskCreatePage" asChild>
             <Pressable style={styles.addNewTaskPressable}>
               <View style={{ justifyContent: 'center' }}>
                 <Text style={{ ...styles.addNewTaskText, fontFamily: 'QuicksandBold' }}>Add new task</Text>

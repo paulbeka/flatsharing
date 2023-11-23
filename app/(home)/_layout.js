@@ -40,6 +40,7 @@ const Layout = () => {
       />
       <Tabs.Screen name="NewEnvironmentPage" options={{ href: null }} />
       <Tabs.Screen name="TaskCreationPage" options={{ href: null }} />
+      <Tabs.Screen name="TaskCreatePage" options={{ href: null }} />
       <Tabs.Screen name="TemplatePage" options={{ href: null }} />
       <Tabs.Screen name="QrGenerator" options={{ href: null }} />
       <Tabs.Screen name="JoinEnvironmentPage" options={{ href: null }} />
