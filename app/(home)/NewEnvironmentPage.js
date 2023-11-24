@@ -6,7 +6,6 @@ import { useRouter } from 'expo-router';
 
 const NewEnvironmentPage = () => {
   const [currentPage, setCurrentPage] = useState(0)
-  const [flatname, setFlatname] = useState(null)
 
   const router = useRouter();
 
@@ -26,13 +25,11 @@ const NewEnvironmentPage = () => {
       return <CreateEnvironmentName 
         nextItem={incCurrentPage}
         previousItem={decCurrentPage}
-        setFlatname={setFlatname}
       />
     case 1:
       return <AddPeople 
         nextItem={incCurrentPage}
         previousItem={decCurrentPage}
-        flatname={flatname}
       />
     case 2:
       return <EnvironmentCreated />

@@ -7,7 +7,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { useEnvironmentsStore } from "../../store/EnvironmentsContext";
 
 
-const AddPeople = ({ nextItem, previousItem, flatname}) => {
+const AddPeople = ({ nextItem, previousItem}) => {
   const [currentNameInput, setCurrentNameInput] = useState("")
   const [listOfPeople, setListOfPeople] = useState(["John", "Harris"])
   const [error, setError] = useState(null);
@@ -27,7 +27,7 @@ const AddPeople = ({ nextItem, previousItem, flatname}) => {
     if(listOfPeople.length <= 0) {
       setError("You need to add people to the list.")
     } else {
-      let env = environmentsStore.getEnvironment(flatname)
+      let env = environmentsStore.getEnvironment()
       env.flatmates = listOfPeople
       env.tasks = []
       

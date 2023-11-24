@@ -15,6 +15,10 @@ export const createEnvironmentStore = () => {
     },
     language: null,
 
+    setUsername(username) {
+      this.userData.username = username;
+    },
+
     loadLanguage() {
       if(this.userData["language"] === "en") {
         import('../../assets/languages/english')

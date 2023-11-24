@@ -5,8 +5,10 @@ import {
 import { useEnvironmentsStore } from '../../store/EnvironmentsContext';
 
 
-const CreateEnvironmentName = ({nextItem, previousItem, setFlatname}) => {
+const CreateEnvironmentName = ({nextItem, previousItem}) => {
+  const [name, onNameChange] = useState("GenericUser")
   const [flatname, onChangeFlatname] = useState("Test")
+
   const [error, setError] = useState(null)
   const environmentsStore = useEnvironmentsStore();
 
@@ -15,7 +17,7 @@ const CreateEnvironmentName = ({nextItem, previousItem, setFlatname}) => {
       setError("Please set a name before continuing")
     } else {
       environmentsStore.setEnvironment({ name: flatname, tasks: [] })
-      setFlatname(flatname)
+      environmentsStore.setUsername(name)
       nextItem()
     }
   }
@@ -28,13 +30,17 @@ const CreateEnvironmentName = ({nextItem, previousItem, setFlatname}) => {
   return (
     <SafeAreaView style={styles.newEnvironmentPage}>
       <View style={styles.inputView}>
-        <Text style={styles.inputText}>Input flat name:</Text>
-        <TextInput 
-          style={styles.input}
-          onChangeText={onChangeFlatname}
-          value={flatname}
-          placeholder="Flat name..."
-        />
+        <Text style={styles.inputText}>Create your living space</Text>
+        <View style={{ width: '100%', height: '50%', alignItems: 'center', justifyContent: 'space-evenly'}}>
+          <View style={styles.inputContainer}>
+            <Text style={{marginBottom: 15}}>Your name:</Text>
+            <TextInput style={styles.input} onChangeText={onChangeFlatname} value={flatname}/>
+          </View>
+          <View style={styles.inputContainer}>
+            <Text style={{marginBottom: 15}}>Your living space's name:</Text>
+            <TextInput style={styles.input} onChangeText={onNameChange} value={name}/>
+          </View>
+        </View>
       </View>
       {error === null ? <></> : 
       <Text style={{color: 'red'}}>{error}</Text>}
@@ -55,7 +61,6 @@ const CreateEnvironmentName = ({nextItem, previousItem, setFlatname}) => {
 const styles = StyleSheet.create({
   newEnvironmentPage: {
     flex: 1,
-    backgroundColor: '#bdf8ff',
     alignItems: 'center',
   },
   inputView: {
@@ -65,10 +70,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   }, 
   input: {
-    width: '90%',
-    height: 45,
+    width: '100%',
+    height: 60,
     borderWidth: 1,
-    borderRadius: 5,
+    borderRadius: 25,
     padding: 10,
     backgroundColor: 'white',
     marginBottom: 20,
@@ -76,7 +81,12 @@ const styles = StyleSheet.create({
   inputText: {
     fontSize: 16,
     fontWeight: 'bold',
-    marginBottom: 10,
+    marginBottom: 50,
+  },
+  inputContainer: {
+    width: '85%',
+    alignItems: 'left',
+    justifyContent: 'left'
   },
   createNewEnvironmentButton: {
     backgroundColor: '#007BFF',

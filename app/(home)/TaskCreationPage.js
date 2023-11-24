@@ -52,7 +52,9 @@ const TaskCreationPage = () => {
     }
 
     const flatmates = flatmatesIncluded.map(item => item.name);
-    const newTask = Task(taskName, taskDescription, taskType, flatmates, selectedTaskIcon, parseInt(timeInterval))
+
+    const time = timeInterval !== "" ? parseInt(timeInterval) : null;
+    const newTask = Task(taskName, taskDescription, taskType, flatmates, selectedTaskIcon, time)
 
     if(environment.tasks) {
       environment.tasks.push(newTask)
