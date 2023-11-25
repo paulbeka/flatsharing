@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { 
-  SafeAreaView, Text, StyleSheet, View, ScrollView, TextInput, TouchableHighlight, Pressable
+  Text, StyleSheet, View, ScrollView, TextInput, TouchableHighlight
 } from "react-native";
-import { Picker } from '@react-native-picker/picker';
 import { useEnvironmentsStore } from '../store/EnvironmentsContext';
 import { Stack, useRouter } from "expo-router";
 import CustomHeader from "../components/StackHeader/CustomHeader"

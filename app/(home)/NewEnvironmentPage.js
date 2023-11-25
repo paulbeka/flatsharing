@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import CreateEnvironmentName from "../components/AddNewEnvironment/CreateEnvironmentName.js";
-import AddPeople from "../components/AddNewEnvironment/AddPeople.js";
+import QrGenerator from "./QrGenerator.js";
 import EnvironmentCreated from "../components/AddNewEnvironment/EnvironmentCreated.js";
 import { useRouter } from 'expo-router';
 
@@ -27,9 +27,8 @@ const NewEnvironmentPage = () => {
         previousItem={decCurrentPage}
       />
     case 1:
-      return <AddPeople 
+      return <QrGenerator 
         nextItem={incCurrentPage}
-        previousItem={decCurrentPage}
       />
     case 2:
       return <EnvironmentCreated />

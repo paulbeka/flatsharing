@@ -12,7 +12,7 @@ const NoTasksYetPage = () => {
         You have no tasks. Create new tasks or choose from a template to get started.
       </Text>
       <View>
-        <Link href="/TaskCreationPage" asChild>
+        <Link href="/TaskCreatePage" asChild>
           <Pressable style={styles.button}>
             <Text style={styles.buttonText}>
               Create New Task

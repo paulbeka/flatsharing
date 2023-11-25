@@ -82,7 +82,7 @@ export const createEnvironmentStore = () => {
       const dbRef = ref(database);
       const userId = firebase.auth().currentUser.uid;
       get(child(dbRef, `/users/user-${userId}`)).then((snapshot) => {
-        if (snapshot.exists()) {
+        if(snapshot.exists()) {
           const envId = Object.keys(snapshot.val())[0];
 
           const updates = {};
@@ -91,6 +91,8 @@ export const createEnvironmentStore = () => {
           update(ref(database), updates);
         } else {
           const newEnvKey = push(child(ref(database), '/environments/')).key;
+          this.environments = newEnvironment
+          this.environments.envId = newEnvKey;
 
           const updates = {};
           const path = '/users/user-' + firebase.auth().currentUser.uid + '/' + newEnvKey
