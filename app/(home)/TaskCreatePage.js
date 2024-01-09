@@ -6,19 +6,23 @@ import {
 import Icon from "react-native-vector-icons/AntDesign";
 import { Link, useRouter } from 'expo-router';
 import TaskCreationPresetPeriodic from '../components/TaskCreationPresets/TaskCreationPresetPeriodic'
-
+import TaskCreationPresetAdhoc from '../components/TaskCreationPresets/TaskCreationPresetAdhoc'
 
 const TaskCreatePage = () => {
   const router = useRouter();
 
-  const [taskInView, setTaskInView] = useState(null)
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const listOfTasks = [
+    {title: "Bins", type: "ad_hoc", description: "Taking out the bins", participants: []},
+    {title: "Kitchen", type: "periodic", description: "Taking out the bins", participants: []},
+    {title: "Bathroom", type: "periodic", description: "Taking out the bins", participants: []},
+  ]
 
-  const listOfTasks = [{title: "Bins"}]
+  const [taskInView, setTaskInView] = useState(listOfTasks[0])
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const closeModal = () => {
     setIsModalVisible(false);
-    setTaskInView(null);
+    setTaskInView(listOfTasks[0]); // set to 0th item to prevent null bug
   }
   
   const selectTask = (task) => {
@@ -28,7 +32,7 @@ const TaskCreatePage = () => {
 
   return (
     <View style={styles.mainContainer}>
-      <View style={{height: '70%', width: '100%', alignItems: 'center'}}>
+      <View style={{height: '80%', width: '100%', alignItems: 'center'}}>
 
       <Pressable style={styles.fillInManually} onPress={ () => { router.replace("/TaskCreationPage") }}>
         <Text style={{ fontSize: 22}}>Fill in manually</Text>
@@ -68,7 +72,10 @@ const TaskCreatePage = () => {
         >
           <View style={styles.taskInFocusView}>
             <Pressable style={styles.taskInFocusBackground} onPress={closeModal}>
+              {taskInView.type === "periodic" ? 
               <TaskCreationPresetPeriodic task={taskInView} />
+              :
+              <TaskCreationPresetAdhoc task={taskInView} />}  
             </Pressable>
           </View>
         </Modal>
@@ -81,6 +88,7 @@ const styles = StyleSheet.create({
   mainContainer: {
     alignItems: 'center',
     justifyContent: 'center',
+    flex: 1
   },
   fillInManually: {
     width: '90%',
@@ -96,6 +104,7 @@ const styles = StyleSheet.create({
   predefinedTask: {
     width: '90%',
     height: 70,
+    marginBottom: 20,
     borderRadius: 25,
     backgroundColor: '#BCD6EE',
     alignItems: 'center',

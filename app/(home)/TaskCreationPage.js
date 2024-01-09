@@ -10,6 +10,7 @@ import CustomButton from "../components/Buttons/CustomButton";
 import Checkbox from 'expo-checkbox';
 import Icon from "react-native-vector-icons/AntDesign";
 import { Task } from "../objects/Task";
+import TimePicker from "../components/GeneralUtil/TimePicker";
 
 
 const TaskCreationPage = () => {
@@ -17,7 +18,6 @@ const TaskCreationPage = () => {
   const router = useRouter();
   const environment = environmentsStore.getEnvironment(0);
   
-  const [suggestions, setSuggestions] = useState([{"title": "Test"}, {"title": "Test"}, {"title": "Test"}])
   const [taskName, setTaskName] = useState("")
   const [taskDescription, setTaskDescription] = useState("")
   const [taskIcons, setTaskIcons] = useState([
@@ -28,7 +28,7 @@ const TaskCreationPage = () => {
   const [flatmatesIncluded, setFlatmatesIncluded] = useState(
     environment.flatmates.map((x) => {return {"name": x, "isIncluded": true}})
   )
-  const [timeInterval, setTimeInterval] = useState("")
+  const [timeInterval, setTimeInterval] = useState(1)
   const [error, setError] = useState(null)
 
   const [fontsLoaded] = useFonts({
@@ -71,26 +71,6 @@ const TaskCreationPage = () => {
     setFlatmatesIncluded(updatedFlatmatesIncluded);
   };
 
-  const renderTaskTypeSelector = () => {
-    if (taskType === 0) {
-      return (
-        <View>
-          <Text>Input your task interval here:</Text>
-          <TextInput style={styles.inputBar} onChangeText={setTimeInterval} value={timeInterval}/>
-        </View>
-      )
-    } else if (taskType === 1) {
-      return (
-        <View>
-          <Text>Select bins options here.</Text>
-        </View>
-      )
-    } else {
-      return <></>
-    }
-  }
-
-
   if (!fontsLoaded) {
     return null; // You can return a loading indicator here if needed
   }
@@ -107,22 +87,6 @@ const TaskCreationPage = () => {
           }}
         />
 
-        <View style={{width: '90%'}}>
-          <Text style={{fontFamily: 'Bold', fontSize: 20, marginTop: 5}}>Task Suggestions</Text>
-        </View>
-
-        <ScrollView horizontal={true} style={styles.suggestionScrollView}>
-          {suggestions.map((suggestion, key) => {
-            return (
-              <View style={styles.suggestionView} key={key}>
-                <Text>{suggestion.title}</Text>
-              </View>
-            )
-          })}
-        </ScrollView>
-
-        {/* Add an icon functionality here */}
-        
         <View style={{width: '90%'}}>
           <Text style={{fontFamily: 'Bold', fontSize: 20}}>Create a task</Text>
         </View>
@@ -187,12 +151,16 @@ const TaskCreationPage = () => {
                 {/* Add the image for task type here */}
               </View>
               <Text style={{fontFamily: "Regular"}}>Ad Hoc</Text>
-              <Text style={{fontFamily: "Regular"}}>Set tasks to rotate as they are completed.</Text>
+              <Text style={{fontFamily: "Regular"}}>Set tasks to rotate when they are completed.</Text>
             </View>
           </TouchableHighlight>
         </View>
 
-        {renderTaskTypeSelector()}
+        <TimePicker 
+          timeInterval={timeInterval}
+          setTimeInterval={setTimeInterval} 
+          taskType={taskType} 
+        />
 
         <View style={{width: '90%'}}>
           <Text style={{fontFamily: 'Bold', fontSize: 15, marginTop: 5}}>Flatmates included:</Text>

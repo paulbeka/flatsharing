@@ -17,10 +17,12 @@ const TaskCreationPresetPeriodic = (task) => {
   // the number of times it happens and who is involved.
   return (
     <View style={styles.mainContainer}>
-      <Text>Periodic Preset</Text>
-      <Text>Explaination of what this is...</Text>
+      <Text style={styles.modalTitle}>Periodic</Text>
+      <Text>{task.task.description}</Text>
       <Text>Select how often the task happens</Text>
+      {/* Make some kind of task selector here */}
       <Text>Select who is involved inside of this task</Text>
+      {/* Make some kind of persom selector here */}
     </View>
   )
 }
@@ -31,8 +33,12 @@ const styles = StyleSheet.create({
     height: '100%',
     borderRadius: 25,
     backgroundColor: '#cdd1d4',
-    justifyContent: 'space-between',
     alignItems: 'center'
+  },
+  modalTitle: {
+    fontSize: 28,
+    marginTop: 15,
+    fontWeight: 'bold'
   }
 });
 
