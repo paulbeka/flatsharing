@@ -25,15 +25,12 @@ const EnvironmentCreated = () => {
           You have created a new environment! Head back to the home page to see your environment,
           or click on the add tasks button to add tasks to the environment.
         </Text>
-      </View>
-      
 
-      <View style={styles.buttonsView}>
         <Pressable style={styles.button} onPress={goToTasksManagement}>
-          <Text style={styles.buttonText}>Edit Tasks</Text>
+          <Text style={{...styles.buttonText, color: "white"}}>Add tasks now</Text>
         </Pressable>
-        <Pressable style={styles.button} onPress={goHome}>
-          <Text style={styles.buttonText}>Home</Text>
+        <Pressable style={{...styles.button, backgroundColor: "#DEDEDE"}} onPress={goHome}>
+          <Text style={{...styles.buttonText, color: "black"}}>Home</Text>
         </Pressable>
       </View>
     </SafeAreaView>
@@ -43,38 +40,32 @@ const EnvironmentCreated = () => {
 const styles = {
   environmentCreatedPage: {
     flex: 1,
-    backgroundColor: '#bdf8ff',
+    backgroundColor: 'white',
     alignItems: 'center',
   },
   checkmark: {
     marginBottom: 10
   },
-  buttonsView: {
-    marginBottom: 20,
-    width: '90%',
-    alignItems: 'center'
-  },
   checkmarkView: {
     flex: 1,
-    width: '75%',
+    width: '85%',
     alignItems: 'center',
     justifyContent: 'center'
   },
   button: {
-    backgroundColor: '#007BFF',
-    borderRadius: 5,
+    backgroundColor: 'black',
+    borderRadius: 25,
     padding: 15,
-    width: '90%',
+    width: '100%',
     alignItems: 'center',
     marginBottom: 10
   },
   buttonText: {
-    color: 'white',
     fontSize: 16,
-    fontWeight: 'bold',
   },
   createdEnvironmentText: {
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    marginBottom: 25
   }
 }
 

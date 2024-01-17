@@ -4,7 +4,7 @@ import { useEnvironmentsStore } from "../store/EnvironmentsContext";
 import QRCode from 'react-native-qrcode-svg';
 import { observer  } from 'mobx-react';
 import Icon from "react-native-vector-icons/AntDesign";
-import SplitLine from '../components/beautyUtil/SplitLine'
+import SplitLine from '../components/GeneralUtil/SplitLine'
 import { useRouter } from 'expo-router'
 import { setStringAsync } from 'expo-clipboard';
 

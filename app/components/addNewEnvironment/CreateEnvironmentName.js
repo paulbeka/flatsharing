@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     justifyContent: 'left'
   },
   createNewEnvironmentButton: {
-    backgroundColor: '#007BFF',
+    backgroundColor: 'black',
     borderRadius: 5,
     padding: 15,
     width: '90%',

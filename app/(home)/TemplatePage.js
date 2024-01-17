@@ -67,7 +67,6 @@ const TemplatePage = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f0f0f0",
   },
   scrollViewContent: {
     padding: 16,

@@ -2,6 +2,7 @@ import { Link } from "expo-router";
 import React from "react";
 import { StyleSheet, View, Pressable, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
+import SplitLine from '../GeneralUtil/SplitLine'
 
 
 const NoTasksYetPage = () => {
@@ -21,11 +22,7 @@ const NoTasksYetPage = () => {
         </Link>
 
         <View style={{flexDirection: 'row', alignItems: 'center', width: '90%'}}>
-          <View style={{flex: 1, height: 1, backgroundColor: 'black'}} />
-          <View>
-            <Text style={{width: 50, textAlign: 'center'}}>OR</Text>
-          </View>
-          <View style={{flex: 1, height: 1, backgroundColor: 'black'}} />
+          <SplitLine component={"OR"} />
         </View>
         
         <Link href="/TemplatePage" asChild>
@@ -35,7 +32,7 @@ const NoTasksYetPage = () => {
             </Text>
           </Pressable>
         </Link>
-        <View style={{}}>
+        <View style={{ }}>
           <Link href="QrGenerator" asChild>
             <Icon size={50} name="qrcode" />
           </Link>
@@ -59,9 +56,9 @@ const styles = StyleSheet.create({
   button: {
     padding: 15,
     margin: 10,
-    borderRadius: 5,
+    borderRadius: 25,
     alignItems: 'center',
-    backgroundColor: '#007BFF',
+    backgroundColor: 'black',
   },
   buttonText: {
     color: 'white',

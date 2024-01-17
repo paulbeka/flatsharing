@@ -7,10 +7,10 @@ import { Stack, useRouter } from "expo-router";
 import CustomHeader from "../components/StackHeader/CustomHeader"
 import { useFonts, Quicksand_400Regular, Quicksand_500Medium, Quicksand_700Bold } from '@expo-google-fonts/quicksand';
 import CustomButton from "../components/Buttons/CustomButton";
-import Checkbox from 'expo-checkbox';
 import Icon from "react-native-vector-icons/AntDesign";
 import { Task } from "../objects/Task";
 import TimePicker from "../components/GeneralUtil/TimePicker";
+import FlatmatePicker from "../components/GeneralUtil/FlatmatePicker";
 
 
 const TaskCreationPage = () => {
@@ -64,12 +64,6 @@ const TaskCreationPage = () => {
 
     router.replace("/")
   }
-
-  const handleFlatmateCheckboxChange = (index) => {
-    const updatedFlatmatesIncluded = [...flatmatesIncluded];
-    updatedFlatmatesIncluded[index].isIncluded = !updatedFlatmatesIncluded[index].isIncluded;
-    setFlatmatesIncluded(updatedFlatmatesIncluded);
-  };
 
   if (!fontsLoaded) {
     return null; // You can return a loading indicator here if needed
@@ -162,31 +156,12 @@ const TaskCreationPage = () => {
           taskType={taskType} 
         />
 
-        <View style={{width: '90%'}}>
-          <Text style={{fontFamily: 'Bold', fontSize: 15, marginTop: 5}}>Flatmates included:</Text>
+        <View style={{width:'90%', justifyContent: 'center'}}>
+          <FlatmatePicker 
+            flatmatesIncluded={flatmatesIncluded}
+            setFlatmatesIncluded={setFlatmatesIncluded}
+          />
         </View>
-
-        <ScrollView style={{...styles.flatmatePicker, height: 100* flatmatesIncluded.length}}>
-          {flatmatesIncluded.map((flatmate, index) => {
-            return (
-              <View style={styles.flatmateView} key={index}>
-                {/* This will be the profile picture of the flatmate one day */}
-                <View style={{ alignItems: 'center', flexDirection: 'row', justifyContent: 'center'}}>
-                  <View style={{width: 40, height: 40, borderRadius: 20, borderWidth: 1}}></View>
-                  <Text style={{marginLeft: 20}}>{flatmate.name}</Text>
-                </View>
-                <View style={{marginRight: 20}}>
-                  <Checkbox
-                    value={flatmate.isIncluded}
-                    onValueChange={() => handleFlatmateCheckboxChange(index)}
-                    color={false ? '#4630EB' : undefined}
-                    style={{ width: 35, height: 35}}
-                  />
-                </View>
-              </View>
-            )
-          })}
-        </ScrollView>
         
         {error ? <Text style={{ color: 'red' }}>{error}</Text> : <></>}
 
@@ -246,15 +221,6 @@ const styles = StyleSheet.create({
   taskTypeSelected: {
     backgroundColor: 'lightgray'
   },
-  flatmateView: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    padding: 10,
-    marginBottom: 5,
-    borderRadius: 10
-  },
   createTaskButton: {
     alignItems: 'center',
     paddingVertical: 12,
@@ -278,13 +244,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
-  flatmatePicker: {
-    marginTop: 10,
-    marginBottom: 5,
-    width: '90%',
-  },
-
-  // ICON CHOOSING
   iconChooserView: {
     flexDirection: 'row',
     margin: 10,

@@ -12,7 +12,7 @@ const TaskCreatePage = () => {
   const router = useRouter();
 
   const listOfTasks = [
-    {title: "Bins", type: "ad_hoc", description: "Taking out the bins", participants: []},
+    {title: "Bins", type: "ad_hoc", description: "Taking out the bins", icon: "delete", participants: []},
     {title: "Kitchen", type: "periodic", description: "Taking out the bins", participants: []},
     {title: "Bathroom", type: "periodic", description: "Taking out the bins", participants: []},
   ]
@@ -73,9 +73,9 @@ const TaskCreatePage = () => {
           <View style={styles.taskInFocusView}>
             <Pressable style={styles.taskInFocusBackground} onPress={closeModal}>
               {taskInView.type === "periodic" ? 
-              <TaskCreationPresetPeriodic task={taskInView} />
+              <TaskCreationPresetPeriodic task={taskInView} closeModal={closeModal} />
               :
-              <TaskCreationPresetAdhoc task={taskInView} />}  
+              <TaskCreationPresetAdhoc task={taskInView} closeModal={closeModal} />}  
             </Pressable>
           </View>
         </Modal>
