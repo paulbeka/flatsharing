@@ -3,7 +3,6 @@ import { SafeAreaView, View, Text, StyleSheet, Pressable, ScrollView } from "rea
 import { Stack, useRouter } from 'expo-router'
 import Icon from "react-native-vector-icons/AntDesign";
 import { useEnvironmentsStore } from "../store/EnvironmentsContext";
-import CustomHeader from "../components/StackHeader/CustomHeader";
 import { Task } from "../objects/Task";
 
 
@@ -37,15 +36,6 @@ const TemplatePage = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Stack.Screen
-        component={CustomHeader}
-        options={{
-          headerShown: true,
-          header: ({ route, navigation }) => (
-            <CustomHeader title="Templates" />
-          ),
-        }}
-      />
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         {templates.map((template, key) => {
           return (

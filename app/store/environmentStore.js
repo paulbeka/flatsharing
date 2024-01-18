@@ -78,6 +78,10 @@ export const createEnvironmentStore = () => {
       return this.environments;
     },
 
+    getUserData() {
+      return this.userData
+    },
+
     setEnvironment(newEnvironment) {
       const dbRef = ref(database);
       const userId = firebase.auth().currentUser.uid;

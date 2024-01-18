@@ -42,6 +42,7 @@ const TimePicker = ({ timeInterval, setTimeInterval, taskType }) => {
     }
   };
 
+  // TODO: Does this check need to be here?
   if (taskType === 0) {
     return (
       <View style={styles.mainContainer}>

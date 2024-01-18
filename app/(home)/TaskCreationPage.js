@@ -4,7 +4,6 @@ import {
 } from "react-native";
 import { useEnvironmentsStore } from '../store/EnvironmentsContext';
 import { Stack, useRouter } from "expo-router";
-import CustomHeader from "../components/StackHeader/CustomHeader"
 import { useFonts, Quicksand_400Regular, Quicksand_500Medium, Quicksand_700Bold } from '@expo-google-fonts/quicksand';
 import CustomButton from "../components/Buttons/CustomButton";
 import Icon from "react-native-vector-icons/AntDesign";
@@ -71,16 +70,6 @@ const TaskCreationPage = () => {
 
   return (
     <ScrollView contentContainerStyle={styles.mainContainer}>
-        <Stack.Screen
-          component={CustomHeader}
-          options={{
-            headerShown: true,
-            header: ({ route, navigation }) => (
-              <CustomHeader title={environment.name} />
-            ),
-          }}
-        />
-
         <View style={{width: '90%'}}>
           <Text style={{fontFamily: 'Bold', fontSize: 20}}>Create a task</Text>
         </View>

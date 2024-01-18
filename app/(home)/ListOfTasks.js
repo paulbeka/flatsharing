@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Stack, useRouter } from "expo-router";
 import { useEnvironmentsStore } from "../store/EnvironmentsContext";
-import CustomHeader from "../components/StackHeader/CustomHeader";
 import { ScrollView, View, Text, StyleSheet } from "react-native";
 import { useFonts, Quicksand_500Medium, Quicksand_700Bold } from '@expo-google-fonts/quicksand'; // Import the fonts
 import Icon from "react-native-vector-icons/AntDesign";
@@ -46,16 +45,6 @@ const ListOfTasks = () => {
 
   return (
     <View style={styles.mainContainer}>
-      <Stack.Screen
-        component={CustomHeader}
-        options={{
-          headerShown: true,
-          header: ({ route, navigation }) => (
-            <CustomHeader title={environment.name} />
-          ),
-        }}
-      />
-
       {tasks !== undefined && tasks.length > 0 ? 
       <ScrollView style={{width: '90%'}}>
         {tasks.map((task, key) => (

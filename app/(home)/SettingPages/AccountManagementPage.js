@@ -3,7 +3,6 @@ import {
   View, Text, StyleSheet, SafeAreaView, Pressable
 } from 'react-native'
 import { Stack } from 'expo-router';
-import CustomHeader from "../../components/StackHeader/CustomHeader";
 import { useEnvironmentsStore } from "../../store/EnvironmentsContext";
 
 
@@ -21,15 +20,6 @@ const AccountManagementPage = () => {
 
   return (
     <SafeAreaView style={styles.mainContainer}>
-      <Stack.Screen
-        component={CustomHeader}
-        options={{
-          headerShown: true,
-          header: ({ route, navigation }) => (
-            <CustomHeader title={environment.name} />
-          ),
-        }}
-      />
 
       <View style={{ marginBottom: 10 }}>
         <Text style={{fontFamily: 'Bold', fontSize: 32}}>Account</Text>

@@ -6,7 +6,6 @@ import NoTasksYetPage from "../components/HomePageComponents/NoTasksYetPage";
 import { Link, Stack } from 'expo-router';
 import Icon from 'react-native-vector-icons/AntDesign';
 import { useFonts, Quicksand_400Regular, Quicksand_700Bold } from '@expo-google-fonts/quicksand'; // Import the fonts
-import CustomHeader from '../components/StackHeader/CustomHeader'
 import WelcomePage from "../components/HomePageComponents/WelcomePage";
 import TaskFocusedView from "../components/HomePageComponents/TaskFocusedView";
 import { useEnvironmentsStore } from "../store/EnvironmentsContext";
@@ -15,7 +14,8 @@ import { useEnvironmentsStore } from "../store/EnvironmentsContext";
 const HomePage = () => {
 
   const environmentStore = useEnvironmentsStore()
-  const environment = environmentStore.getEnvironment(0)
+  const environment = environmentStore.getEnvironment()
+  const userData = environmentStore.getUserData()
 
   const [taskInFocus, setTaskInFocus] = useState(null)
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -52,18 +52,11 @@ const HomePage = () => {
     let flatmatesTasks = environment.tasks.filter((el) => !(environmentStore.userData["username"] in el.flatmates))
     return (
       <View style={{justifyContent: 'space-between', height: '100%'}}>
-        <Stack.Screen
-          component={CustomHeader}
-          options={{
-            headerShown: true,
-            header: ({ route, navigation }) => (
-              <CustomHeader title={environment.name} />
-            ),
-          }}
-        />
+        
         <ScrollView contentContainerStyle={styles.homePageContainer}>
+          <Text>Hi, {userData.username}!</Text>
           <Text style={{ ...styles.subTitle, marginTop: 10, fontFamily: 'QuicksandBold' }}>Today's tasks:</Text>
-          <Text style={{ fontFamily: 'QuicksandRegular' }}>No tasks today! :D</Text>
+          <Text style={{ fontFamily: 'QuicksandRegular' }}>No tasks today</Text>
           <Text style={{ ...styles.subTitle, fontFamily: 'QuicksandBold', marginTop: 20 }}>Your upcoming tasks...</Text>
           <ScrollView horizontal={true}>
             {usersTasks.length ? 

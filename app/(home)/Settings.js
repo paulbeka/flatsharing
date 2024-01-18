@@ -3,7 +3,6 @@ import {
   View, Text, SafeAreaView, StyleSheet, Pressable
 } from 'react-native'
 import { Stack, Link, useRouter } from 'expo-router';
-import CustomHeader from "../components/StackHeader/CustomHeader";
 import { useEnvironmentsStore } from "../store/EnvironmentsContext";
 import { ScrollView } from "react-native-gesture-handler";
 import { useFonts, Quicksand_500Medium, Quicksand_700Bold } from '@expo-google-fonts/quicksand'; // Import the fonts
@@ -44,16 +43,6 @@ const Settings = () => {
 
   return (
     <SafeAreaView style={styles.mainContainer}>
-      <Stack.Screen
-        component={CustomHeader}
-        options={{
-          headerShown: true,
-          header: ({ route, navigation }) => (
-            <CustomHeader title="Profile Page" />
-          ),
-        }}
-      />
-
       <View style={{ marginBottom: 10 }}>
         <Text style={{fontFamily: 'Bold', fontSize: 32}}>Settings</Text>
       </View>

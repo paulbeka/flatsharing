@@ -4,17 +4,16 @@ import {
   View, Text, Pressable, StyleSheet, Modal
 } from 'react-native';
 import Icon from "react-native-vector-icons/AntDesign";
-import { Link, useRouter } from 'expo-router';
-import TaskCreationPresetPeriodic from '../components/TaskCreationPresets/TaskCreationPresetPeriodic'
-import TaskCreationPresetAdhoc from '../components/TaskCreationPresets/TaskCreationPresetAdhoc'
+import { useRouter } from 'expo-router';
+import TaskCreationPreset from '../components/TaskCreationPresets/TaskCreationPreset'
 
 const TaskCreatePage = () => {
   const router = useRouter();
 
   const listOfTasks = [
     {title: "Bins", type: "ad_hoc", description: "Taking out the bins", icon: "delete", participants: []},
-    {title: "Kitchen", type: "periodic", description: "Taking out the bins", participants: []},
-    {title: "Bathroom", type: "periodic", description: "Taking out the bins", participants: []},
+    {title: "Kitchen", type: "periodic", description: "Taking out the bins", icon: "delete", participants: []},
+    {title: "Bathroom", type: "periodic", description: "Taking out the bins", icon: "delete", participants: []},
   ]
 
   const [taskInView, setTaskInView] = useState(listOfTasks[0])
@@ -72,10 +71,7 @@ const TaskCreatePage = () => {
         >
           <View style={styles.taskInFocusView}>
             <Pressable style={styles.taskInFocusBackground} onPress={closeModal}>
-              {taskInView.type === "periodic" ? 
-              <TaskCreationPresetPeriodic task={taskInView} closeModal={closeModal} />
-              :
-              <TaskCreationPresetAdhoc task={taskInView} closeModal={closeModal} />}  
+              <TaskCreationPreset task={taskInView} closeModal={closeModal} />
             </Pressable>
           </View>
         </Modal>
