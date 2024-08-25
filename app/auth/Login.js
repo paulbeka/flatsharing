@@ -34,11 +34,13 @@ const Login = ({ setInitialView }) => {
     auth.signInWithEmailAndPassword(email, password)
       .then((creds) => {
         const user = creds.user;
-        
       })
       .catch((err) => {
-        setError("There was an error logging you in.")
-        console.log(err);
+        if (err.code === "auth/invalid-credential") {
+          setError("Invalid login credentials. Please try again.");
+        } else {
+          setError("There was an internal error logging you in. Please contact an admin.")
+        }
       });
   }
 
@@ -87,9 +89,9 @@ const Login = ({ setInitialView }) => {
 
           {error !== "" ? <Text style={{color: 'red', width: '90%'}}>{error}</Text> : <></>}
 
-          <View style={styles.forgotPasswordLinkView}>
+          <Pressable style={styles.forgotPasswordLinkView}>
             <Text style={{ textDecorationLine: 'underline' }}>{text.forgotPassword}</Text>
-          </View>
+          </Pressable>
 
           <Pressable onPress={submitLogin} style={styles.loginButton}>
             <Text style={{ fontSize: 26, fontWeight: 'semibold' }}>{text.logIn}</Text>

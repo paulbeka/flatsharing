@@ -3,7 +3,7 @@ import { View, TextInput, Text, Pressable, StyleSheet } from 'react-native';
 import { auth } from '../../firebaseConfig';
 import { useFonts, Quicksand_400Regular } from '@expo-google-fonts/quicksand';
 import Icon from 'react-native-vector-icons/AntDesign';
-import { useRouter, Stack } from 'expo-router';
+import { Stack } from 'expo-router';
 import { useEnvironmentsStore } from "../store/EnvironmentsContext";
 
 // import {
@@ -26,9 +26,7 @@ const Register = ({ setInitialView }) => {
 
   const [error, setError] = useState("");
 
-  const router = useRouter();
-
-  const submitRegister = ({ setInitialView }) => {
+  const submitRegister = () => {
     if(password !== confirmPassword) {
       setError("Please make sure the passwords are matching.");
       return;
@@ -39,6 +37,11 @@ const Register = ({ setInitialView }) => {
       })
       .catch((err) => {
         console.log(err);
+        if (err.code === "auth/email-already-in-use") {
+          setError("Email is already in use. Please either log in or use a different email.")
+        } else {
+          setError("An internal server error has occured. Please contact an administrator.")
+        }
       });
   }
 

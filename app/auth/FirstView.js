@@ -8,6 +8,7 @@ import { useEnvironmentsStore } from "../store/EnvironmentsContext";
 
 
 const FirstView = ({ setInitialView }) => {
+
   const environmentsStore = useEnvironmentsStore()
   const text = environmentsStore.language;
 

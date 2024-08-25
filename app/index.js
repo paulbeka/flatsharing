@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import {
-  StyleSheet,
-  Text,
+  Text
 } from 'react-native';
 import { useEnvironmentsStore } from './store/EnvironmentsContext';
 import firebase from 'firebase/compat/app';

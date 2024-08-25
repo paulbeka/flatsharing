@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import CreateEnvironmentName from "../components/AddNewEnvironment/CreateEnvironmentName.js";
+import CreateEnvironmentName from "../components/addNewEnvironment/CreateEnvironmentName.js";
 import QrGenerator from "./QrGenerator.js";
-import EnvironmentCreated from "../components/AddNewEnvironment/EnvironmentCreated.js";
+import EnvironmentCreated from "../components/addNewEnvironment/EnvironmentCreated.js";
 import { useRouter } from 'expo-router';
 
 const NewEnvironmentPage = () => {
