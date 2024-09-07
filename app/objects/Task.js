@@ -9,7 +9,7 @@ export const Task = (tname, tdescription, ttype, tflatmates, ticon, ttiming) => 
   const flatmates = tflatmates;
   const icon = ticon;
   const timingInDays = ttiming
-  const dateOfCreation = Date.now();
+  const dateOfCreation = Date.now();  // todo: make this into "last completed? or add separately"
   let next = null
 
   if(type === 1) {

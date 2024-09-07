@@ -18,7 +18,7 @@ const HomePage = () => {
 
   const environmentStore = useEnvironmentsStore()
   const environment = environmentStore.getEnvironment()
-  const userData = environmentStore.getUserData()
+  const username = environmentStore.getUserData().username
 
   const [taskInFocus, setTaskInFocus] = useState(null)
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -46,26 +46,19 @@ const HomePage = () => {
   if(environment === undefined) {
     return <WelcomePage />
   }
-  if(environment.tasks === undefined || environment.tasks.length === 0) {
+  if(environment.tasks.length === 0) {
     return <NoTasksYetPage />;
   } else {
 
-    // TODO: redo this logic
-    let usersTasksToday = environment.tasks.filter((el) => 
-      environmentStore.userData["username"] in el.flatmates
-      && daysBeforeTaskDue(el) === 0
-    );
-    let usersTasksFuture = environment.tasks.filter(
-      (el) => environmentStore.userData["username"] in el.flatmates
-      && !(el in usersTasksToday)
-    );
-    let flatmatesTasks = environment.tasks.filter((el) => !(environmentStore.userData["username"] in el.flatmates));
+    let usersTasksToday = environment.tasks.filter((el) => el.flatmates.includes(username) && daysBeforeTaskDue(el) === 0);
+    let usersTasksFuture = environment.tasks.filter((el) => el.flatmates.includes(username) && !(el in usersTasksToday));
+    let flatmatesTasks = environment.tasks.filter((el) => !el.flatmates.includes(username));
 
     return (
       <View style={{justifyContent: 'space-between', height: '100%', paddingTop: 25}}>
         
         <ScrollView contentContainerStyle={styles.homePageContainer}>
-          <Text style={styles.title}>Hi, {userData.username}!</Text>
+          <Text style={styles.title}>Hi, {username}!</Text>
 
           <Text style={{ ...styles.subTitle, marginTop: 10, fontFamily: 'QuicksandBold' }}>Today's tasks:</Text>
           <HomePageBoxedScrollTaskView tasks={usersTasksToday} taskFocusCallback={setTaskInFocus} openModal={openModal}/>
