@@ -2,9 +2,10 @@ import React from "react";
 import {
   View, StyleSheet, Pressable, Text
 } from 'react-native';
-import { Stack, useRouter } from 'expo-router';
+import { Stack } from 'expo-router';
 import { useFonts, Quicksand_700Bold } from '@expo-google-fonts/quicksand';
 import { useEnvironmentsStore } from "../store/EnvironmentsContext";
+import LoadingIcon from "../components/LoadingIcon";
 
 
 const FirstView = ({ setInitialView }) => {
@@ -17,7 +18,7 @@ const FirstView = ({ setInitialView }) => {
   });
 
   if (!fontsLoaded) {
-    return null; // You can return a loading indicator here if needed
+    return <LoadingIcon />
   }
 
   return (

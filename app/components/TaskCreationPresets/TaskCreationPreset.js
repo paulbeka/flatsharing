@@ -24,7 +24,7 @@ const TaskCreationPreset = ({task, closeModal}) => {
     const newTask = Task(
       task.title, 
       task.description, 
-      taskType === "ad_hoc" ? 1 : 0, 
+      task.taskType === "ad_hoc" ? 1 : 0, 
       flatmates, 
       task.icon, 
       timeInterval

@@ -1,7 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import {
-  Text
-} from 'react-native';
 import { useEnvironmentsStore } from './store/EnvironmentsContext';
 import firebase from 'firebase/compat/app';
 import { observer  } from 'mobx-react';
@@ -11,6 +8,7 @@ import Register from './auth/Register'
 import { useRouter } from 'expo-router';
 import * as Notifications from 'expo-notifications';
 import * as Device from 'expo-device';
+import LoadingIcon from './components/LoadingIcon';
 
 
 Notifications.setNotificationHandler({
@@ -50,6 +48,7 @@ const App = observer(() => {
     // do something when the notification is replied to or something
     responseListener.current = Notifications.addNotificationResponseReceivedListener(
       (response) => console.log(response)
+      
     );
 
     return () => {
@@ -100,7 +99,7 @@ const App = observer(() => {
 
   if(user) {
     if(environmentsStore.environments === null) {
-      return <Text>Loading...</Text>
+      return <LoadingIcon />
     } else {
       router.replace("(home)/HomePage")
     }

@@ -1,14 +1,5 @@
-# Expo Router Example
+## Setup
 
-Use [`expo-router`](https://expo.github.io/router) to build native navigation using files in the `app/` directory.
-
-## 🚀 How to use
-
-```sh
-npx create-expo-app -e with-router
-```
-
-## 📝 Notes
-
-- [Expo Router: Docs](https://expo.github.io/router)
-- [Expo Router: Repo](https://github.com/expo/router)
+1. Install expo
+2. run `npm install`
+3. Run `npx expo start --tunnel` to start the server. Connect using expo go 49.

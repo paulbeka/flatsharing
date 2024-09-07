@@ -3,12 +3,13 @@ import {
   StyleSheet, ScrollView, Text, View, Pressable, Modal
 } from 'react-native';
 import NoTasksYetPage from "../components/HomePageComponents/NoTasksYetPage";
-import { Link, Stack } from 'expo-router';
+import { Link } from 'expo-router';
 import Icon from 'react-native-vector-icons/AntDesign';
 import { useFonts, Quicksand_400Regular, Quicksand_700Bold } from '@expo-google-fonts/quicksand'; // Import the fonts
 import WelcomePage from "../components/HomePageComponents/WelcomePage";
 import TaskFocusedView from "../components/HomePageComponents/TaskFocusedView";
 import { useEnvironmentsStore } from "../store/EnvironmentsContext";
+import LoadingIcon from "../components/LoadingIcon";
 
 
 const HomePage = () => {
@@ -26,7 +27,7 @@ const HomePage = () => {
 
   const closeModal = () => {
     setIsModalVisible(false);
-    setTaskInFocus(null); // Clear taskInFocus when closing the modal
+    setTaskInFocus(null); 
   };
 
   const [fontsLoaded] = useFonts({
@@ -38,13 +39,11 @@ const HomePage = () => {
     return null;
   }
   if(environment === null) {
-    return <></>
+    return <LoadingIcon />
   }
-  // you have not created or joined an environment so you need to make one
   if(environment === undefined) {
     return <WelcomePage />
   }
-  // You have an environment, but no tasks have been defined
   if(environment.tasks === undefined || environment.tasks.length === 0) {
     return <NoTasksYetPage />;
   } else {
