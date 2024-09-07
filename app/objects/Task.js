@@ -9,6 +9,7 @@ export const Task = (tname, tdescription, ttype, tflatmates, ticon, ttiming) => 
   const flatmates = tflatmates;
   const icon = ticon;
   const timingInDays = ttiming
+  const dateOfCreation = Date.now();
   let next = null
 
   if(type === 1) {
@@ -20,23 +21,37 @@ export const Task = (tname, tdescription, ttype, tflatmates, ticon, ttiming) => 
     trigger.setMinutes(0);
     trigger.setSeconds(0);
 
-    scheduleNotification({
-      title: "You have a task to do!",
-      body: `Task to do: ${name}`,
-      time: trigger
-    }).then(async (notifId) => {
-      try {
-        await AsyncStorage.setItem(name, notifId);
-      } catch (e) {
-        console.log(e);
-      }
-    }).catch((err) => {
-      console.log(err);
-    })
+    // todo: extract the scheduleNotification function inside of an initializer
+    // scheduleNotification({
+    //   title: "You have a task to do!",
+    //   body: `Task to do: ${name}`,
+    //   time: trigger
+    // }).then(async (notifId) => {
+    //   try {
+    //     await AsyncStorage.setItem(name, notifId);
+    //   } catch (e) {
+    //     console.log(e);
+    //   }
+    // }).catch((err) => {
+    //   console.log(err);
+    // })
   }
   
   return {
-    name, description, type, flatmates, icon, timingInDays, next
-  }
+    name,
+    description,
+    type,
+    flatmates,
+    icon,
+    timingInDays,
+    next,
+    dateOfCreation
+  };
 }
 
+export const daysBeforeTaskDue = (task) => {
+  const currentTime = Date.now();
+  const timeDiff = (task.dateOfCreation + (task.timingInDays * 24 * 60 * 60 * 1000)) - currentTime;
+  const daysDiff = Math.ceil(timeDiff / (24 * 60 * 60 * 1000));
+  return daysDiff > 0 ? daysDiff : 0;
+}

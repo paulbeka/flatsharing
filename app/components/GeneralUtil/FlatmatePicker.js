@@ -3,8 +3,15 @@ import Checkbox from 'expo-checkbox';
 import {
   View, Text, ScrollView, StyleSheet
 } from "react-native"
+import { useFonts, Quicksand_500Medium, Quicksand_700Bold } from '@expo-google-fonts/quicksand'; // Import the fonts
+
 
 const FlatmatePicker = ({flatmatesIncluded, setFlatmatesIncluded}) => {
+
+  const [fontsLoaded] = useFonts({
+    Regular: Quicksand_500Medium,
+    Bold: Quicksand_700Bold
+  });
 
   const handleFlatmateCheckboxChange = (index) => {
     const updatedFlatmatesIncluded = [...flatmatesIncluded];

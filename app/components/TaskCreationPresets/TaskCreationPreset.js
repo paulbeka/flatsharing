@@ -40,7 +40,6 @@ const TaskCreationPreset = ({task, closeModal}) => {
     ToastAndroid.show('Task created.', ToastAndroid.SHORT);
     closeModal()
   }
-  console.log(task)
   // This should contain a brief explanation of what's going on, and settings for 
   // the number of times it happens and who is involved.
   return (

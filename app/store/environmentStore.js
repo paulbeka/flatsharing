@@ -54,7 +54,7 @@ export const createEnvironmentStore = () => {
                 // and just make it the next persons's task
               })
             } else {
-              console.log("Wrong environment key.")
+              this.environments = undefined;  // there is no assosiated environment
             }
           })
           .catch((error) => { 
@@ -85,6 +85,8 @@ export const createEnvironmentStore = () => {
     setEnvironment(newEnvironment) {
       const dbRef = ref(database);
       const userId = firebase.auth().currentUser.uid;
+      console.log(`/users/user-${userId}`);
+
       get(child(dbRef, `/users/user-${userId}`)).then((snapshot) => {
         if(snapshot.exists()) {
           const envId = Object.keys(snapshot.val())[0];
@@ -93,6 +95,7 @@ export const createEnvironmentStore = () => {
           updates['/environments/' + envId] = newEnvironment;
 
           update(ref(database), updates);
+          console.log("HERE!")
         } else {
           const newEnvKey = push(child(ref(database), '/environments/')).key;
           this.environments = newEnvironment

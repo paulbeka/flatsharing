@@ -4,11 +4,18 @@ import {
 } from 'react-native'
 import { Stack } from 'expo-router';
 import { useEnvironmentsStore } from "../../store/EnvironmentsContext";
+import { useFonts, Quicksand_500Medium, Quicksand_700Bold } from '@expo-google-fonts/quicksand'; // Import the fonts
 
 
 const AccountManagementPage = () => {
   const environmentsStore = useEnvironmentsStore();
   const environment = environmentsStore.getEnvironment(0);
+
+  const [fontsLoaded] = useFonts({
+    Quicksand: Quicksand_400Regular,
+    Regular: Quicksand_500Medium,
+    Bold: Quicksand_700Bold
+  });
 
   const onPressChangePassword = () => {
     // display some kind of modal to change password and confirm

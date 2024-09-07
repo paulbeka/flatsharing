@@ -4,12 +4,13 @@ import {
 } from "react-native";
 import { useEnvironmentsStore } from '../store/EnvironmentsContext';
 import { Stack, useRouter } from "expo-router";
-import { useFonts, Quicksand_400Regular, Quicksand_500Medium, Quicksand_700Bold } from '@expo-google-fonts/quicksand';
+import { useFonts, Quicksand_500Medium, Quicksand_700Bold } from '@expo-google-fonts/quicksand';
 import CustomButton from "../components/Buttons/CustomButton";
 import Icon from "react-native-vector-icons/AntDesign";
 import { Task } from "../objects/Task";
 import TimePicker from "../components/GeneralUtil/TimePicker";
 import FlatmatePicker from "../components/GeneralUtil/FlatmatePicker";
+import LoadingIcon from "../components/LoadingIcon";
 
 
 const TaskCreationPage = () => {
@@ -20,6 +21,7 @@ const TaskCreationPage = () => {
   const [taskName, setTaskName] = useState("")
   const [taskDescription, setTaskDescription] = useState("")
   const [taskIcons, setTaskIcons] = useState([
+    // todo: get the icons dynamically
     {name: "home"}, {name: "save"}, {name: "team"}, {name: "lock"}
   ])
   const [selectedTaskIcon, setSelectedTaskIcon] = useState("home")
@@ -31,7 +33,6 @@ const TaskCreationPage = () => {
   const [error, setError] = useState(null)
 
   const [fontsLoaded] = useFonts({
-    Quicksand: Quicksand_400Regular,
     Regular: Quicksand_500Medium,
     Bold: Quicksand_700Bold
   });
@@ -52,20 +53,20 @@ const TaskCreationPage = () => {
     const flatmates = flatmatesIncluded.map(item => item.name);
 
     const time = timeInterval !== "" ? parseInt(timeInterval) : null;
-    const newTask = Task(taskName, taskDescription, taskType, flatmates, selectedTaskIcon, time)
+    const newTask = Task(taskName, taskDescription, taskType, flatmates, selectedTaskIcon, time);
 
     if(environment.tasks) {
-      environment.tasks.push(newTask)
+      environment.tasks.push(newTask);
     } else {
-      environment.tasks = [newTask]
+      environment.tasks = [newTask];
     }
-    environmentsStore.setEnvironment(environment)
+    environmentsStore.setEnvironment(environment);
 
-    router.replace("/")
+    router.replace("/");
   }
 
   if (!fontsLoaded) {
-    return null; // You can return a loading indicator here if needed
+    return <LoadingIcon />
   }
 
   return (

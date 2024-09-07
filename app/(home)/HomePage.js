@@ -10,6 +10,8 @@ import WelcomePage from "../components/HomePageComponents/WelcomePage";
 import TaskFocusedView from "../components/HomePageComponents/TaskFocusedView";
 import { useEnvironmentsStore } from "../store/EnvironmentsContext";
 import LoadingIcon from "../components/LoadingIcon";
+import HomePageBoxedScrollTaskView from '../components/HomePageComponents/HomePageBoxedScrollTaskView'
+import { daysBeforeTaskDue } from '../objects/Task';
 
 
 const HomePage = () => {
@@ -47,41 +49,33 @@ const HomePage = () => {
   if(environment.tasks === undefined || environment.tasks.length === 0) {
     return <NoTasksYetPage />;
   } else {
-    let usersTasks = environment.tasks.filter((el) => environmentStore.userData["username"] in el.flatmates)
-    let flatmatesTasks = environment.tasks.filter((el) => !(environmentStore.userData["username"] in el.flatmates))
+
+    // TODO: redo this logic
+    let usersTasksToday = environment.tasks.filter((el) => 
+      environmentStore.userData["username"] in el.flatmates
+      && daysBeforeTaskDue(el) === 0
+    );
+    let usersTasksFuture = environment.tasks.filter(
+      (el) => environmentStore.userData["username"] in el.flatmates
+      && !(el in usersTasksToday)
+    );
+    let flatmatesTasks = environment.tasks.filter((el) => !(environmentStore.userData["username"] in el.flatmates));
+
     return (
-      <View style={{justifyContent: 'space-between', height: '100%'}}>
+      <View style={{justifyContent: 'space-between', height: '100%', paddingTop: 25}}>
         
         <ScrollView contentContainerStyle={styles.homePageContainer}>
-          <Text>Hi, {userData.username}!</Text>
+          <Text style={styles.title}>Hi, {userData.username}!</Text>
+
           <Text style={{ ...styles.subTitle, marginTop: 10, fontFamily: 'QuicksandBold' }}>Today's tasks:</Text>
-          <Text style={{ fontFamily: 'QuicksandRegular' }}>No tasks today</Text>
+          <HomePageBoxedScrollTaskView tasks={usersTasksToday} taskFocusCallback={setTaskInFocus} openModal={openModal}/>
+          
           <Text style={{ ...styles.subTitle, fontFamily: 'QuicksandBold', marginTop: 20 }}>Your upcoming tasks...</Text>
-          <ScrollView horizontal={true}>
-            {usersTasks.length ? 
-            usersTasks.map((task, key) => {
-              return (
-                <Pressable style={styles.yourTaskView} key={key} onPress={() => {setTaskInFocus(task); openModal()}}>
-                  <Text style={{ fontFamily: 'QuicksandRegular' }}>{task.name}</Text>
-                  <Text style={{ fontFamily: 'QuicksandRegular' }}>{task.description}</Text>
-                  <Icon size={30} name={task.icon} />
-                </Pressable>
-              );
-            }) : <Text style={{ fontFamily: 'QuicksandRegular' }}>You don't have any tasks!</Text>}
-          </ScrollView>
+          <HomePageBoxedScrollTaskView tasks={usersTasksFuture} taskFocusCallback={setTaskInFocus} openModal={openModal}/>
+        
           <Text style={{ ...styles.subTitle, fontFamily: 'QuicksandBold', marginTop: 20 }}>Your flatmates' tasks...</Text>
-          <ScrollView horizontal={true}>
-            {flatmatesTasks.length ? 
-            flatmatesTasks.map((task, key) => {
-              return (
-                <Pressable style={styles.yourTaskView} key={key} onPress={() => {setTaskInFocus(task); openModal()}}>
-                  <Text style={{ fontFamily: 'QuicksandRegular' }}>{task.name}</Text>
-                  <Text style={{ fontFamily: 'QuicksandRegular' }}>{task.description}</Text>
-                  <Icon size={30} name={task.icon} />
-                </Pressable>
-              );
-            }) : <Text style={{ fontFamily: 'QuicksandRegular' }}>Your flatmates don't have any tasks!</Text>}
-          </ScrollView>
+          <HomePageBoxedScrollTaskView tasks={flatmatesTasks} taskFocusCallback={setTaskInFocus} openModal={openModal}/>
+
         </ScrollView>
 
         <View style={styles.addNewTaskView}>
@@ -134,14 +128,6 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     borderWidth: 1,
-  },
-  yourTaskView: {
-    borderWidth: 1,
-    margin: 5,
-    width: 100,
-    height: 100,
-    borderRadius: 5,
-    padding: 3,
   },
   addNewTaskView: {
     width: '100%',
