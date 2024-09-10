@@ -1,4 +1,4 @@
-import { ref, set, child, push, update, get } from "firebase/database";
+import { ref, child, push, update, get } from "firebase/database";
 import { database } from "../../firebaseConfig";
 import firebase from 'firebase/compat/app';
 import { runInAction } from "mobx";
@@ -95,7 +95,6 @@ export const createEnvironmentStore = () => {
           updates['/environments/' + envId] = newEnvironment;
 
           update(ref(database), updates);
-          console.log("HERE!")
         } else {
           const newEnvKey = push(child(ref(database), '/environments/')).key;
           this.environments = newEnvironment

@@ -3,7 +3,9 @@ import {
   View, Text, Pressable, StyleSheet
 } from 'react-native'
 import Icon from "react-native-vector-icons/AntDesign";
-import { useFonts, Quicksand_400Regular, Quicksand_700Bold } from '@expo-google-fonts/quicksand'; // Import the fonts
+import { useFonts, Quicksand_400Regular, Quicksand_700Bold } from '@expo-google-fonts/quicksand';
+import { getGetDoneByDate } from '../../objects/Task';
+import { updateTaskOnDatabase } from '../../store/EnvironmentEventHandler'
 
 
 const TaskFocusedView = ({ task, closeModal }) => {
@@ -14,6 +16,8 @@ const TaskFocusedView = ({ task, closeModal }) => {
   });
 
   const taskCompleted = () => {
+    // todo: update the "last completed by" on task and push to update
+    updateTaskOnDatabase(task)
     closeModal()
   }
 
@@ -24,10 +28,14 @@ const TaskFocusedView = ({ task, closeModal }) => {
     <View style={styles.mainContainer}>
       <View style={{ alignItems: 'center'}}>
         <Text style={styles.title}>{task.name}</Text>
-        <Icon size={200} name="home" style={styles.iconStyle}/>
-        <Text>{task.description}</Text>
-        <Text style={{ fontFamily: 'QuicksandRegular', fontSize: 20 }}>Finish this task by:</Text>
-        <Text>{task.date}</Text>
+        <Icon size={200} name={task.icon} style={styles.iconStyle}/>
+        <Text style={{marginTop: 20, marginBottom: 20, fontFamily: 'QuicksandRegular', fontSize: 20}}>{task.description}</Text>
+        <Text style={{ fontFamily: 'QuicksandRegular', fontSize: 30 }}>Finish this task by:</Text>
+        {task.type === 0 &&
+          <Text style={{marginTop: 20, fontFamily: 'QuicksandRegular', fontSize: 20}}>
+            {getGetDoneByDate(task).toLocaleDateString([], { year: 'numeric', month: 'long', day: 'numeric' })}
+          </Text>
+        }
       </View>
       <Pressable style={styles.button} onPress={taskCompleted}>
         <Text style={{

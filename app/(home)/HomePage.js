@@ -46,12 +46,13 @@ const HomePage = () => {
   if(environment === undefined) {
     return <WelcomePage />
   }
-  if(environment.tasks.length === 0) {
+  if(environment.tasks === undefined || environment.tasks.length === 0) {
     return <NoTasksYetPage />;
   } else {
 
-    let usersTasksToday = environment.tasks.filter((el) => el.flatmates.includes(username) && daysBeforeTaskDue(el) === 0);
-    let usersTasksFuture = environment.tasks.filter((el) => el.flatmates.includes(username) && !(el in usersTasksToday));
+
+    let usersTasksToday = environment.tasks.filter((el) => el.flatmates.includes(username) && daysBeforeTaskDue(el, username) === 0);
+    let usersTasksFuture = environment.tasks.filter((el) => el.flatmates.includes(username) && !(usersTasksToday.includes(el)));
     let flatmatesTasks = environment.tasks.filter((el) => !el.flatmates.includes(username));
 
     return (

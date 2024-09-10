@@ -2,7 +2,6 @@ import React from "react";
 import {
   View, Text, StyleSheet, SafeAreaView, Pressable
 } from 'react-native'
-import { Stack } from 'expo-router';
 import { useEnvironmentsStore } from "../../store/EnvironmentsContext";
 import { useFonts, Quicksand_500Medium, Quicksand_700Bold } from '@expo-google-fonts/quicksand'; // Import the fonts
 
