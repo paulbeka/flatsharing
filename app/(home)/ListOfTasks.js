@@ -6,6 +6,7 @@ import { useFonts, Quicksand_500Medium, Quicksand_700Bold } from '@expo-google-f
 import Icon from "react-native-vector-icons/AntDesign";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { cancelNotification } from "../notifications/NotificationsHandler";
+import ConfirmDeleteTaskModal from "../components/ListOfTasksComponents/ConfirmDeleteTaskModal";
 
 
 const ListOfTasks = () => {
@@ -14,20 +15,31 @@ const ListOfTasks = () => {
   let environment = environmentsStore.getEnvironment(0);
   
   const [tasks, setTasks] = useState(environment.tasks)
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [taskBeingDeleted, setTaskBeingDeleted] = useState(null);
 
   const [fontsLoaded] = useFonts({
     Regular: Quicksand_500Medium, 
     Bold: Quicksand_700Bold
   })
 
-  // fix this for the last items
-  const deleteItem = (item) => {
-    if(item.type === 0) {
-      AsyncStorage.getItem(item.name).then((id) => {
+  const closeModal = () => {
+    setIsModalVisible(false);
+    setTaskBeingDeleted(null);
+  }
+
+  const deleteItem = (task) =>{
+    setTaskBeingDeleted(task);
+    setIsModalVisible(true);
+  }
+
+  const deleteTask = () => {
+    if(taskBeingDeleted.type === 0) {
+      AsyncStorage.getItem(taskBeingDeleted.name).then((id) => {
         cancelNotification(id);
       })
     }
-    environment.tasks = environment.tasks.filter((el) => el !== item)
+    environment.tasks = environment.tasks.filter((el) => el !== taskBeingDeleted)
     if(environment.tasks.length <= 0) {
       environment.tasks = []
       setTasks(environment.tasks)
@@ -37,12 +49,17 @@ const ListOfTasks = () => {
       setTasks(environment.tasks)
       environmentsStore.setEnvironment(environment)
     }
+
+    if(isModalVisible) {
+      closeModal();
+    }
   }
 
   if (!fontsLoaded) {
     return null;
   }
 
+  // todo: add the CoonfirmDeleteTaskModal here
   return (
     <View style={styles.mainContainer}>
       {tasks !== undefined && tasks.length > 0 ? 
@@ -53,7 +70,7 @@ const ListOfTasks = () => {
               <Text style={{ fontFamily: 'Bold' }}>{task.name}</Text>
               <View style={{ flexDirection: 'row' }}>
                 <Icon size={25} name="edit" style={{marginRight: 10}} />
-                <Icon size={25} name="delete" style={{marginRight: 10}} onPress={()=>deleteItem(task)} />
+                <Icon size={25} name="delete" style={{marginRight: 10}} onPress={() => deleteItem(task)} />
               </View>
             </View>
           </View>
@@ -64,6 +81,12 @@ const ListOfTasks = () => {
         <Text style={{ fontFamily: 'Bold', fontSize: 30, marginTop: 30}}>No tasks</Text>
       </View>
       }
+
+      <ConfirmDeleteTaskModal 
+        isModalVisible={isModalVisible} 
+        closeModal={closeModal} 
+        deleteTask={deleteTask}
+      />
 
     </View>
   )

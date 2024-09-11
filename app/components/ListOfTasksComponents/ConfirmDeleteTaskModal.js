@@ -1,10 +1,10 @@
 import React from 'react';
 import {
-  StyleSheet, ScrollView, Text, View, Pressable, Modal
+  StyleSheet, Text, View, Pressable, Modal
 } from 'react-native';
 
 
-const ConfirmDeleteTaskModal = ({isModalVisible, closeModal}) => {
+const ConfirmDeleteTaskModal = ({isModalVisible, closeModal, deleteTask}) => {
 
   return (
     <Modal
@@ -15,7 +15,14 @@ const ConfirmDeleteTaskModal = ({isModalVisible, closeModal}) => {
     >
       <View style={styles.taskInFocusView}>
         <Pressable style={styles.taskInFocusBackground} onPress={closeModal}>
-          
+          <View style={styles.mainContainer}>
+            <Text style={{}}>Confirmation</Text>
+            <Text style={{}}>Are you sure you want to delete this task? Once deleted, it cannot be recovered.</Text>
+            <View style={{flex: 1, flexDirection: 'row'}}>
+              <Pressable style={styles.confirmButton} onClick={deleteTask}>Confirm</Pressable>
+              <Pressable style={styles.goBackButton} onClick={closeModal}>Go Back</Pressable>
+            </View>
+          </View>        
         </Pressable>
       </View>
     </Modal>
@@ -36,6 +43,20 @@ const styles = StyleSheet.create({
   taskInFocusBackground: {
     height: '90%',
     width: '90%',
+  },
+  mainContainer: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 25,
+    backgroundColor: '#cdd1d4',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  },
+  confirmButton: {
+    
+  },
+  goBackButton: {
+
   }
 });
 

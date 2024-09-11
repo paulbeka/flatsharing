@@ -30,11 +30,13 @@ const TaskFocusedView = ({ task, closeModal }) => {
         <Text style={styles.title}>{task.name}</Text>
         <Icon size={200} name={task.icon} style={styles.iconStyle}/>
         <Text style={{marginTop: 20, marginBottom: 20, fontFamily: 'QuicksandRegular', fontSize: 20}}>{task.description}</Text>
-        <Text style={{ fontFamily: 'QuicksandRegular', fontSize: 30 }}>Finish this task by:</Text>
         {task.type === 0 &&
+        <>
+          <Text style={{ fontFamily: 'QuicksandRegular', fontSize: 30 }}>Finish this task by:</Text>
           <Text style={{marginTop: 20, fontFamily: 'QuicksandRegular', fontSize: 20}}>
             {getGetDoneByDate(task).toLocaleDateString([], { year: 'numeric', month: 'long', day: 'numeric' })}
           </Text>
+        </>
         }
       </View>
       <Pressable style={styles.button} onPress={taskCompleted}>
