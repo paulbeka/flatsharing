@@ -3,7 +3,8 @@ import {
   Text, StyleSheet, View, ScrollView, TextInput, TouchableHighlight
 } from "react-native";
 import { useEnvironmentsStore } from '../store/EnvironmentsContext';
-import { Stack, useRouter } from "expo-router";
+import { useTaskDatabaseHandler } from '../store/EnvironmentEventHandler';
+import { useRouter } from "expo-router";
 import { useFonts, Quicksand_500Medium, Quicksand_700Bold } from '@expo-google-fonts/quicksand';
 import CustomButton from "../components/Buttons/CustomButton";
 import Icon from "react-native-vector-icons/AntDesign";
@@ -15,8 +16,9 @@ import LoadingIcon from "../components/LoadingIcon";
 
 const TaskCreationPage = () => {
   const environmentsStore = useEnvironmentsStore();
-  const router = useRouter();
   const environment = environmentsStore.getEnvironment(0);
+  const router = useRouter();
+  const updateTaskOnDatabase = useTaskDatabaseHandler().updateTaskOnDatabase;
   
   const [taskName, setTaskName] = useState("")
   const [taskDescription, setTaskDescription] = useState("")
@@ -55,12 +57,7 @@ const TaskCreationPage = () => {
     const time = timeInterval !== "" ? parseInt(timeInterval) : null;
     const newTask = Task(taskName, taskDescription, taskType, flatmates, selectedTaskIcon, time);
 
-    if(environment.tasks) {
-      environment.tasks.push(newTask);
-    } else {
-      environment.tasks = [newTask];
-    }
-    environmentsStore.setEnvironment(environment);
+    updateTaskOnDatabase(newTask);
 
     router.replace("/");
   }
@@ -105,7 +102,7 @@ const TaskCreationPage = () => {
           <Icon name={selectedTaskIcon} size={50} style={{ padding: 10}}/>
           <ScrollView style={{ maxHeight: 100 }} horizontal={true}>
             {taskIcons.map((icon) => {
-              return <Icon size={50} style={styles.iconSelection} name={icon.name} onPress={
+              return <Icon size={50} style={styles.iconSelection} name={icon.name} key={icon.name} onPress={
                 () => {setSelectedTaskIcon(icon.name)}} />
             })}
           </ScrollView>

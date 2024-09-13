@@ -3,6 +3,7 @@ import {
   View, Text, StyleSheet, Pressable, ToastAndroid
 } from 'react-native';
 import { useEnvironmentsStore } from "../../store/EnvironmentsContext";
+import { updateTaskOnDatabase } from "../../store/EnvironmentEventHandler"; 
 import Icon from "react-native-vector-icons/AntDesign";
 import FlatmatePicker from "../GeneralUtil/FlatmatePicker";
 import { Task } from "../../objects/Task";
@@ -14,32 +15,30 @@ const TaskCreationPreset = ({task, closeModal}) => {
   const environment = environmentsStore.getEnvironment()
 
   const [flatmatesIncluded, setFlatmatesIncluded] = useState(
-    environment.flatmates.map((x) => {return {"name": x, "isIncluded": true}})
+    environment.flatmates.map((name) => {return {"name": name, "isIncluded": true}})
   )
 
   const [timeInterval, setTimeInterval] = useState(null)
 
   const createTask = () => {
     const flatmates = flatmatesIncluded.map(item => item.name);
+    const time = timeInterval !== "" ? parseInt(timeInterval) : null;
+
     const newTask = Task(
       task.title, 
       task.description, 
       task.taskType === "ad_hoc" ? 1 : 0, 
       flatmates, 
       task.icon, 
-      timeInterval
+      time
     );
 
-    if(environment.tasks) {
-      environment.tasks.push(newTask)
-    } else {
-      environment.tasks = [newTask]
-    }
-    environmentsStore.setEnvironment(environment)
+    updateTaskOnDatabase(newTask);
 
     ToastAndroid.show('Task created.', ToastAndroid.SHORT);
     closeModal()
   }
+
   // This should contain a brief explanation of what's going on, and settings for 
   // the number of times it happens and who is involved.
   return (
@@ -55,7 +54,6 @@ const TaskCreationPreset = ({task, closeModal}) => {
         taskType={0}
       />
       : <></>}
-
 
       <View style={{ width: "90%", marginTop: 20 }}>
         <FlatmatePicker

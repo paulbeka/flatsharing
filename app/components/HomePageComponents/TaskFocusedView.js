@@ -5,10 +5,12 @@ import {
 import Icon from "react-native-vector-icons/AntDesign";
 import { useFonts, Quicksand_400Regular, Quicksand_700Bold } from '@expo-google-fonts/quicksand';
 import { getGetDoneByDate } from '../../objects/Task';
-import { updateTaskOnDatabase } from '../../store/EnvironmentEventHandler'
+import { useTaskDatabaseHandler } from '../../store/EnvironmentEventHandler';
+import LoadingIcon from '../LoadingIcon';
 
 
 const TaskFocusedView = ({ task, closeModal }) => {
+  const updateTaskOnDatabase = useTaskDatabaseHandler().updateTaskOnDatabase;
 
   const [fontsLoaded] = useFonts({
     QuicksandRegular: Quicksand_400Regular,
@@ -16,13 +18,21 @@ const TaskFocusedView = ({ task, closeModal }) => {
   });
 
   const taskCompleted = () => {
-    // todo: update the "last completed by" on task and push to update
-    updateTaskOnDatabase(task)
-    closeModal()
+    const currentFlatmateIndex = task.flatmates.findIndex(flatmate => flatmate === task.next);
+    const nextFlatmateIndex = currentFlatmateIndex > task.flatmates.length-1 ? 0 : currentFlatmateIndex + 1;
+    const newNextFlatmate = task.flatmates[nextFlatmateIndex];
+
+    const newTask = { ...task, 
+      next: newNextFlatmate,
+      dateLastCompleted: Date.now()
+    }
+
+    updateTaskOnDatabase(newTask);
+    closeModal();
   }
 
   if (!fontsLoaded) {
-    return null;
+    return <LoadingIcon />;
   }
   return (
     <View style={styles.mainContainer}>
@@ -30,12 +40,15 @@ const TaskFocusedView = ({ task, closeModal }) => {
         <Text style={styles.title}>{task.name}</Text>
         <Icon size={200} name={task.icon} style={styles.iconStyle}/>
         <Text style={{marginTop: 20, marginBottom: 20, fontFamily: 'QuicksandRegular', fontSize: 20}}>{task.description}</Text>
-        {task.type === 0 &&
+        {task.type === 0 ?
         <>
           <Text style={{ fontFamily: 'QuicksandRegular', fontSize: 30 }}>Finish this task by:</Text>
           <Text style={{marginTop: 20, fontFamily: 'QuicksandRegular', fontSize: 20}}>
             {getGetDoneByDate(task).toLocaleDateString([], { year: 'numeric', month: 'long', day: 'numeric' })}
           </Text>
+        </> :
+        <>
+          <Text>You're the next person responsible to complete this task! Click the "Complete" button once the task has been completed. Don't wait too long to finish it!</Text>
         </>
         }
       </View>

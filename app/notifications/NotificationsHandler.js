@@ -1,7 +1,5 @@
 import * as Notifications from "expo-notifications";
 
-
-
 // TODO: check that the same thing hasn't been scheduled already
 // When loading the data from server, check what has already been scheduled
 // and when. If it has been scheduled, but now it's at a different time,

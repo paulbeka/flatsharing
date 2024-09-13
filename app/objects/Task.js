@@ -1,9 +1,5 @@
-import { scheduleNotification } from "../notifications/NotificationsHandler";
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
 
 const dayInMillis =  24 * 60 * 60 * 1000;
-
 
 export const Task = (tname, tdescription, ttype, tflatmates, ticon, ttiming) => {
   const name = tname;

@@ -1,17 +1,15 @@
 import React, { useState } from "react";
-import { Stack, useRouter } from "expo-router";
 import { useEnvironmentsStore } from "../store/EnvironmentsContext";
 import { ScrollView, View, Text, StyleSheet } from "react-native";
 import { useFonts, Quicksand_500Medium, Quicksand_700Bold } from '@expo-google-fonts/quicksand'; // Import the fonts
 import Icon from "react-native-vector-icons/AntDesign";
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { cancelNotification } from "../notifications/NotificationsHandler";
+import { useTaskDatabaseHandler } from '../store/EnvironmentEventHandler';
 import ConfirmDeleteTaskModal from "../components/ListOfTasksComponents/ConfirmDeleteTaskModal";
 
 
 const ListOfTasks = () => {
   const environmentsStore = useEnvironmentsStore();
-  const router = useRouter()
+  const deleteTaskOnDatabase = useTaskDatabaseHandler().deleteTaskOnDatabase;
   let environment = environmentsStore.getEnvironment(0);
   
   const [tasks, setTasks] = useState(environment.tasks)
@@ -34,21 +32,9 @@ const ListOfTasks = () => {
   }
 
   const deleteTask = () => {
-    if(taskBeingDeleted.type === 0) {
-      AsyncStorage.getItem(taskBeingDeleted.name).then((id) => {
-        cancelNotification(id);
-      })
-    }
-    environment.tasks = environment.tasks.filter((el) => el !== taskBeingDeleted)
-    if(environment.tasks.length <= 0) {
-      environment.tasks = []
-      setTasks(environment.tasks)
-      environmentsStore.setEnvironment(environment)
-      router.replace("/")
-    } else {
-      setTasks(environment.tasks)
-      environmentsStore.setEnvironment(environment)
-    }
+    deleteTaskOnDatabase(taskBeingDeleted);
+    environment = environmentsStore.getEnvironment(0);  // refresh the environment - should we use redux?
+    setTasks(environment.tasks);
 
     if(isModalVisible) {
       closeModal();
@@ -59,7 +45,6 @@ const ListOfTasks = () => {
     return null;
   }
 
-  // todo: add the CoonfirmDeleteTaskModal here
   return (
     <View style={styles.mainContainer}>
       {tasks !== undefined && tasks.length > 0 ? 
