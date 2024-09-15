@@ -3,7 +3,7 @@ import {
   View, Text, StyleSheet, Pressable, ToastAndroid
 } from 'react-native';
 import { useEnvironmentsStore } from "../../store/EnvironmentsContext";
-import { updateTaskOnDatabase } from "../../store/EnvironmentEventHandler"; 
+import { useTaskDatabaseHandler } from "../../store/EnvironmentEventHandler";
 import Icon from "react-native-vector-icons/AntDesign";
 import FlatmatePicker from "../GeneralUtil/FlatmatePicker";
 import { Task } from "../../objects/Task";
@@ -13,6 +13,7 @@ import TimePicker from "../GeneralUtil/TimePicker";
 const TaskCreationPreset = ({task, closeModal}) => {
   const environmentsStore = useEnvironmentsStore();
   const environment = environmentsStore.getEnvironment()
+  const updateTaskOnDatabase = useTaskDatabaseHandler().updateTaskOnDatabase;
 
   const [flatmatesIncluded, setFlatmatesIncluded] = useState(
     environment.flatmates.map((name) => {return {"name": name, "isIncluded": true}})

@@ -10,7 +10,7 @@ import LoadingIcon from '../LoadingIcon';
 
 
 const TaskFocusedView = ({ task, closeModal }) => {
-  const updateTaskOnDatabase = useTaskDatabaseHandler().updateTaskOnDatabase;
+  const taskDatabaseHandler = useTaskDatabaseHandler();
 
   const [fontsLoaded] = useFonts({
     QuicksandRegular: Quicksand_400Regular,
@@ -27,7 +27,8 @@ const TaskFocusedView = ({ task, closeModal }) => {
       dateLastCompleted: Date.now()
     }
 
-    updateTaskOnDatabase(newTask);
+    taskDatabaseHandler.deleteTaskOnDatabase(task);
+    taskDatabaseHandler.updateTaskOnDatabase(newTask);
     closeModal();
   }
 

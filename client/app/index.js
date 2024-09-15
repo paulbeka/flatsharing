@@ -32,6 +32,7 @@ const App = observer(() => {
 
   useEffect(() => {
     environmentsStore.loadLanguage()
+
     const unsubscribe = firebase.auth().onAuthStateChanged((authUser) => {
       setUser(authUser);
       if(authUser !== null) {
@@ -39,16 +40,15 @@ const App = observer(() => {
       }
     });
 
+    // TODO: do we need any of this local scheduling?
     registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
 
     notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
       setNotification(notification);
     });
 
-    // do something when the notification is replied to or something
     responseListener.current = Notifications.addNotificationResponseReceivedListener(
       (response) => console.log(response)
-      
     );
 
     return () => {
@@ -94,7 +94,7 @@ const App = observer(() => {
   }
 
   if(environmentsStore.language === null) {
-    return null
+    return <LoadingIcon />
   }
 
   if(user) {
