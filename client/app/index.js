@@ -40,7 +40,6 @@ const App = observer(() => {
       }
     });
 
-    // TODO: do we need any of this local scheduling?
     registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
 
     notificationListener.current = Notifications.addNotificationReceivedListener(notification => {

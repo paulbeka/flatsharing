@@ -33,4 +33,8 @@ export const useTaskDatabaseHandler = () => {
     updateTaskOnDatabase,
     deleteTaskOnDatabase
   };
+
+  const uploadUserTokenId = (token) => {
+    // upload to the user here, and maybe assign it to the flatmates
+  }
 };

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet, ScrollView, Text, View, Pressable, Modal
 } from 'react-native';
@@ -12,6 +12,7 @@ import { useEnvironmentsStore } from "../store/EnvironmentsContext";
 import LoadingIcon from "../components/LoadingIcon";
 import HomePageBoxedScrollTaskView from '../components/HomePageComponents/HomePageBoxedScrollTaskView'
 import { daysBeforeTaskDue } from '../objects/Task';
+import { handleFcmPermission } from '../notifications/FcmHandler';
 
 
 const HomePage = () => {
@@ -22,6 +23,10 @@ const HomePage = () => {
 
   const [taskInFocus, setTaskInFocus] = useState(null)
   const [isModalVisible, setIsModalVisible] = useState(false);
+
+  useEffect(() => {
+    return handleFcmPermission();
+  }, []);
 
   const openModal = () => {
     setIsModalVisible(true);
