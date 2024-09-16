@@ -53,8 +53,8 @@ const TaskCreationPage = () => {
     }
 
     const flatmates = flatmatesIncluded.map(item => item.name);
-
-    const time = timeInterval !== "" ? parseInt(timeInterval) : null;
+    
+    const time = timeInterval !== "" ? timeInterval : null;
     const newTask = Task(taskName, taskDescription, taskType, flatmates, selectedTaskIcon, time);
 
     updateTaskOnDatabase(newTask);

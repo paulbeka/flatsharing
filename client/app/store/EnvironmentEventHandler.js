@@ -19,13 +19,6 @@ export const useTaskDatabaseHandler = () => {
   const deleteTaskOnDatabase = (task) => {
     const environment = environmentsStore.getEnvironment();
 
-    
-    // if (task.type === 0) {
-    //   AsyncStorage.getItem(task.name).then((id) => {
-    //     cancelNotification(id);
-    //   });
-    // }
-
     environment.tasks = environment.tasks.filter((el) => el !== task);
 
     if (environment.tasks.length <= 0) {
