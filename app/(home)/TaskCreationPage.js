@@ -101,8 +101,8 @@ const TaskCreationPage = () => {
         <View style={styles.iconChooserView}>
           <Icon name={selectedTaskIcon} size={50} style={{ padding: 10}}/>
           <ScrollView style={{ maxHeight: 100 }} horizontal={true}>
-            {taskIcons.map((icon) => {
-              return <Icon size={50} style={styles.iconSelection} name={icon.name} key={icon.name} onPress={
+            {taskIcons.map((icon, key) => {
+              return <Icon size={50} style={styles.iconSelection} name={icon.name} key={key} onPress={
                 () => {setSelectedTaskIcon(icon.name)}} />
             })}
           </ScrollView>

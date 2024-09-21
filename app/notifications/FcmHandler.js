@@ -1,5 +1,5 @@
-import messaging from '@react-native-firebase/messaging';
 import { useTaskDatabaseHandler } from '../store/EnvironmentEventHandler';
+import { messaging } from '@react-native-firebase/messaging'
 
 
 export const handleFcmPermission = () => {

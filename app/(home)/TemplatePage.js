@@ -43,7 +43,7 @@ const TemplatePage = () => {
               <Text style={styles.templateTitle}>{template.title}</Text>
               <View style={styles.iconsOnTemplates}>
                 {template.items.map((task, key) => (
-                  <Icon style={styles.templateIcon} size={25} name={task.icon}  key={key}/>
+                  <Icon style={styles.templateIcon} size={25} name={task.icon} key={key}/>
                 ))}
               </View>
             </Pressable>

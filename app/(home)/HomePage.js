@@ -25,7 +25,8 @@ const HomePage = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   useEffect(() => {
-    return handleFcmPermission();
+    console.log("Test!");
+    // return handleFcmPermission();
   }, []);
 
   const openModal = () => {
