@@ -46,8 +46,13 @@
     "react-native-qrcode-svg": "^6.2.0",
     "react-native-radial-menu": "^1.1.0",
     "react-native-reanimated": "~3.10.1",
+<<<<<<< HEAD
     "react-native-safe-area-context": "4.10.5",
     "react-native-screens": "3.31.1",
+=======
+    "react-native-safe-area-context": "4.6.3",
+    "react-native-screens": "~3.22.0",
+>>>>>>> 37435e345c65cf70c9b5234514d8fba124910b72
     "react-native-vector-icons": "^10.0.1",
     "react-native-web": "~0.19.6"
   },

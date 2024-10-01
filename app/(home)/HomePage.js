@@ -68,13 +68,13 @@ const HomePage = () => {
           <Text style={styles.title}>Hi, {username}!</Text>
 
           <Text style={{ ...styles.subTitle, marginTop: 10, fontFamily: 'QuicksandBold' }}>Today's tasks:</Text>
-          <HomePageBoxedScrollTaskView tasks={usersTasksToday} taskFocusCallback={setTaskInFocus} openModal={openModal}/>
+          <HomePageBoxedScrollTaskView username={username} tasks={usersTasksToday} taskFocusCallback={setTaskInFocus} openModal={openModal}/>
           
           <Text style={{ ...styles.subTitle, fontFamily: 'QuicksandBold', marginTop: 20 }}>Your upcoming tasks...</Text>
-          <HomePageBoxedScrollTaskView tasks={usersTasksFuture} taskFocusCallback={setTaskInFocus} openModal={openModal}/>
+          <HomePageBoxedScrollTaskView username={username} tasks={usersTasksFuture} taskFocusCallback={setTaskInFocus} openModal={openModal}/>
         
           <Text style={{ ...styles.subTitle, fontFamily: 'QuicksandBold', marginTop: 20 }}>Your flatmates' tasks...</Text>
-          <HomePageBoxedScrollTaskView tasks={flatmatesTasks} taskFocusCallback={setTaskInFocus} openModal={openModal}/>
+          <HomePageBoxedScrollTaskView username={username} tasks={flatmatesTasks} taskFocusCallback={setTaskInFocus} openModal={openModal}/>
 
         </ScrollView>
 

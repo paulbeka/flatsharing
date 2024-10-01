@@ -40,19 +40,21 @@ const App = observer(() => {
       }
     });
 
-    registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
+    // registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
 
-    notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
-      setNotification(notification);
-    });
+    // notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
+    //   setNotification(notification);
+    // });
 
-    responseListener.current = Notifications.addNotificationResponseReceivedListener(
-      (response) => console.log(response)
-    );
+    // // do something when the notification is replied to or something
+    // responseListener.current = Notifications.addNotificationResponseReceivedListener(
+    //   (response) => console.log(response)
+      
+    // );
 
     return () => {
-      Notifications.removeNotificationSubscription(notificationListener.current);
-      Notifications.removeNotificationSubscription(responseListener.current);
+      // Notifications.removeNotificationSubscription(notificationListener.current);
+      // Notifications.removeNotificationSubscription(responseListener.current);
       unsubscribe();
     };
 

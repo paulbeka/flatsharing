@@ -60,7 +60,7 @@ const QrGenerator = observer((incCurrentPage) => {
 
       {/* goto home or next page in task creation process */}
       {incCurrentPage["segment"] === "QrGenerator" ? 
-      <Pressable style={styles.nextPageButton} onPress={() => {router.replace("/")}}>
+      <Pressable style={styles.nextPageButton} onPress={() => {() => router.replace("/")}}>
         <Text style={{ color: "white", fontSize: 18}}>Home</Text>
       </Pressable>
       :
