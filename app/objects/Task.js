@@ -62,7 +62,7 @@ export const daysBeforeTaskDue = (task, username) => {
 
   const timeDiff = (task.dateLastCompleted + (task.timingInDays * distance * dayInMillis)) - currentTime;
   const daysDiff = Math.ceil(timeDiff / (24 * 60 * 60 * 1000));
-  return daysDiff > 0 ? daysDiff : 0;
+  return daysDiff;
 }
 
 export const getGetDoneByDate = (task) => {
