@@ -14,7 +14,8 @@ import FlatmatePicker from "../components/GeneralUtil/FlatmatePicker";
 import LoadingIcon from "../components/LoadingIcon";
 
 
-const TaskCreationPage = () => {
+const TaskCreationPage = ({
+}) => {
   const environmentsStore = useEnvironmentsStore();
   const environment = environmentsStore.getEnvironment(0);
   const router = useRouter();
@@ -23,7 +24,7 @@ const TaskCreationPage = () => {
   const [taskName, setTaskName] = useState("")
   const [taskDescription, setTaskDescription] = useState("")
   const [taskIcons, setTaskIcons] = useState([
-    // todo: get the icons dynamically
+    // TODO: get the icons dynamically
     {name: "home"}, {name: "save"}, {name: "team"}, {name: "lock"}
   ])
   const [selectedTaskIcon, setSelectedTaskIcon] = useState("home")

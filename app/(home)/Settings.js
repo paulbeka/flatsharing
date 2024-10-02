@@ -18,8 +18,6 @@ const Settings = () => {
   const [settingsIcons, setSettingsIcons] = useState([
     {"title": "Account", "iconName": "user", "link": "SettingPages/AccountManagementPage"},
     {"title": "Notifications", "iconName": "bells", "link": "SettingPages/NotificationManagementPage"},
-    {"title": "Theme", "iconName": "tool", "link": "AccountManagementPage"},
-    // TODO: We may need to remove this option depending how it works, or change entirely this functionality
     {"title": "Flatmate management", "iconName": "edit", "link": "AccountManagementPage"},
   ]);
 

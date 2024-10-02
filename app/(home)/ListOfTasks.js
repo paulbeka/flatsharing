@@ -14,7 +14,9 @@ const ListOfTasks = () => {
   
   const [tasks, setTasks] = useState(environment.tasks)
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isEditTaskModalVisible, setIsEditTaskModalVisible] = useState(false);
   const [taskBeingDeleted, setTaskBeingDeleted] = useState(null);
+  const [taskBeingEdited, setTaskBeingEdited] = useState(null);
 
   const [fontsLoaded] = useFonts({
     Regular: Quicksand_500Medium, 
@@ -26,9 +28,19 @@ const ListOfTasks = () => {
     setTaskBeingDeleted(null);
   }
 
+  const closeEditModal = () => {
+    setIsEditTaskModalVisible(false);
+    setTaskBeingEdited(null);
+  }
+
   const deleteItem = (task) =>{
     setTaskBeingDeleted(task);
     setIsModalVisible(true);
+  }
+
+  const editItem = (task) => {
+    setTaskBeingEdited(task);
+    setIsEditTaskModalVisible(true);
   }
 
   const deleteTask = () => {
@@ -39,6 +51,10 @@ const ListOfTasks = () => {
     if(isModalVisible) {
       closeModal();
     }
+  }
+
+  const editTask = () => {
+    // TODO: add the edit task stuff here
   }
 
   if (!fontsLoaded) {
@@ -54,7 +70,7 @@ const ListOfTasks = () => {
             <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
               <Text style={{ fontFamily: 'Bold' }}>{task.name}</Text>
               <View style={{ flexDirection: 'row' }}>
-                <Icon size={25} name="edit" style={{marginRight: 10}} />
+                <Icon size={25} name="edit" style={{marginRight: 10}} onPress={() => editItem(task)} />
                 <Icon size={25} name="delete" style={{marginRight: 10}} onPress={() => deleteItem(task)} />
               </View>
             </View>
@@ -71,6 +87,12 @@ const ListOfTasks = () => {
         isModalVisible={isModalVisible} 
         closeModal={closeModal} 
         deleteTask={deleteTask}
+      />
+
+      <EditTaskModal 
+        isModalVisible={isEditTaskModalVisible}
+        closeModal={closeEditModal}
+        editTask={editTask}
       />
 
     </View>
